@@ -1,0 +1,15 @@
+{
+  "name": "ad_maker",
+  "version": "0.2.0",
+  "description": "Быстрая генерация рекламной кампании для Яндекс.Командер",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Kozack",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.79.0",
+    "transliteration": "^1.1.16"
+  }
+}
