@@ -1,6 +1,6 @@
 {
   "name": "ad_maker",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Быстрая генерация рекламной кампании для Яндекс.Командер",
   "main": "index.js",
   "scripts": {
