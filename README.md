@@ -24,4 +24,4 @@ node node_modules\ad_maker
 - **Not-found-keywords.csv** -- Пригодный для импорта в Exel список ключевых слов, которые не были применены ни к одной группе.
 - **Counter-keywords.csv** -- Количество добавленных фраз к каждой группе.
 
-[nodejs] <https://nodejs.org/en/>
+[nodejs]: <https://nodejs.org>
