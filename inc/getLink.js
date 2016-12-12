@@ -3,8 +3,8 @@ function getLink(ad, map) {
 	var linkRow = map.find(word => {
 
 		return word.every(col => col != '') 
-			&& ad[8].toLowerCase() == `"${word[0]}"`.toLowerCase()
-			&& ad[3].toLowerCase() == `"${word[1]}"`.toLowerCase()
+			&& ad[8].toLowerCase() == word[0].toLowerCase()
+			&& ad[3].toLowerCase() == word[1].toLowerCase()
 	}
 	);
 

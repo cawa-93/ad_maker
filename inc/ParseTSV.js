@@ -2,7 +2,7 @@ const fs = require('fs');
 
 function ParseTSV(file_path) {
 	return new Promise(function (resolve, reject) {
-		fs.readFile(file_path, 'utf8', function (err, data) {
+		fs.readFile(file_path, 'utf16le', function (err, data) {
 			if (err) {
 				return reject(err);
 			}

@@ -1,7 +1,7 @@
 {
   "name": "ad_maker",
-  "version": "0.2.1",
-  "description": "Быстрая генерация рекламной кампании для Яндекс.Командер",
+  "version": "0.3.0",
+  "description": "Программа для быстрого копирования ключевых фрах и быстрых ссылок из Adwords editor в Яндекс.Директ Командер",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
