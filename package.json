@@ -1,6 +1,6 @@
 {
   "name": "ad_maker",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Программа для быстрого копирования ключевых фраз и быстрых ссылок из Adwords editor в Яндекс.Директ Командер",
   "bugs": {
     "url": "https://github.com/cawa-93/ad_maker/issues",
