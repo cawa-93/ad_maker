@@ -39,7 +39,7 @@ function main (config) {
 					}
 				}
 				currentLinks.forEach(row => {
-					result = result.concat([row[46], row[43], `${row[47]} ${row[48]}`]);
+					result = result.concat([row[46], row[43].replace(/\+/g, ''), `${row[47]} ${row[48]}`]);
 				});
 				results.push(result);
 			}

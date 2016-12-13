@@ -2,14 +2,25 @@
   "name": "ad_maker",
   "version": "0.3.0",
   "description": "Программа для быстрого копирования ключевых фрах и быстрых ссылок из Adwords editor в Яндекс.Директ Командер",
+  "bugs": {
+    "url": "https://github.com/cawa-93/ad_maker/issues",
+    "email": "kozackunisoft@gmail.com"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Alex Kozack",
-  "license": "ISC",
+  "author": {
+    "name": "Alex Kozack",
+    "email": "kozackunisoft@gmail.com"
+  },
+  "repository": "cawa-93/ad_maker",
+  "license": "GPL-3.0",
   "dependencies": {
     "request": "^2.79.0",
     "transliteration": "^1.1.16"
-  }
+  },
+  "engines": {
+    "node" : ">=6.9.2"
+    }
 }
