@@ -1,0 +1,16 @@
+{
+  "name": "ad_maker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "author": "Alex Kozack",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "angular": "^1.5.10",
+    "angular-animate": "^1.5.10",
+    "angular-aria": "^1.5.10",
+    "angular-material": "^1.1.1",
+    "iconv-lite": "^0.4.15",
+    "transliteration": "^1.1.16"
+  }
+}

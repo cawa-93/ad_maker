@@ -1,26 +1,20 @@
 {
-  "name": "ad_maker",
-  "version": "0.3.2",
-  "description": "Программа для быстрого копирования ключевых фраз и быстрых ссылок из Adwords editor в Яндекс.Директ Командер",
-  "bugs": {
-    "url": "https://github.com/cawa-93/ad_maker/issues",
-    "email": "kozackunisoft@gmail.com"
-  },
-  "main": "index.js",
+  "name": "ad_maker-electron",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/electron ./app",
+    "build": "./node_modules/.bin/electron-packager ./app $npm_package_name --all --version=$npm_package_electronVersion --app-version=$npm_package_version --out=build --ignore=build --prune",
+    "build:dev": "./node_modules/.bin/electron-packager ./app --version=$npm_package_electronVersion --out=build --ignore=build --overwrite"
   },
-  "author": {
-    "name": "Alex Kozack",
-    "email": "kozackunisoft@gmail.com"
-  },
-  "repository": "cawa-93/ad_maker",
+  "author": "Alex Kozack",
   "license": "GPL-3.0",
-  "dependencies": {
-    "appendable-cli-menu": "^2.0.0",
-    "transliteration": "^1.1.16"
+  "electronVersion": "1.4.12",
+  "devDependencies": {
+    "electron-installer-windows": "^0.2.0",
+    "electron-packager": "^8.4.0",
+    "electron-prebuilt": "^1.4.12"
   },
-  "engines": {
-    "node": ">=6.9.2"
-  }
+  "dependencies": {}
 }
