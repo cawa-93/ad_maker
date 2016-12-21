@@ -81,9 +81,11 @@ class Template {
 			keywords: new Set(),
 		}
 		this.data.forEach(row => {
-			stat.campain.add(row[0]);
-			stat.groups.add(row[1]);
-			stat.keywords.add(row[2]);
+			if (row && row.length && row[0] && row[1] && row[2]) {
+				stat.campain.add(row[0]);
+				stat.groups.add(`${row[0]}_${row[1]}`);
+				stat.keywords.add(`${row[0]}_${row[1]}_${row[2]}`);
+			}
 		});
 		return stat;
 	}

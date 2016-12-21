@@ -1,20 +1,37 @@
 {
-  "name": "ad_maker-electron",
-  "version": "0.1.0",
-  "description": "",
-  "main": "main.js",
+  "name": "ad_maker",
+  "version": "0.2.1",
+  "description": "Быстрое заполнение Коммандера",
+  "main": "app/main.js",
   "scripts": {
-    "start": "./node_modules/.bin/electron ./app",
-    "build": "./node_modules/.bin/electron-packager ./app $npm_package_name --all --version=$npm_package_electronVersion --app-version=$npm_package_version --out=build --ignore=build --prune",
-    "build:dev": "./node_modules/.bin/electron-packager ./app --version=$npm_package_electronVersion --out=build --ignore=build --overwrite"
+    "start": "electron ./app",
+    "build": "build -lw --x64 --ia32",
+    "build:dev": "build -l --x64"
   },
-  "author": "Alex Kozack",
+  "author": "Alex Kozack <kozackunisoft@gmail.com>",
+  "repository": "cawa-93/ad_maker",
   "license": "GPL-3.0",
-  "electronVersion": "1.4.12",
   "devDependencies": {
-    "electron-installer-windows": "^0.2.0",
-    "electron-packager": "^8.4.0",
-    "electron-prebuilt": "^1.4.12"
+    "electron-builder": "^10.9.2",
+    "electron-prebuilt": "^1.4.13"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "build": {
+    "linux": {
+      "target": "deb",
+      "category": "Utility"
+    },
+    "nsis": {
+      "license": "./LICENSE",
+      "language": "1058"
+    },
+    "win": {},
+    "publish": [{
+      "provider": "github",
+      "repo": "cawa-93/ad_maker"
+    }]
+  },
+  "directories": {
+    "app": "./app"
+  }
 }

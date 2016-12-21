@@ -1,14 +1,15 @@
 {
-  "name": "ad_maker",
-  "version": "0.0.1",
-  "description": "",
+  "name": "admaker",
+  "version": "0.2.1",
+  "description": "Быстрое заполнение Коммандера",
   "main": "main.js",
-  "author": "Alex Kozack",
+  "author": "Alex Kozack <kozackunisoft@gmail.com>",
   "license": "GPL-3.0",
+  "homepage": "https://github.com/cawa-93/ad_maker",
   "dependencies": {
-    "angular": "^1.5.10",
-    "angular-animate": "^1.5.10",
-    "angular-aria": "^1.5.10",
+    "angular": "~1.5.10",
+    "angular-animate": "~1.5.10",
+    "angular-aria": "~1.5.10",
     "angular-material": "^1.1.1",
     "iconv-lite": "^0.4.15",
     "transliteration": "^1.1.16"
