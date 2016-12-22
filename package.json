@@ -5,6 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "start": "electron ./app",
+    "build": "build --dir",
     "release": "build -lw --x64 --ia32"
   },
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
@@ -30,7 +31,11 @@
     },
     "squirrelWindows": {
       "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"
-    }
+    },
+    "publish": [{
+      "provider": "github",
+      "owner":"cawa-93"
+    }]
   },
   "directories": {
     "app": "./app"
