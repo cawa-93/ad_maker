@@ -13,32 +13,6 @@ app.on('window-all-closed', function () {
 });
 
 app.on('ready', function () {
-
-
-    autoUpdater.addListener("update-available", (event) => {
-      console.log("A new update is available")
-    })
-    autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-      console.log("A new update is ready to install", `Version ${releaseName} is downloaded and will be automatically installed on Quit`)
-      console.log("quitAndInstall")
-      autoUpdater.quitAndInstall()
-      return true
-    })
-    autoUpdater.addListener("error", (error) => {
-      console.log(error);
-    })
-    autoUpdater.addListener("checking-for-update", (event) => {
-      console.log("checking-for-update")
-    })
-    autoUpdater.addListener("update-not-available", () => {
-      console.log("update-not-available")
-    })
-
-		mainWindow.webContents.once("did-frame-finish-load", (event) => {
-      autoUpdater.checkForUpdates();
-    })
-
-	
 	mainWindow = new BrowserWindow({
 		width: 700,
 		height: 510,
@@ -57,6 +31,28 @@ app.on('ready', function () {
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});
+
+	autoUpdater.addListener("update-available", (event) => {
+		console.log("update-available")
+	})
+	autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+		console.log("update-downloaded");
+		autoUpdater.quitAndInstall();
+		return true;
+	})
+	autoUpdater.addListener("error", (error) => {
+		console.error(error);
+	})
+	autoUpdater.addListener("checking-for-update", (event) => {
+		console.log("checking-for-update");
+	})
+	autoUpdater.addListener("update-not-available", () => {
+		console.log("update-not-available");
+	})
+
+	mainWindow.webContents.once("did-frame-finish-load", (event) => {
+		autoUpdater.checkForUpdates();
+	})
 });
 
 
