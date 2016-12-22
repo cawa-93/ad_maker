@@ -1,5 +1,5 @@
 const {app, BrowserWindow, Tray} = require('electron');
-const {autoUpdater} =  require("electron-auto-updater");
+// const {autoUpdater} =  require("electron-auto-updater");
 const path = require('path');
 
 let mainWindow = null;
@@ -43,22 +43,22 @@ app.on('activate', function () {
 	}
 });
 
-    autoUpdater.addListener("update-available", (event) => {
-      console.log("A new update is available")
-    })
-    autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-      console.log("A new update is ready to install", `Version ${releaseName} is downloaded and will be automatically installed on Quit`)
-      console.log("quitAndInstall")
-      autoUpdater.quitAndInstall()
-      return true
+    // autoUpdater.addListener("update-available", (event) => {
+    //   console.log("A new update is available")
+    // })
+    // autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+    //   console.log("A new update is ready to install", `Version ${releaseName} is downloaded and will be automatically installed on Quit`)
+    //   console.log("quitAndInstall")
+    //   autoUpdater.quitAndInstall()
+    //   return true
 
-    })
-    autoUpdater.addListener("error", (error) => {
-      console.log(error)
-    })
-    autoUpdater.addListener("checking-for-update", (event) => {
-      console.log("checking-for-update")
-    })
-    autoUpdater.addListener("update-not-available", () => {
-      console.log("update-not-available")
-    })
+    // })
+    // autoUpdater.addListener("error", (error) => {
+    //   console.log(error)
+    // })
+    // autoUpdater.addListener("checking-for-update", (event) => {
+    //   console.log("checking-for-update")
+    // })
+    // autoUpdater.addListener("update-not-available", () => {
+    //   console.log("update-not-available")
+    // })

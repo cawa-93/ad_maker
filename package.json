@@ -1,13 +1,11 @@
 {
   "name": "ad_maker",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Быстрое заполнение Коммандера",
   "main": "app/main.js",
   "scripts": {
     "start": "electron ./app",
-    "build": "build -lw --x64 --ia32",
-    "build:dev": "build -l --x64",
-    "build:win":"build -w --ia32 --prerelease"
+    "release": "build -lw --x64 --ia32"
   },
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
   "repository": "cawa-93/ad_maker",
@@ -28,15 +26,10 @@
       "language": "1058"
     },
     "win": {
-      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"      
+      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"
     },
-    "publish": [{
-      "provider": "github",
-      "repo": "cawa-93/ad_maker"
-    }],
     "squirrelWindows": {
-      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true",
-      "remoteReleases": true
+      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"
     }
   },
   "directories": {
