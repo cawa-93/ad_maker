@@ -6,11 +6,13 @@
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
   "license": "GPL-3.0",
   "homepage": "https://github.com/cawa-93/ad_maker",
+  "repository": "cawa-93/ad_maker",
   "dependencies": {
     "angular": "~1.5.10",
     "angular-animate": "~1.5.10",
     "angular-aria": "~1.5.10",
     "angular-material": "^1.1.1",
+    "electron-auto-updater": "^0.8.2",
     "iconv-lite": "^0.4.15",
     "transliteration": "^1.1.16"
   }

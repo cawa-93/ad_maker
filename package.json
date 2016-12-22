@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron ./app",
     "build": "build -lw --x64 --ia32",
-    "build:dev": "build -l --x64"
+    "build:dev": "build -l --x64",
+    "build:win":"build -w --ia32 --prerelease"
   },
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
   "repository": "cawa-93/ad_maker",
@@ -17,6 +18,7 @@
   },
   "dependencies": {},
   "build": {
+    "appId": "com.electron.admaker",
     "linux": {
       "target": "deb",
       "category": "Utility"
@@ -25,11 +27,17 @@
       "license": "./LICENSE",
       "language": "1058"
     },
-    "win": {},
+    "win": {
+      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"      
+    },
     "publish": [{
       "provider": "github",
       "repo": "cawa-93/ad_maker"
-    }]
+    }],
+    "squirrelWindows": {
+      "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true",
+      "remoteReleases": true
+    }
   },
   "directories": {
     "app": "./app"

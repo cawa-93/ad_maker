@@ -1,7 +1,8 @@
-var {app, BrowserWindow, Tray} = require('electron');
-var path = require('path');
+const {app, BrowserWindow, Tray} = require('electron');
+const {autoUpdater} =  require("electron-auto-updater");
+const path = require('path');
 
-var mainWindow = null;
+let mainWindow = null;
 
 app.setName('Ad maker');
 
@@ -16,21 +17,22 @@ app.on('ready', function () {
 	mainWindow = new BrowserWindow({
 		width: 700,
 		height: 510,
-		resizable:false,
+		// resizable:false,
 		center: true,
 		maximizable: false,
 		title: 'Ad Maker by Alex Kozack',
-		icon: path.join('file://', __dirname , '/imgs/electron.png'),
-		useContentSize: true
+		useContentSize: true,
+		webContents: true,
 	});
 
-	// mainWindow.webContents.openDevTools();
+	mainWindow.webContents.openDevTools();
 
 	mainWindow.loadURL(path.join('file://', __dirname , '/index.html')); //загрузка html файла
 
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 	});
+	autoUpdater.checkForUpdates()
 });
 
 
@@ -40,3 +42,23 @@ app.on('activate', function () {
 		createWindow();
 	}
 });
+
+    autoUpdater.addListener("update-available", (event) => {
+      console.log("A new update is available")
+    })
+    autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+      console.log("A new update is ready to install", `Version ${releaseName} is downloaded and will be automatically installed on Quit`)
+      console.log("quitAndInstall")
+      autoUpdater.quitAndInstall()
+      return true
+
+    })
+    autoUpdater.addListener("error", (error) => {
+      console.log(error)
+    })
+    autoUpdater.addListener("checking-for-update", (event) => {
+      console.log("checking-for-update")
+    })
+    autoUpdater.addListener("update-not-available", () => {
+      console.log("update-not-available")
+    })
