@@ -1,6 +1,6 @@
 {
   "name": "ad_maker",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Быстрое заполнение Коммандера",
   "main": "app/main.js",
   "scripts": {
