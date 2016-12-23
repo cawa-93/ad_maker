@@ -12,8 +12,10 @@
     "angular-animate": "~1.5.10",
     "angular-aria": "~1.5.10",
     "angular-material": "^1.1.1",
+    "angular-ui-router": "^1.0.0-beta.3",
     "electron-auto-updater": "^0.8.2",
     "iconv-lite": "^0.4.15",
+    "mime-types": "^2.1.13",
     "transliteration": "^1.1.16"
   }
 }
