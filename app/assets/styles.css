@@ -25,14 +25,18 @@ md-list-item.active {
 }
 
 .preview-table {
-	/*table-layout: fixed;*/
-	    /*table-layout: fixed;*/
-    /*width: 300%;*/
-    /*height: 100%;*/
+	width: 100%;
+	border-collapse: collapse;
 }
-md-tabs:not(.md-no-tab-content):not(.md-dynamic-height) {
-	height: 100%;
+.preview-table td {
+	white-space: nowrap;
+	border-bottom: 1px solid #ccc;
+	padding: 15px 10px;
 }
+.preview-table tr:hover td {
+	background-color: #dadada;
+}
+
 /*.progress-circular-container {
 	display: flex;
 	justify-content: center;

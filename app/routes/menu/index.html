@@ -2,7 +2,7 @@
 	
 	<section layout="row" flex>
 		<md-sidenav
-			flex="10"
+			flex="15"
 			class="md-sidenav-left"
 			md-component-id="left"
 			md-is-locked-open="true"
@@ -15,9 +15,7 @@
 			<md-content>
 				<md-list flex>
 					<md-list-item ng-repeat="page in menu.pages" class="md-1-line" ng-click="menu.go(page)">
-						<div class="md-list-item-text" layout="column">
-							<p>{{ page.title }}</p>
-						</div>
+						<p>{{ page.title }}</p>
 					</md-list-item>
 				</md-list>
 			</md-content>

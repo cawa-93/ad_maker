@@ -28,7 +28,7 @@ module.exports = angular.module('preview', [])
 			keywords: [],
 			fastLinks: [],
 		};
-		$scope.campains[campain][group].keywords.push(keyword);
+		if (keyword) $scope.campains[campain][group].keywords.push(keyword);
 		if ($scope.campains[campain][group].ads.findIndex(a => a[0] == ad[0]) == -1){
 			$scope.campains[campain][group].ads.push(ad);
 		}
@@ -38,10 +38,14 @@ module.exports = angular.module('preview', [])
 	})
 
 	$scope.getCampainNames = () => Object.keys($scope.campains);
-	$scope.openCampain = campain => {$scope.selectedCampain = campain; $scope.selectedGroup = null};
+	$scope.openCampain = campain => {
+		$scope.selectedCampain = campain;
+		$scope.openGroup( $scope.getGroupsNames()[0] );
+	};
 	$scope.openGroup = group => $scope.selectedGroup = group;
 	$scope.getGroupsNames = () => Object.keys($scope.campains[$scope.selectedCampain]);
-	console.log($scope.direct);
+	
+	$scope.openCampain( $scope.getCampainNames()[0] );
 })
 
 .name;

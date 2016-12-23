@@ -1,0 +1,32 @@
+<div ng-controller="fastLinksCtrl" layout="column" ng-cloak>
+		<form name="fastLinks">
+			<div layout="row" layout-padding ng-repeat="i in [1,2,3,4]">
+				<md-input-container class="md-block" flex="33">
+					<label>Заголовок {{i}}</label>
+					<input md-maxlength="33" required md-no-asterisk name="title" ng-model="fastLinks[i].title">
+					<div ng-messages="fastLinks[i].title.$error">
+						<div ng-message="required">Это обязательное поле.</div>
+						<div ng-message="md-maxlength">Максимальная длянна заголовка не должна превышать 33 символа.</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex="33">
+					<label>Url {{i}}</label>
+					<input required md-no-asterisk name="url" ng-model="fastLinks[i].url">
+					<div ng-messages="fastLinks[i].url.$error">
+						<div ng-message="required">Это обязательное поле.</div>
+					</div>
+				</md-input-container>
+
+				<md-input-container class="md-block" flex="33">
+					<label>Описание {{i}}</label>
+					<input required md-no-asterisk name="desc" ng-model="fastLinks[i].desc">
+					<div ng-messages="fastLinks[i].desc.$error">
+						<div ng-message="required">Это обязательное поле.</div>
+					</div>
+				</md-input-container>
+			</div>
+		</form>
+
+		<md-button class="md-raised md-primary" ng-click="setFastLinks()">Применить</md-button>
+</div>
