@@ -14,11 +14,9 @@ app.on('window-all-closed', function () {
 
 app.on('ready', function () {
 	mainWindow = new BrowserWindow({
-		width: 1080,
-		height: 768,
-		// resizable:false,
+		minWidth: 800,
+		minHeight: 600,
 		center: true,
-		maximizable: false,
 		title: 'Ad Maker by Alex Kozack',
 		useContentSize: true,
 		webContents: true,
@@ -41,7 +39,12 @@ app.on('ready', function () {
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {
-		dialog.showErrorBox('Ошибка', 'При проверке обновлений произошла ошибка');
+		dialog.showMessageBox({
+			type: 'error',
+			buttons: ['OK'],
+			message:'При проверке обновлений произошла ошибка',
+			detail: error.toString()
+		});
 		console.error(error);
 	})
 	autoUpdater.addListener("checking-for-update", (event) => {

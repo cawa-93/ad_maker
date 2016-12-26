@@ -1,12 +1,12 @@
 <div layout="column" ng-controller="previewCtrl" style="height: 100%;">
 	<div flex="55" layout>
-		<md-content flex=50 style="height: 100%">
+		<md-virtual-repeat-container flex=50 style="height: 100%">
 			<md-list class="compact-list">
-				<md-list-item ng-repeat="campain in getCampainNames()" class="md-1-line" ng-class="{'active': campain == selectedCampain}" ng-click="openCampain(campain)">
+				<md-list-item md-virtual-repeat="campain in getCampainNames()" class="md-1-line" ng-class="{'active': campain == selectedCampain}" ng-click="openCampain(campain)">
 					<span>{{ campain }}</span>
 				</md-list-item>
 			</md-list>
-		</md-content>
+		</md-virtual-repeat-container>
 
 		<md-content flex style="height: 100%" ng-if="selectedCampain">
 			<md-list class="compact-list" >
