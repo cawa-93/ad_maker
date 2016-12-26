@@ -3,6 +3,7 @@ const getDirectModule = require('../getDirect/module');
 const previewModule = require('../preview/module');
 const fastLinksModule = require('../fastLinks/module');
 const utmModule = require('../utm/module');
+const keywordsModule = require('../keywords/module');
 
 module.exports = angular.module('menu', [routerModule, getDirectModule, previewModule, fastLinksModule, utmModule])
 .constant('pages', [{
@@ -19,6 +20,11 @@ module.exports = angular.module('menu', [routerModule, getDirectModule, previewM
 		templateUrl: 'routes/preview/index.html',
 		url: "/preview",
 		title:'Просмотр'
+	},{
+		name: 'menu.keywords',
+		templateUrl: 'routes/keywords/index.html',
+		url: "/keywords",
+		title:'Ключевые слова'
 	},{
 		name: 'menu.fastLinks',
 		templateUrl: 'routes/fastLinks/index.html',

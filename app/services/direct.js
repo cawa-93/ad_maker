@@ -85,6 +85,25 @@ module.exports = angular.module('main')
 		return this;
 	}
 
+	this.setKeywords = (keywords) => {
+		keywords.forEach(([campain, group, keyword], i) => {
+			let adIndex = _data.findIndex(row => row && row && row[8] && row[3]
+			                                         && getWithoutQuotes(row[8]).toLowerCase() == campain.toLowerCase()
+			                                         && getWithoutQuotes(row[3]).toLowerCase() == group.toLowerCase()
+			);
+			if (adIndex < 0) return;
+
+			if (_data[adIndex][10] != '') {
+				let new_ad = angular.copy(_data[adIndex]);
+				new_ad[0] = `"-"`;
+				_data.splice(adIndex,0,new_ad);
+				adIndex += 1;
+			} else {
+				_data[adIndex][0] = `"-"`;
+			}
+			_data[adIndex][10] = `"${keyword}"`;
+		});
+	}
 })
 
 .name;
