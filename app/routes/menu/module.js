@@ -4,8 +4,9 @@ const previewModule = require('../preview/module');
 const fastLinksModule = require('../fastLinks/module');
 const utmModule = require('../utm/module');
 const keywordsModule = require('../keywords/module');
+const saveModule = require('../save/module');
 
-module.exports = angular.module('menu', [routerModule, getDirectModule, previewModule, fastLinksModule, utmModule])
+module.exports = angular.module('menu', [routerModule, getDirectModule, previewModule, fastLinksModule, utmModule, keywordsModule, saveModule])
 .constant('pages', [{
 		name: 'getDirect',
 		templateUrl: 'routes/getDirect/index.html',
@@ -35,6 +36,11 @@ module.exports = angular.module('menu', [routerModule, getDirectModule, previewM
 		templateUrl: 'routes/utm/index.html',
 		url: "/utm",
 		title:'Пометка ссылок'
+	},{
+		name: 'menu.save',
+		templateUrl: 'routes/save/index.html',
+		url: "/save",
+		title:'Сохранить'
 	}]
 )
 
