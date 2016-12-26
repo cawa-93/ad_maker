@@ -2,7 +2,16 @@ require('angular');
 require('angular-animate');
 require('angular-aria');
 require('angular-material');
-require('./routes/Main');
+
+const menuModule = require('./routes/menu/module');
+
+angular.module('main', ['ngMaterial', menuModule])
+.controller('MainCtrl', function () {
+
+});
+
+require('./services/direct');
+
 
 // const {dialog, shell} = require('electron').remote;
 // const fs = require('fs');
