@@ -2,8 +2,9 @@ const routerModule = require('angular-ui-router').default;
 const getDirectModule = require('../getDirect/module');
 const previewModule = require('../preview/module');
 const fastLinksModule = require('../fastLinks/module');
+const utmModule = require('../utm/module');
 
-module.exports = angular.module('menu', [routerModule, getDirectModule, previewModule, fastLinksModule])
+module.exports = angular.module('menu', [routerModule, getDirectModule, previewModule, fastLinksModule, utmModule])
 .constant('pages', [{
 		name: 'getDirect',
 		templateUrl: 'routes/getDirect/index.html',
@@ -23,6 +24,11 @@ module.exports = angular.module('menu', [routerModule, getDirectModule, previewM
 		templateUrl: 'routes/fastLinks/index.html',
 		url: "/fastLinks",
 		title:'Быстрые ссылки'
+	},{
+		name: 'menu.utm',
+		templateUrl: 'routes/utm/index.html',
+		url: "/utm",
+		title:'Пометка ссылок'
 	}]
 )
 

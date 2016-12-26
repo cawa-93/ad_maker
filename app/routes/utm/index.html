@@ -1,0 +1,53 @@
+<md-content ng-controller="utmCtrl" layout="row " layout-padding >
+	<form flex name="formCtrl" layout="column"  >
+		<md-radio-group ng-model="target">
+			<md-radio-button value="main" class="md-primary">Пометка основных ссылок</md-radio-button>
+			<md-radio-button value="fast"> Пометка быстрых ссылок </md-radio-button>
+		</md-radio-group>
+
+		<md-input-container>
+			<label>Campaign Source</label>
+			<input required md-no-asterisk name="utm_source" ng-model="utm.utm_source">
+			<div ng-messages="formCtrl.utm_source.$error">
+				<div ng-message="required">Это обязательное поле</div>
+			</div>
+		</md-input-container>
+		
+		<md-input-container>
+			<label>Campaign Medium</label>
+			<input md-no-asterisk name="utm_medium" ng-model="utm.utm_medium">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Campaign Name</label>
+			<input md-no-asterisk name="utm_campaign" ng-model="utm.utm_campaign">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Campaign Term</label>
+			<input md-no-asterisk name="utm_term" ng-model="utm.utm_term">
+		</md-input-container>
+
+		<md-input-container>
+			<label>Campaign Content</label>
+			<input md-no-asterisk name="utm_content" ng-model="utm.utm_content">
+		</md-input-container>
+
+		<md-button class="md-raised md-primary" ng-disabled="isLoader || !formCtrl.$valid" ng-click="setUtm()">Пометить</md-button>
+
+	</form>
+
+	<div flex>
+		<p>Вы можете использовать следующие специальные теги:</p>
+		<dl>
+			<dt><b>${campaign_name}</b></dt>
+				<dd>Будет заменён на название кампании</dd>
+			<dt><b>${group_name}</b></dt>
+				<dd>Будет заменён на название кампании</dd>
+			<dt><b>${ad_title}</b></dt>
+				<dd>Будет заменён на заголовок объявления</dd>
+			<dt ng-if="target == 'fast'"><b>${fastlink_name}</b></dt>
+				<dd ng-if="target == 'fast'">Будет заменён на заголовок быстрой ссылки</dd>
+		</dl>
+	</div>
+</md-content>

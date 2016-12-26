@@ -41,6 +41,7 @@ app.on('ready', function () {
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {
+		dialog.showErrorBox('Ошибка', 'При проверке обновлений произошла ошибка');
 		console.error(error);
 	})
 	autoUpdater.addListener("checking-for-update", (event) => {
