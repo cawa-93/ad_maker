@@ -8,13 +8,9 @@
 			md-is-locked-open="true"
 			md-whiteframe="4">
 
-			<md-toolbar class="md-theme-indigo">
-				<h1 class="md-toolbar-tools">Меню</h1>
-			</md-toolbar>
-
 			<md-content>
 				<md-list flex>
-					<md-list-item ng-repeat="page in menu.pages" class="md-1-line" ng-click="menu.go(page)">
+					<md-list-item ng-repeat="page in menu.pages" class="md-1-line" ui-sref="{{page.name}}" ui-sref-active="active">
 						<p>{{ page.title }}</p>
 					</md-list-item>
 				</md-list>

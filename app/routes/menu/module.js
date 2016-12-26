@@ -51,10 +51,6 @@ module.exports = angular.module('menu', [routerModule, getDirectModule, previewM
 
 .controller('MenuCtrl', function (pages, $state) {
 	this.pages = pages.filter(page => !!page.title);
-
-	this.go = function (page) {
-		$state.go(page.name);
-	}
 })
 
 .name;
