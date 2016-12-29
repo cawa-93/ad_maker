@@ -2,6 +2,10 @@
 	<section flex layout="row" layout-align="center center" class="full-height" ng-if="!keywords.length">
 		<div md-whiteframe="4" layout="column" layout-padding style="text-align: center">
 			<p>Выберите файл с ключевыми словами</p>
+			<md-radio-group ng-model="target" style="text-align: left;">
+				<md-radio-button value="custom"> Шаблон созданный вручную </md-radio-button>
+				<md-radio-button value="adwords" class="md-primary">Шаблон из AdWords</md-radio-button>
+			</md-radio-group>
 			<md-button ng-click="parseKeywords()" class="md-raised md-primary" ng-disabled="isLoader">Загрузить</md-button>
 		</div>
 	</section>
