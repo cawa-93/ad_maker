@@ -9,7 +9,7 @@ module.exports = angular.module('preview', [])
 	$scope.selectedGroup = null;
 	$scope.campains = {};
 	$scope.direct.forEach((row, index) => {
-		if (index < 3 || !row[8] || !row[3]) return;
+		if (index < 3 || !row || !row[8] || !row[3]) return;
 
 		const campain = getWithoutQuotes(row[8]);
 		const group = getWithoutQuotes(row[3]);

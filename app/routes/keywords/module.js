@@ -21,8 +21,8 @@ module.exports = angular.module('keywords', [])
 		// $scope.$apply();
 		openFile(file).then(file_content => {
 			file_content = parseTSV(file_content);
-			if (file_content[1].length !== 3) $scope.keywords = parseFromAdwords(file_content);
-			else $scope.keywords = parseFromCustom(file_content);
+			if (file_content[1].length == 3) $scope.keywords = parseFromCustom(file_content);
+			else $scope.keywords = parseFromAdwords(file_content);
 			$scope.isLoader = false;
 			$scope.$apply();
 		})

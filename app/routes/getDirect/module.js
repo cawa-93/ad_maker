@@ -15,8 +15,13 @@ module.exports = angular.module('getDirect', [])
 		$scope.isLoader = true;
 		openFile(file).then(file_content => {
 			directService.setData( parseTSV(file_content) );
+			const directData = directService.getData();
+			if (directData && directData[3] && directData[3].length >= 24) {
+				$state.go('menu.preview');
+			} else {
+				$scope.showMess('Не удалось распознать структуру кампаний');
+			}
 			$scope.isLoader = false;
-			$state.go('menu.preview');
 		})
 		.catch(e => {
 			console.error(e);
