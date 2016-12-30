@@ -24,7 +24,7 @@ app.on('ready', function () {
 
 	// mainWindow.webContents.openDevTools();
 
-	mainWindow.loadURL(path.join('file://', __dirname , '/index.html')); //загрузка html файла
+	mainWindow.loadURL(path.join('file://', __dirname , '/index.html#/getDirect')); //загрузка html файла
 
 	mainWindow.on('closed', function() {
 		mainWindow = null;
@@ -39,12 +39,12 @@ app.on('ready', function () {
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {
-		dialog.showMessageBox({
-			type: 'error',
-			buttons: ['OK'],
-			message:'При проверке обновлений произошла ошибка',
-			detail: error.toString()
-		});
+		// dialog.showMessageBox({
+		// 	type: 'error',
+		// 	buttons: ['OK'],
+		// 	message:'При проверке обновлений произошла ошибка',
+		// 	detail: error.toString()
+		// });
 		console.error(error);
 	})
 	autoUpdater.addListener("checking-for-update", (event) => {
