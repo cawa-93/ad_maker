@@ -39,12 +39,12 @@ app.on('ready', function () {
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {
-		// dialog.showMessageBox({
-		// 	type: 'error',
-		// 	buttons: ['OK'],
-		// 	message:'При проверке обновлений произошла ошибка',
-		// 	detail: error.toString()
-		// });
+		dialog.showMessageBox({
+			type: 'error',
+			buttons: ['OK'],
+			message:'При проверке обновлений произошла ошибка',
+			detail: error.toString()
+		});
 		console.error(error);
 	})
 	autoUpdater.addListener("checking-for-update", (event) => {
