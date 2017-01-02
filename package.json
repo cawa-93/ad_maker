@@ -1,6 +1,6 @@
 {
   "name": "ad_maker",
-  "version": "0.2.5",
+  "version": "0.3.2",
   "description": "Быстрое заполнение Коммандера",
   "main": "app/main.js",
   "scripts": {
@@ -32,10 +32,12 @@
     "squirrelWindows": {
       "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"
     },
-    "publish": [{
-      "provider": "github",
-      "owner":"cawa-93"
-    }]
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "cawa-93"
+      }
+    ]
   },
   "directories": {
     "app": "./app"

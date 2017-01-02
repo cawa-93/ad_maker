@@ -1,0 +1,23 @@
+<div layout="column" class="full-height" ng-controller="MenuCtrl as menu">
+	
+	<section layout="row" flex>
+		<md-sidenav
+			flex="15"
+			class="md-sidenav-left"
+			md-component-id="left"
+			md-is-locked-open="true"
+			md-whiteframe="4">
+
+			<md-content>
+				<md-list flex>
+					<md-list-item ng-repeat="page in menu.pages" class="md-1-line" ui-sref="{{page.name}}" ui-sref-active="active">
+						<p>{{ page.title }}</p>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</md-sidenav>
+
+	<div flex md-whiteframe="4" style="margin-left: 10px;" ui-view></div>
+
+	</section>
+</div>

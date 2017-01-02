@@ -1,0 +1,32 @@
+<md-content ng-controller="keywordsCtrl" layout="column" layout-padding class="full-height">
+	<section flex layout="row" layout-align="center center" class="full-height" ng-if="!keywords.length">
+		<div md-whiteframe="4" layout="column" layout-padding style="text-align: center">
+			<p>Выберите файл с ключевыми словами</p>
+			<md-radio-group ng-model="target" style="text-align: left;">
+				<md-radio-button value="custom"> Шаблон созданный вручную </md-radio-button>
+				<md-radio-button value="adwords" class="md-primary">Шаблон из AdWords</md-radio-button>
+			</md-radio-group>
+			<md-button ng-click="parseKeywords()" class="md-raised md-primary" ng-disabled="isLoader">Загрузить</md-button>
+		</div>
+	</section>
+
+	<div flex layout="column" layout-padding ng-if="keywords.length" class="full-height">
+		<md-virtual-repeat-container id="vertical-container" class="full-height">
+			<div layout="row" md-virtual-repeat="keyword in keywords">
+				<md-input-container class="md-block" flex="33">
+					<label>Название кампании</label>
+					<input ng-model="keyword[0]">
+				</md-input-container>
+				<md-input-container class="md-block" flex="33">
+					<label>Название группы</label>
+					<input ng-model="keyword[1]">
+				</md-input-container>
+				<md-input-container class="md-block" flex="33">
+					<label>Ключевое слово</label>
+					<input ng-model="keyword[2]">
+				</md-input-container>
+			</div>
+		</md-virtual-repeat-container>
+		<md-button ng-click="setKeywords()" class="md-raised md-primary" ng-disabled="isLoader">Подтвердить</md-button>
+	</div>
+</md-content>

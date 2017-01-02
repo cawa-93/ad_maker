@@ -1,0 +1,52 @@
+<div layout="column" ng-controller="previewCtrl" style="height: 100%;">
+	<div flex="55" layout>
+		<md-virtual-repeat-container flex=50 style="height: 100%">
+			<md-list class="compact-list">
+				<md-list-item md-virtual-repeat="campain in getCampainNames()" class="md-1-line" ng-class="{'active': campain == selectedCampain}" ng-click="openCampain(campain)">
+					<span>{{ campain }}</span>
+				</md-list-item>
+			</md-list>
+		</md-virtual-repeat-container>
+
+		<md-content flex style="height: 100%" ng-if="selectedCampain">
+			<md-list class="compact-list" >
+				<md-list-item ng-repeat="group in getGroupsNames()" class="md-1-line" ng-class="{'active': group == selectedGroup}" ng-click="openGroup(group)">
+					<span>{{ group }}</span>
+				</md-list-item>
+			</md-list>
+		</md-content>
+	</div>
+
+	<md-tabs flex ng-if="selectedGroup" class="md-primary" md-selected="data.selectedIndex" md-border-bottom >
+		<md-tab id="ads">
+			<md-tab-label>Объявления</md-tab-label>
+			<md-tab-body>
+				<table class="preview-table">
+					<tr ng-repeat="ad in campains[selectedCampain][selectedGroup].ads track by $index">
+						<td ng-repeat="field in ad track by $index">{{field}}</td>
+					</tr>
+				</table>
+			</md-tab-body>
+		</md-tab>
+		<md-tab id="keywords" ng-disabled="data.secondLocked">
+			<md-tab-label>Ключевые слова</md-tab-label>
+			<md-tab-body>
+				<table class="preview-table">
+					<tr ng-repeat="keyword in campains[selectedCampain][selectedGroup].keywords track by $index">
+						<td>{{keyword}}</td>
+					</tr>
+				</table>
+			</md-tab-body>
+		</md-tab>
+		<md-tab id="fastLinks">
+			<md-tab-label>Быстрые ссылки</md-tab-label>
+			<md-tab-body>
+				<table class="preview-table">
+					<tr ng-repeat="ad in campains[selectedCampain][selectedGroup].fastLinks track by $index">
+						<td ng-repeat="field in ad track by $index">{{field}}</td>
+					</tr>
+				</table>
+			</md-tab-body>
+		</md-tab>
+	</md-tabs>
+</div>

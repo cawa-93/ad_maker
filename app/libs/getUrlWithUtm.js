@@ -1,6 +1,6 @@
 const URL = require('url');
 
-function addUTM(url, utm) {
+function getUrlWithUtm(url, utm) {
 	var url_data = URL.parse(url, true);
 	url_data.search = null;
 
@@ -10,4 +10,4 @@ function addUTM(url, utm) {
 	return URL.format(url_data);
 }
 
-module.exports = addUTM;
+module.exports = getUrlWithUtm;
