@@ -34,8 +34,19 @@ app.on('ready', function () {
 		console.log("update-available")
 	})
 	autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-		console.log("update-downloaded");
-		autoUpdater.quitAndInstall();
+		console.log("update-downloaded", releaseNotes, releaseName, releaseDate, updateURL);
+		dialog.showMessageBox({
+			type: 'question',
+			buttons: ['No', 'Yes'],
+			title: 'Доступна новая версия',
+			message:'Установить обновление прямо сейчас?',
+			cancelId: 0,
+			defaultId: 1,
+		}, isInstall => {
+			if (isInstall) {
+				autoUpdater.quitAndInstall()
+			}
+		});
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {
