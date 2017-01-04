@@ -12,7 +12,7 @@
   "repository": "cawa-93/ad_maker",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron-builder": "^10.9.3",
+    "electron-builder": "^11.2.3",
     "electron-prebuilt": "^1.4.13"
   },
   "dependencies": {},

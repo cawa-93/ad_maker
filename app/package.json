@@ -13,10 +13,10 @@
     "angular-aria": "~1.5.10",
     "angular-material": "^1.1.1",
     "angular-messages": "^1.6.1",
-    "angular-ui-router": "^1.0.0-beta.3",
-    "electron-auto-updater": "^0.9.0",
+    "angular-ui-router": "^1.0.0-rc.1",
+    "electron-auto-updater": "^0.10.1",
     "iconv-lite": "^0.4.15",
     "mime-types": "^2.1.13",
-    "transliteration": "^1.1.16"
+    "transliteration": "^1.2.2"
   }
 }
