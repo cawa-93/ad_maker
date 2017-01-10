@@ -1,14 +1,9 @@
 {
-  "name": "ad_maker",
-  "version": "0.3.2",
-  "description": "Быстрое заполнение Коммандера",
-  "main": "app/main.js",
   "scripts": {
     "start": "electron ./app",
     "build": "build --dir",
     "release": "build -lw --x64 --ia32"
   },
-  "author": "Alex Kozack <kozackunisoft@gmail.com>",
   "repository": "cawa-93/ad_maker",
   "license": "GPL-3.0",
   "devDependencies": {
