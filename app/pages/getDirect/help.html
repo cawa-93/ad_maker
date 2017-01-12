@@ -1,0 +1,49 @@
+<md-dialog aria-label="Начало работы" flex="50">
+  <base href="pages/getDirect/">
+	<form ng-cloak>
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Начало работы</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<md-icon aria-label="Close dialog">clear</md-icon>
+				</md-button>
+			</div>
+		</md-toolbar>
+
+		<md-dialog-content>
+			<div class="md-dialog-content">
+				<p>
+					Прежде всего, вы должны загрузить кампании из Коммандера в admaker
+				</p>
+
+				<p>
+					Для этого:
+				</p>
+				<ol>
+					<li>Откройте командер</li>
+					<li>Выберите необходимые кампании</li>
+          <li>В верхнем меню выберите: <b>Приложение</b> → <b>Экспортировать в файл</b> → <b>Выбранные кампании...</b></li>
+					<li>В открывшемся окне выберите формаn: <b>Свободный (.csv)</b></li>
+					<li>Полученный файл загрузите в admaker</li>
+				</ol>
+        <p>
+          <img src="img/export.png" alt="Пример экспорта кампаний" style="width: 100%;">
+        </p>
+			</div>
+		</md-dialog-content>
+
+		<!--<md-dialog-actions layout="row">
+			<md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+				More on Wikipedia
+			</md-button>
+			<span flex></span>
+			<md-button ng-click="answer('not useful')">
+			 Not Useful
+			</md-button>
+			<md-button ng-click="answer('useful')">
+				Useful
+			</md-button>
+		</md-dialog-actions>-->
+	</form>
+</md-dialog>

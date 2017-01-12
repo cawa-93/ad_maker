@@ -1,5 +1,6 @@
 const getUrlWithUtm = require('../libs/getUrlWithUtm');
 const getWithoutQuotes = require('../libs/getWithoutQuotes');
+const isURL = require('../libs/isURL');
 const slugify = require('transliteration').slugify;
 slugify.config({ lowercase: false, separator: '_' });
 
@@ -17,18 +18,66 @@ module.exports = angular.module('main')
 		return _data;
 	}
 
-	this.setFastLinks = ([titles, urls, descs]) => {
-		titles = `"${Object.keys(titles).map(k => titles[k]).join('||')}"`;
-		urls = `"${Object.keys(urls).map(k => urls[k]).join('||')}"`;
-		descs = `"${Object.keys(descs).map(k => descs[k]).join('||')}"`;
+	this.setFastLinks = (template, templateType) => {
+		if (angular.isArray(template) && templateType) {
+			return this._setFastLinks_custom(template);
+		}
+
+		// titles = `"${Object.keys(titles).map(k => titles[k]).join('||')}"`;
+		// urls = `"${Object.keys(urls).map(k => urls[k]).join('||')}"`;
+		// descs = `"${Object.keys(descs).map(k => descs[k]).join('||')}"`;
+
+		// _data = _data.map((ad, index) => {
+		// 	if (index < 3 || !ad) return ad;
+		// 	ad[22] = titles;
+		// 	ad[23] = urls;
+		// 	ad[24] = descs;
+		// 	return ad;
+		// })
+		// return this;
+	}
+
+	this._setFastLinks_custom = (template) => {
+		const map = {};
 
 		_data = _data.map((ad, index) => {
-			if (index < 3 || !ad) return ad;
-			ad[22] = titles;
-			ad[23] = urls;
-			ad[24] = descs;
+			if (index < 3 || !ad || !angular.isArray(ad) || !ad[8] || !ad[3]) return ad;
+
+			if (!map[ad[8]] || !map[ad[8]][ad[3]]) {
+				let linksRow = template.find(([campain, group,/*keyword*/,/*title*/, url]) => 
+					campain && group && url
+					        && getWithoutQuotes(ad[8]).toLowerCase() == campain.toLowerCase()
+					        && getWithoutQuotes(ad[3]).toLowerCase() == group.toLowerCase()
+				);
+				if (!linksRow) return ad;
+
+				[/*campain*/, /*group*/,/*keyword*/, ...linksRow] = linksRow;
+				let titles = [];
+				let urls = [];
+				let descs = [];
+				
+				linksRow.forEach((linkItem, i) => {
+					if (!linkItem) return;
+					if (isURL(linksRow[i+1])) titles.push(linkItem);
+					else if (isURL(linkItem)) urls.push(linkItem);
+					else if (isURL(linksRow[i-1])) descs.push(linkItem);
+					else descs[descs.length-1] += ` ${linkItem}`;
+				});
+
+				if(!map[ad[8]]) map[ad[8]] = {};
+				if(!map[ad[8]][ad[3]]) map[ad[8]][ad[3]] = {
+					titles: `"${titles.join('||')}"`,
+					urls: `"${urls.join('||')}"`,
+					descs: `"${descs.join('||')}"`,
+				};
+			}
+
+			ad[22] = map[ad[8]][ad[3]].titles;
+			ad[23] = map[ad[8]][ad[3]].urls;
+			ad[24] = map[ad[8]][ad[3]].descs;
+
 			return ad;
-		})
+		});
 		return this;
 	}
 

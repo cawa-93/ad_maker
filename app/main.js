@@ -1,7 +1,7 @@
 const {app, BrowserWindow, Tray, dialog} = require('electron');
 const {autoUpdater} =  require("electron-auto-updater");
 const path = require('path');
-			const fs = require('fs');
+const fs = require('fs');
 
 let mainWindow = null;
 app.setName('Ad maker');
@@ -42,11 +42,7 @@ app.on('ready', function () {
 			message:'Установить обновление прямо сейчас?',
 			cancelId: 0,
 			defaultId: 1,
-		}, isInstall => {
-			if (isInstall) {
-				autoUpdater.quitAndInstall()
-			}
-		});
+		}, isInstall => isInstall && autoUpdater.quitAndInstall());
 		return true;
 	})
 	autoUpdater.addListener("error", (error) => {

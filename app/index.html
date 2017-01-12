@@ -3,112 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Ad Maker by Alex Kozack</title>
+	<link rel="stylesheet" href="./node_modules/material-design-icons/iconfont/material-icons.css">
 	<link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="./node_modules/angular-material-data-table/dist/md-data-table.min.css">
 	<link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body ng-app="main">
-	<div class="container full-height" ng-controller="MainCtrl as main" ui-view>
-		<!--<div class="row">
-
-			<div layout="row">
-
-
-				<div flex>
-					<md-card>
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">Выберите файл с ключевыми словами</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<p>
-								Ключевые слова можно добавить из <b>Google Editor</b> или <b>Exel</b> (<a target="_blank" href="https://github.com/cawa-93/ad_maker/wiki/%D0%A1%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D0%B0">инструкция</a>)
-							</p>
-						</md-card-content>
-						<md-card-actions layout="column" layout-align="start">
-							<md-button class="md-raised md-primary" ng-click="loadTemplate()">Открыть</md-button>
-						</md-card-actions>
-					</md-card>
-
-					<div class="progress-circular-container" ng-show="loaders.keywords">
-						<md-progress-circular md-diameter="50"></md-progress-circular>
-					</div>
-
-					<md-card ng-show="template">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">Загружено</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<p>
-								<ul>
-									<li>Кампаний: {{stat.campain.size}}</li>
-									<li>Групп: {{stat.groups.size}}</li>
-									<li>Фраз: {{stat.keywords.size}}</li>
-								</ul>
-							</p>
-						</md-card-content>
-						<md-card-actions layout="column" layout-align="start">
-							<md-button class="md-raised" md-colors="{background: 'red'}" ng-click="deleteTemplate()">Очистить</md-button>
-						</md-card-actions>
-					</md-card>
-				</div>
-
-
-				<div flex>
-					<div class="progress-circular-container" ng-show="loaders.direct">
-						<md-progress-circular md-diameter="50"></md-progress-circular>
-					</div>
-					<md-card ng-show="template">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">Выберите файл из Коммандера</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<p>
-								Файл должен находятся в формате <b>.CSV</b>
-							</p>
-						</md-card-content>
-						<md-card-actions layout="column" layout-align="start">
-							<md-button class="md-raised md-primary" ng-click="generateDirect()">Открыть</md-button>
-						</md-card-actions>
-					</md-card>
-
-					<div class="progress-circular-container" ng-show="loaders.direct_result">
-						<md-progress-circular md-diameter="50"></md-progress-circular>
-					</div>
-					<md-card ng-show="newDirect">
-						<md-card-title>
-							<md-card-title-text>
-								<span class="md-headline">Обработано</span>
-							</md-card-title-text>
-						</md-card-title>
-						<md-card-content>
-							<p>
-								Теперь вы можете сохранить результат и импортировать его в Коммандер.
-							</p>
-						</md-card-content>
-						<md-card-actions layout="column" layout-align="start">
-							<md-button class="md-raised" md-colors="{background: 'green'}" ng-click="saveDirect()">Сохранить как</md-button>
-						</md-card-actions>
-					</md-card>
-				</div>
-			</div>
-
-			<md-divider></md-divider>
-
-			<div layout="row">
-
-				<md-button flex title="Будет открыто в браузере" ng-click="openExternal('https://www.liqpay.com/ru/checkout/kozack')">Оставить предложение</md-button>
-			</div>
-
-
-		</div>-->
+	<div class="container full-height" ng-controller="MainCtrl as main" ui-view></div>
+	<div class="help" ng-controller="helpCtrl">
+		<md-button class="md-fab md-primary" ng-disabled="isDisabled" aria-label="Справка" ng-click="show()">
+			<md-icon>help</md-icon>
+		</md-button>
 	</div>
-
-	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jschardet/1.4.1/jschardet.min.js"></script> 
 	<!--<script src="./node_modules/angular/angular.js"></script> -->
 	<!--<script src="./node_modules/angular-aria/angular-aria.js"></script> 

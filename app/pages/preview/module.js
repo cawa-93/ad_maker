@@ -46,6 +46,4 @@ module.exports = angular.module('preview', [])
 	$scope.getGroupsNames = () => Object.keys($scope.campains[$scope.selectedCampain]);
 	
 	$scope.openCampain( $scope.getCampainNames()[0] );
-})
-
-.name;
+});

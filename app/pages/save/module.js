@@ -23,6 +23,4 @@ module.exports = angular.module('save', [])
 	$scope.showMess = function(text) {
 		$mdToast.show( $mdToast.simple().textContent(text).position('top right') );
 	}
-})
-
-.name;
+});

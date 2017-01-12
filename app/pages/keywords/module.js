@@ -52,6 +52,4 @@ module.exports = angular.module('keywords', [])
 	$scope.showMess = function(text) {
 		$mdToast.show( $mdToast.simple().textContent(text).position('top right') );
 	}
-})
-
-.name;
+});

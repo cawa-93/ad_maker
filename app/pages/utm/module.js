@@ -19,6 +19,4 @@ module.exports = angular.module('utm', [ngMessages])
 		$scope.isLoader = false;
 		$mdToast.show( $mdToast.simple().textContent(`Пометка ${$scope.target == 'main' ? 'основных' : 'быстрых'} ссылок закончена`).position('top right') );
 	}
-})
-
-.name;
+});
