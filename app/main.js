@@ -34,7 +34,6 @@ app.on('ready', function () {
 		console.log("update-available")
 	})
 	autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
-		console.log("update-downloaded", releaseNotes, releaseName, releaseDate, updateURL);
 		dialog.showMessageBox({
 			type: 'question',
 			buttons: ['No', 'Yes'],
@@ -44,7 +43,7 @@ app.on('ready', function () {
 			defaultId: 1,
 		}, isInstall => isInstall && autoUpdater.quitAndInstall());
 		return true;
-	})
+	});
 	autoUpdater.addListener("error", (error) => {
 		dialog.showMessageBox({
 			type: 'error',
@@ -53,13 +52,16 @@ app.on('ready', function () {
 			detail: error.toString()
 		});
 		console.error(error);
-	})
+	});
 	autoUpdater.addListener("checking-for-update", (event) => {
 		console.log("checking-for-update");
-	})
+	});
 	autoUpdater.addListener("update-not-available", () => {
 		console.log("update-not-available");
-	})
+	});
+	autoUpdater.addListener("download-progress", (e, progress) => {
+    console.log(progress.percent);
+	});
 
 	mainWindow.webContents.once("did-frame-finish-load", (event) => {
 		autoUpdater.checkForUpdates();

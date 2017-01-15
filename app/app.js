@@ -51,3 +51,4 @@ angular.module('main', ['ngMaterial', menuModule, ngTable])
 
 
 require('./services/direct');
+require('./services/toast');

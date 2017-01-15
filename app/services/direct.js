@@ -8,6 +8,17 @@ slugify.config({ lowercase: false, separator: '_' });
 module.exports = angular.module('main')
 .service('directService', function () {
 	let _data = [];
+	let _data_backup = null;
+
+	this.saveBackup = () => {
+		_data_backup = angular.copy(_data);
+		return this;
+	}
+
+	this.restoreFromBackup = () => {
+		_data = angular.copy(_data_backup);
+		return this;
+	}
 
 	this.setData = (data) => {
 		_data = data;
@@ -19,6 +30,7 @@ module.exports = angular.module('main')
 	}
 
 	this.setFastLinks = (template, templateType) => {
+		this.saveBackup();
 		if (angular.isArray(template) && templateType) {
 			return this._setFastLinks_custom(template);
 		}
@@ -82,6 +94,7 @@ module.exports = angular.module('main')
 	}
 
 	this.setUtm = (target, utm) => {
+		this.saveBackup();
 		switch (target) {
 			case 'main': return this._setUtm_mainLinks(utm);
 			case 'fast': return this._setUtm_fastLinks(utm);
@@ -135,6 +148,7 @@ module.exports = angular.module('main')
 	}
 
 	this.setKeywords = (keywords) => {
+		this.saveBackup();
 		keywords.forEach(([campain, group, keyword], i) => {
 			let adIndex = _data.findIndex(row => row && row && row[8] && row[3]
 			                                         && getWithoutQuotes(row[8]).toLowerCase() == campain.toLowerCase()

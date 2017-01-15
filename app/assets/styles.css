@@ -1,8 +1,6 @@
 body {
 	opacity: 0;
 	overflow: hidden;
-	/*min-width: 700px;
-	min-height: 500px;*/
 }
 
 body.ng-scope {
@@ -12,28 +10,9 @@ body.ng-scope {
 	height: 100%;
 }
 
-/*.compact-list md-list-item, .compact-list md-list-item .md-list-item-inner, .compact-list md-list-item .md-button {
-	height: 20px;
-	min-height: 20px;
-	line-height: 20px;
-}*/
-
 md-list-item.active {
 	background-color: #3f51b5;
 	color: #fff;
-}
-
-.preview-table {
-	width: 100%;
-	border-collapse: collapse;
-}
-.preview-table td {
-	white-space: nowrap;
-	border-bottom: 1px solid #ccc;
-	padding: 15px 10px;
-}
-.preview-table tr:hover td {
-	background-color: #dadada;
 }
 
 .help {

@@ -1,6 +1,6 @@
 {
   "name": "admaker",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Быстрое заполнение Коммандера",
   "main": "main.js",
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
