@@ -1,0 +1,19 @@
+<md-content ng-controller="aboutCtrl" layout="row" layout-padding layout-align="center center" class="full-height">
+	<md-card style="text-align: center" flex="33">
+		<!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+		<md-card-title>
+			<md-card-title-text>
+				<span class="md-headline">{{app.name}}</span>
+				<span class="md-subhead">v{{app.version}}</span>
+			</md-card-title-text>
+		</md-card-title>
+		<md-card-content>
+			<p>Редактор кампаний для Яндекс.Директ</p>
+			<p><a href="" ng-click="openExternal('https://www.facebook.com/alex.kozack')">Александр Козак</a></p>
+		</md-card-content>
+		<md-card-actions layout="column" layout-align="start">
+			<md-button ng-click="openExternal('https://www.liqpay.com/ru/checkout/kozack')">Сказать "Спасибо"</md-button>
+			<md-button ng-click="openExternal('https://github.com/cawa-93/ad_maker')">Исходный код</md-button>
+		</md-card-actions>
+	</md-card>
+</md-content>
