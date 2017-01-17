@@ -4,6 +4,7 @@
   "description": "Быстрое заполнение Коммандера",
   "main": "main.js",
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
+  "repository": "cawa-93/ad_maker",
   "dependencies": {
     "angular": "~1.5.10",
     "angular-animate": "~1.5.10",
@@ -12,7 +13,7 @@
     "angular-material-data-table": "^0.10.10",
     "angular-messages": "^1.6.1",
     "angular-ui-router": "^1.0.0-rc.1",
-    "electron-auto-updater": "^0.10.1",
+    "electron-auto-updater": "^1.0.0",
     "iconv-lite": "^0.4.15",
     "material-design-icons": "^3.0.1",
     "mime-types": "^2.1.13",
