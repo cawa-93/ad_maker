@@ -1,14 +1,17 @@
 {
   "scripts": {
     "start": "electron ./app",
-    "build": "build --dir",
+    "build": "build",
+    "build:dir": "build --dir",
+    "build:win": "build -w",
+    "build:linux": "build -l",
     "release": "build -lw --x64 --ia32"
   },
   "repository": "cawa-93/ad_maker",
   "license": "GPL-3.0",
   "devDependencies": {
     "electron-builder": "^11.4.4",
-    "electron-prebuilt": "^1.4.13"
+    "electron": "^1.4.14"
   },
   "build": {
     "directories": {
@@ -16,7 +19,6 @@
     },
     "appId": "com.electron.admaker",
     "linux": {
-      "target": "deb",
       "category": "Utility"
     },
     "nsis": {
@@ -29,11 +31,9 @@
     "squirrelWindows": {
       "iconUrl": "https://github.com/cawa-93/ad_maker/blob/master/build/icon.ico?raw=true"
     },
-    "publish": [
-      {
+    "publish": [{
         "provider": "github",
         "owner": "cawa-93"
-      }
-    ]
+      }]
   }
 }
