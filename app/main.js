@@ -14,26 +14,30 @@ app.on('window-all-closed', function () {
 
 app.on('ready', function () {
 	mainWindow = new BrowserWindow({
-		minWidth: 800,
-		minHeight: 600,
+		minWidth: 1000,
+		minHeight: 500,
 		center: true,
 		title: 'Ad Maker by Alex Kozack',
 		useContentSize: true,
 		webContents: true,
 	});
-
-	// mainWindow.webContents.openDevTools();
-
-	mainWindow.loadURL(path.join('file://', __dirname , '/index.html#/getDirect')); //загрузка html файла
-
+	mainWindow.maximize()
+	mainWindow.loadURL(path.join('file://', __dirname , '/index.html#/getDirect'))
 	mainWindow.on('closed', function() {
 		mainWindow = null;
+	})
+	mainWindow.webContents.once("did-frame-finish-load", (event) => {
+		autoUpdater.checkForUpdates();
 	});
 
 	autoUpdater.addListener("update-available", (event) => {
-		console.log("update-available")
+		mainWindow.webContents.send('update-progress', 0);
 	})
+	autoUpdater.addListener("download-progress", (progress) => {
+		mainWindow.webContents.send('update-progress', progress.percent);
+	});
 	autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
+		mainWindow.webContents.send('update-progress', 100);
 		dialog.showMessageBox({
 			type: 'question',
 			buttons: ['No', 'Yes'],
@@ -45,6 +49,7 @@ app.on('ready', function () {
 		return true;
 	});
 	autoUpdater.addListener("error", (error) => {
+		mainWindow.webContents.send('update-progress', 100);		
 		dialog.showMessageBox({
 			type: 'error',
 			buttons: ['OK'],
@@ -53,24 +58,10 @@ app.on('ready', function () {
 		});
 		console.error(error);
 	});
-	autoUpdater.addListener("checking-for-update", (event) => {
-		console.log("checking-for-update");
-	});
-	autoUpdater.addListener("update-not-available", () => {
-		console.log("update-not-available");
-	});
-	autoUpdater.addListener("download-progress", (e, progress) => {
-    console.log(progress.percent);
-	});
-
-	mainWindow.webContents.once("did-frame-finish-load", (event) => {
-		autoUpdater.checkForUpdates();
-	})
 });
 
 
 app.on('activate', function () {
-
 	if (mainWindow === null) {
 		createWindow();
 	}
