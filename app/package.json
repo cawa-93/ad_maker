@@ -15,6 +15,7 @@
     "angular-ui-router": "^1.0.0-rc.1",
     "electron-auto-updater": "^1.0.0",
     "iconv-lite": "^0.4.15",
+    "jschardet": "^1.4.1",
     "material-design-icons": "^3.0.1",
     "mime-types": "^2.1.13",
     "transliteration": "^1.2.2"

@@ -1,4 +1,4 @@
-const jschardet = require("./jschardet.min");
+const jschardet = require("jschardet");
 const iconv = require('iconv-lite');
 const fs = require('fs');
 
@@ -8,6 +8,7 @@ function openFile(path) {
 			if (err) return reject(err);
 
 			const file_encoding = jschardet.detect(file_buffer).encoding;
+			alert('encoding: ' + file_encoding);
 			if (!file_encoding) reject('Не удалось определить кодировку');
 			resolve( iconv.decode(file_buffer, file_encoding) );
 		})
