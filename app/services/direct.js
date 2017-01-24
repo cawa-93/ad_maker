@@ -164,7 +164,7 @@ module.exports = angular.module('main')
 			} else {
 				_data[adIndex][0] = `"-"`;
 			}
-			_data[adIndex][10] = `"${keyword}"`;
+			_data[adIndex][10] = `"${keyword.trim()}"`;
 		});
 	}
 })

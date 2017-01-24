@@ -20,3 +20,22 @@ md-list-item.active {
 	bottom: 20px;
 	right: 20px;
 }
+
+md-toolbar.md-table-toolbar input {
+    width: 100%;
+    margin: 0;
+    border: none;
+    color: rgba(0, 0, 0, 0.87);
+}
+md-toolbar.md-table-toolbar input:focus {
+    outline: none;
+}
+
+.preview td a {
+	color: #3f51b5;
+	text-decoration: none;
+}
+
+.preview td a:hover {
+	text-decoration: underline;
+}
