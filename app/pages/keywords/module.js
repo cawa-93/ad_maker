@@ -50,6 +50,9 @@ module.exports = angular.module('keywords', [])
 					directService.restoreFromBackup();
 				}
 			});
+			
+			$state.go('menu.preview', {view: 'keyword'});
 		})
+		
 	}
 });

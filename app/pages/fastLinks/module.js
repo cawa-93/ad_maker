@@ -38,6 +38,7 @@ module.exports = angular.module('fastLinks', [ngMessages])
 						directService.restoreFromBackup();
 					}
 				});
+				$state.go('menu.preview', {view: 'bs'});
 			})
 		})
 		.catch(e => {

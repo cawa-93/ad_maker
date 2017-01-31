@@ -23,5 +23,6 @@ module.exports = angular.module('utm', [ngMessages])
 					directService.restoreFromBackup();
 				}
 			});
+		$state.go('menu.preview', {view: $scope.target === 'fast' ? 'bs' : 'ad'});
 	}
 });

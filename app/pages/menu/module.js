@@ -20,7 +20,7 @@ module.exports = angular.module('menu', [routerModule, getDirectModule, previewM
 	},{
 		name: 'menu.preview',
 		templateUrl: 'pages/preview/index.html',
-		url: "/preview",
+		url: "/preview?view",
 		title:'Просмотр'
 	},{
 		name: 'menu.keywords',

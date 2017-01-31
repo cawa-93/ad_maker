@@ -13,13 +13,13 @@ module.exports = angular.module('preview', [])
   };
 })
 
-.controller('previewCtrl', function ($scope, directService, $state) {
+.controller('previewCtrl', function ($scope, directService, $state, $stateParams) {
 	if (!directService.getData().length) return $state.go('getDirect');
 
 	$scope.data = [];
 	$scope.query = {
 		order: 'campain',
-		view: 'ad',
+		view: $stateParams.view || 'ad',
 		search: '',
 	};
 	$scope.setSearch = str => $scope.query.search = str;
