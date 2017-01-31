@@ -37,6 +37,7 @@ module.exports = angular.module('preview', [])
 		const ad = {
 			title: getWithoutQuotes(row[12]),
 			desc: getWithoutQuotes(row[13]),
+			ancor: getWithoutQuotes(row[15]),
 			url: getWithoutQuotes(row[14]),
 		}
 
@@ -89,6 +90,7 @@ module.exports = angular.module('preview', [])
 					group: group.name,
 					ad_title: ad.title,
 					ad_desc: ad.desc,
+					ad_ancor: ad.ancor,
 					ad_url: ad.url,
 				})
 			})

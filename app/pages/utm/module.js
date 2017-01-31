@@ -8,7 +8,7 @@ module.exports = angular.module('utm', [ngMessages])
 
 	$scope.target = 'main';
 	$scope.utm = {
-		utm_source: 'yandex',
+		utm_source: 'yandex.com',
 		utm_medium: 'cpc',
 		utm_campaign: '${campaign_name}',
 		utm_content: '${group_name}'
