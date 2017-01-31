@@ -1,19 +1,25 @@
-<md-content ng-controller="aboutCtrl" layout="row" layout-padding layout-align="center center" class="full-height">
-	<md-card style="text-align: center" flex="33">
-		<!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
-		<md-card-title>
-			<md-card-title-text>
-				<span class="md-headline">{{app.name}}</span>
-				<span class="md-subhead">v{{app.version}}</span>
-			</md-card-title-text>
-		</md-card-title>
+<md-content ng-controller="aboutCtrl" layout="column" layout-padding layout-align="" class="full-height">
+	<md-card>
+		<md-card-header>
+			<md-card-avatar>
+				<img src="https://github.com/cawa-93/ad_maker/blob/master/build/icons/128x128.png?raw=true"/>
+			</md-card-avatar>
+			<md-card-header-text>
+				<span class="md-title">{{app.name}}</span>
+				<span class="md-subhead">Редактор кампаний Яндекс.Директ</span>
+			</md-card-header-text>
+		</md-card-header>
 		<md-card-content>
-			<p>Редактор кампаний для Яндекс.Директ</p>
-			<p><a href="" ng-click="openExternal('https://www.facebook.com/alex.kozack')">Александр Козак</a></p>
+			<p>
+				Версия <a href="" ng-click="openExternal('https://github.com/cawa-93/ad_maker/releases')">{{app.version}}</a>
+				<br>
+				<a href="" ng-click="openExternal('https://github.com/cawa-93/ad_maker/blob/master/LICENSE?raw=true')">Условия использования</a>
+			</p>
 		</md-card-content>
-		<md-card-actions layout="column" layout-align="start">
-			<md-button ng-click="openExternal('https://www.liqpay.com/ru/checkout/kozack')">Сказать "Спасибо"</md-button>
+		<md-card-actions layout="row">
+			<md-button flex="40" md-colors="{background: 'green'}" ng-click="openExternal('https://www.liqpay.com/ru/checkout/kozack')">Сказать "Спасибо"</md-button>
 			<md-button ng-click="openExternal('https://github.com/cawa-93/ad_maker')">Исходный код</md-button>
 		</md-card-actions>
 	</md-card>
+
 </md-content>
