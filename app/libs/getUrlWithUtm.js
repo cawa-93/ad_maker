@@ -5,7 +5,7 @@ function getUrlWithUtm(url, utm) {
 	url_data.search = null;
 
 	for (utm_field in utm) {
-		url_data.query[utm_field] = utm[utm_field];
+		if (utm[utm_field] !== '') url_data.query[utm_field] = utm[utm_field];
 	}
 	return URL.format(url_data);
 }
