@@ -1,6 +1,6 @@
 {
   "name": "admaker",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Быстрое заполнение Коммандера",
   "main": "main.js",
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
@@ -9,15 +9,15 @@
     "angular": "~1.5.10",
     "angular-animate": "~1.5.10",
     "angular-aria": "~1.5.10",
-    "angular-material": "^1.1.1",
+    "angular-material": "^1.1.3",
     "angular-material-data-table": "^0.10.10",
-    "angular-messages": "^1.6.1",
+    "angular-messages": "^1.6.2",
     "angular-ui-router": "^1.0.0-rc.1",
     "electron-auto-updater": "^1.0.0",
     "iconv-lite": "^0.4.15",
     "jschardet": "^1.4.1",
     "material-design-icons": "^3.0.1",
-    "mime-types": "^2.1.13",
-    "transliteration": "^1.2.2"
+    "mime-types": "^2.1.14",
+    "transliteration": "^1.5.2"
   }
 }
