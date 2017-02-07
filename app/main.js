@@ -1,34 +1,34 @@
-const {app, BrowserWindow, Tray, dialog} = require('electron');
+const electron = require('electron');
+const {app, BrowserWindow, Tray, dialog} = electron;
 const {autoUpdater} =  require("electron-auto-updater");
 const path = require('path');
 const fs = require('fs');
 
 let mainWindow = null;
-app.setName('Ad maker');
 
-app.on('window-all-closed', function () {
-	if (process.platform !== 'darwin') {
-		app.quit();
-	}
-});
+app.on('window-all-closed', () =>	process.platform !== 'darwin' && app.quit());
+app.on('activate', () => mainWindow === null && createWindow());
 
 app.on('ready', function () {
+	const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
 	mainWindow = new BrowserWindow({
-		minWidth: 1000,
-		minHeight: 500,
+		width: width,
+		height: height,
 		center: true,
 		title: 'Ad Maker by Alex Kozack',
 		useContentSize: true,
 		webContents: true,
+		show: false
 	});
-	mainWindow.maximize()
-	mainWindow.loadURL(path.join('file://', __dirname , '/index.html#/getDirect'))
+	mainWindow.loadURL(path.join('file://', __dirname , '/index.html#/getDirect'));
+
+	mainWindow.webContents.once("did-frame-finish-load", (event) => {
+		mainWindow.show()
+		autoUpdater.checkForUpdates();
+	});
 	mainWindow.on('closed', function() {
 		mainWindow = null;
 	})
-	mainWindow.webContents.once("did-frame-finish-load", (event) => {
-		autoUpdater.checkForUpdates();
-	});
 
 	autoUpdater.addListener("update-available", (event) => {
 		mainWindow.webContents.send('update-progress', 0);
@@ -61,9 +61,4 @@ app.on('ready', function () {
 });
 
 
-app.on('activate', function () {
-	if (mainWindow === null) {
-		createWindow();
-	}
-});
 
