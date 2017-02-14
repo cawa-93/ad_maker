@@ -1,5 +1,5 @@
 {
-  "name": "admaker",
+  "name": "command.editor",
   "version": "0.3.7",
   "description": "Быстрое заполнение Коммандера",
   "main": "main.js",

@@ -15,7 +15,6 @@ app.on('ready', function () {
 		width: width,
 		height: height,
 		center: true,
-		title: 'Ad Maker by Alex Kozack',
 		useContentSize: true,
 		webContents: true,
 		show: false
