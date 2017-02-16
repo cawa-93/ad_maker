@@ -1,0 +1,3 @@
+export const CLEAR_DIRECT = 'CLEAR_DIRECT'
+export const SET_DIRECT_INDEX = 'SET_DIRECT_INDEX'
+export const SET_DIRECT = 'SET_DIRECT'
