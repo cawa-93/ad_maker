@@ -37,7 +37,7 @@
 			<md-layout class="right-sidebar" md-flex>
 				<md-whiteframe>
 					<md-list v-if="!template">
-						<md-subheader>Тип шаблона</md-subheader>
+						<md-subheader>Тип шаблона {{type}}</md-subheader>
 						<md-list-item><md-radio v-model="type" id="type-custom" name="type-custom" md-value="custom">Из Excel</md-radio></md-list-item>
 						<md-list-item><md-radio v-model="type" id="type-adwords" name="type-adwords" md-value="adwords">Из AdWords</md-radio></md-list-item>
 					</md-list>

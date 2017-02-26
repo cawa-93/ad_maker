@@ -13,7 +13,7 @@
 		</md-toolbar>
 		<transition name="fade" mode="out-in">
 			<keep-alive>
-			<router-view></router-view>
+				<router-view></router-view>
 			</keep-alive>
 		</transition>
 
@@ -52,6 +52,9 @@
 					break
 				case 'clear-keywords' :
 					this.$store.commit(types.CLEAR_KEYWORDS)
+					break
+				case 'clear-fastLinks' :
+					this.$store.commit(types.CLEAR_FASTLINKS)
 					break
 				case 'clear-all' :
 					this.$store.dispatch('CLEAR_ALL')

@@ -1,19 +1,21 @@
 import * as types from '../mutation-types'
-import {clone} from 'lodash'
+import {clone, extend} from 'lodash'
 import libs from 'libs'
+
+const defaultState = {
+	directLog:            [],
+	currentDirectIndex:   -1,
+	directPathHistory:    [],
+	keywordsPathHistory:  [],
+	keywordsTemplate:     [],
+	fastLinksPathHistory: [],
+	fastLinksTemplate:    []
+}
 
 let state = JSON.parse(localStorage.getItem('MAIN_LOCALSTORAGE_KEY'))
 if (state && state.direct) state = state.direct
-else {
-	state = {
-		directLog:            [],
-		currentDirectIndex:   -1,
-		directPathHistory:    [],
-		keywordsPathHistory:  [],
-		keywordsTemplate:     [],
-		fastLinksPathHistory: []
-	}
-}
+
+state = extend(defaultState, state)
 
 const mutations = {
 	[types.PUSH_PATH_HISTORY] (state, params) {
@@ -26,18 +28,15 @@ const mutations = {
 	},
 
 	[types.CLEAR_DIRECT] (state) {
-		console.log('CLEAR_DIRECT')
 		state.directLog = []
 		state.currentDirectIndex = -1
 	},
 	[types.CLEAR_KEYWORDS] (state) {
-		console.log('CLEAR_KEYWORDS')
 		state.keywordsTemplate = []
 	},
-	// [types.CLEAR_FASTLINKS] (state) {
-	// 	state.directLog = [];
-	// 	state.currentDirectIndex = -1;
-	// },
+	[types.CLEAR_FASTLINKS] (state) {
+		state.fastLinksTemplate = []
+	},
 
 	[types.SET_DIRECT_INDEX] (state, newIndex) {
 		if (!newIndex) newIndex = state.directLog.length - 1
@@ -78,8 +77,51 @@ const mutations = {
 		state.keywordsTemplate = []
 	},
 
-	[types.SET_FASTLINKS_TEMPLATE] () {
+	[types.SET_FASTLINKS_TEMPLATE] (state, {template, type}) {
+		if (type === 'adwords') throw new Error('Загрузка быстрых ссылок из adwords не поддерживается')
 
+		state.fastLinksTemplate = template
+	},
+
+	[types.SET_FASTLINKS] (state, template) {
+		const cache = {}
+		const newDirectState = state.directLog[state.currentDirectIndex].map((row, index) => {
+			if (index < 3 || !row) return row
+
+			const cacheKey = row[8] + row[3]
+			if (!cache[cacheKey]) {
+				const campain = template.find(({campainName, groupName}) => {
+					return campainName.toUpperCase() === row[8].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
+				})
+
+				if (!campain) return row
+
+				const titles = []
+				const urls = []
+				const descs = []
+
+				campain.links.forEach(link => {
+					if (!link.title || !link.url || !link.desc) return
+					titles.push(link.title)
+					urls.push(link.url)
+					descs.push(link.desc)
+				})
+
+				cache[cacheKey] = {
+					titles: titles.join('||'),
+					urls:   urls.join('||'),
+					descs:  descs.join('||')
+				}
+			}
+			row[22] = cache[cacheKey].titles
+			row[23] = cache[cacheKey].urls
+			row[24] = cache[cacheKey].descs
+
+			return row
+		})
+
+		state.directLog.push(newDirectState)
+		state.fastLinksTemplate = []
 	}
 }
 

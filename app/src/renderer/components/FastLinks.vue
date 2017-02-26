@@ -18,12 +18,33 @@
 				<md-whiteframe>
 					<md-card v-for="row in template">
 						<md-card-header>
-							<div class="md-title">{{row.groupName}}</div>
-							<div class="md-subhead">{{row.campainName}}</div>
+							<div class="md-title">{{row.campainName}}</div>
+							<div class="md-subhead">{{row.groupName}}</div>
 						</md-card-header>
 
 						<md-card-content>
-							<!--TEMPLATE -->
+							<md-layout md-column>
+								<md-layout :md-gutter="16" md-row v-for="link in row.links">
+									<md-layout md-flex="20">
+										<md-input-container md-inline>
+											<label>Заголовок</label>
+											<md-input required v-model="link.title"></md-input>
+										</md-input-container>
+									</md-layout>
+									<md-layout md-flex="40">
+										<md-input-container md-inline>
+											<label>URL</label>
+											<md-input type="url" required v-model="link.url"></md-input>
+										</md-input-container>
+									</md-layout>
+									<md-layout md-flex="40">
+										<md-input-container md-inline>
+											<label>Описание</label>
+											<md-input required v-model="link.desc"></md-input>
+										</md-input-container>
+									</md-layout>
+								</md-layout>
+							</md-layout>
 						</md-card-content>
 					</md-card>
 				</md-whiteframe>
@@ -60,6 +81,7 @@
 	import dropdownZone from './dropdownZone'
 	import { mapState, mapGetters } from 'vuex'
 	import path from 'path'
+	// import { clone } from 'lodash'
 
 	export default {
 		name:       'fastLinks',
@@ -77,7 +99,28 @@
 				pathHistory: state => state.direct.fastLinksPathHistory,
 				template:    state => {
 					if (!state.direct.fastLinksTemplate || !state.direct.fastLinksTemplate.length) return null
-					return state.direct.fastLinksTemplate
+
+					const _map = []
+					state.direct.fastLinksTemplate.forEach(([campainName, groupName, ...linksData], index) => {
+						if (index === 0) return
+
+						let campain = _map.find(m => m.campainName === campainName && m.groupName === groupName)
+						if (!campain) {
+							campain = {campainName, groupName, links: []}
+							_map.push(campain)
+						}
+						for (let i = 1; i <= 4; i++) {
+							const urlIndex = i * 3 - 2
+							if (linksData[urlIndex - 1] && linksData[urlIndex] && linksData[urlIndex + 1]) {
+								campain.links.push({
+									title: linksData[urlIndex - 1],
+									url:   linksData[urlIndex],
+									desc:  linksData[urlIndex + 1]
+								})
+							}
+						}
+					})
+					return _map
 				}
 			})
 		},

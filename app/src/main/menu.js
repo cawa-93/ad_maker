@@ -35,12 +35,11 @@ export default [{
 			label: 'Ключевые слова',
 			click: true,
 			id:    'clear-keywords'
+		}, {
+			label: 'Быстрые ссылки',
+			click: true,
+			id:    'clear-fastLinks'
 		},
-		// {
-		// 	label: 'Быстрые ссылки',
-		// 	click: true,
-		// 	id: 'clear-fastLinks',
-		// },
 		{type: 'separator'},
 		{
 			label: 'Очистить всё',
