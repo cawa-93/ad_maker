@@ -18,8 +18,8 @@
 				<md-whiteframe>
 					<md-card v-for="row in template">
 						<md-card-header>
-							<div class="md-title">{{row.campainName}}</div>
-							<div class="md-subhead">{{row.groupName}}</div>
+							<div class="md-title">{{row.groupName}}</div>
+							<div class="md-subhead">{{row.campainName}}</div>
 						</md-card-header>
 
 						<md-card-content>
