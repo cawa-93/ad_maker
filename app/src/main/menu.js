@@ -8,32 +8,68 @@ export default [{
 	submenu: [{
 		label: 'Открыть',
 		accelerator: 'CmdOrCtrl+O',
-		click: true
+		click: true,
+		id:'open'
 	}]
 },{
 	label: 'Правка',
 	submenu: [{
 		label: 'Отменить',
 		accelerator: 'CmdOrCtrl+Z',
-		click: true
+		click: true,
+		enable: false,
 	},{
 		label: 'Повторить',
 		accelerator: 'CmdOrCtrl+Y',
-		click: true
+		click: true,
+		enable: false,
+	},
+	{type: 'separator'},
+	{
+		label: 'Очистить...',
+		submenu: [{
+			label: 'Кампании',
+			click: true,
+			id: 'clear-direct',
+		},{
+			label: 'Ключевые слова',
+			click: true,
+			id: 'clear-keywords',
+		},
+		// {
+		// 	label: 'Быстрые ссылки',
+		// 	click: true,
+		// 	id: 'clear-fastLinks',
+		// },
+		{type: 'separator'},
+		{
+			label: 'Очистить всё',
+			click: true,
+			id: 'clear-all',
+		}]
+	}]
+},{
+	label:'Навигация',
+	submenu: [{
+		label: 'Следующая вкладка',
+		click: true,
+		id: 'next-tab',
+		accelerator: 'CmdOrCtrl+Tab'
 	},{
-		type: 'separator'
-	},{
-		label: 'Очистить',
-		click: true
+		label: 'Предыдущая вкладка',
+		click: true,
+		id: 'before-tab',
+		accelerator: 'CmdOrCtrl+Shift+Tab'
 	}]
 },{
 	label: 'Справка',
 	submenu: [{
 		label: 'Открыть справку',
 		accelerator: 'F1',
-		click: () => shell.openExternal('https://github.com/cawa-93/ad_maker')
+		click: () => shell.openExternal('https://github.com/cawa-93/command-editor')
 	},{
 		label: 'О программе',
-		click: true
+		click: true,
+		id: 'about',
 	}]
 }];
