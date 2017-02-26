@@ -1,3 +1,3 @@
-export default function findGroup (campain, group_name) {
-	return campain.groups.find(g => g.name == group_name);
+export default function findGroup (campain, groupName) {
+	return campain.groups.find(g => g.name === groupName)
 }

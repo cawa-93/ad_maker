@@ -6,7 +6,7 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import 'material-design-icons/iconfont/material-icons.css'
 
-import pkg from './../../package.json';
+import pkg from './../../package.json'
 
 import App from './App'
 import routes from './routes'
@@ -17,35 +17,35 @@ Vue.use(VueMaterial)
 Vue.config.debug = process.env.NODE_ENV !== 'production'
 
 Vue.material.registerTheme('default', {
-  primary: {
-    color: 'green',
-    hue: 600
-  },
-  accent: {
-    color: 'blue',
-    hue: 900
-  },
-  warn: {
-    color: 'deep-orange',
-    hue: 700
-  },
+	primary: {
+		color: 'green',
+		hue:   600
+	},
+	accent: {
+		color: 'blue',
+		hue:   900
+	},
+	warn: {
+		color: 'deep-orange',
+		hue:   700
+	}
 })
 
 const router = new Router({
-  scrollBehavior: () => ({ y: 0 }),
-  routes
+	scrollBehavior: () => ({ y: 0 }),
+	routes
 })
 
 Vue.use(VueAnalytics, {
-  appName: pkg.productName,
-  appVersion: pkg.version,
-  trackingId: 'UA-71609511-5',
-  debug: process.env.NODE_ENV !== 'production',
-  vueRouter: router,
+	appName:    pkg.productName,
+	appVersion: pkg.version,
+	trackingId: 'UA-71609511-5',
+	debug:      process.env.NODE_ENV !== 'production',
+	vueRouter:  router
 })
 
 /* eslint-disable no-new */
 new Vue({
-  router,
-  ...App
+	router,
+	...App
 }).$mount('#app')

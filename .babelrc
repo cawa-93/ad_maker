@@ -11,5 +11,5 @@
       ]
     }
   },
-  "plugins": ["transform-runtime", "syntax-async-functions"]
+  "plugins": ["transform-runtime"]
 }

@@ -32,52 +32,51 @@
 
 	export default {
 		store,
-		data() {
+		data () {
 			return {
 				snackbar: {
 					text: ''
 				}
 			}
 		},
-		mounted() {
+		mounted () {
 			this.$electron.ipcRenderer.on('appMenu-onclick', (event, [MenuItem]) => {
-				if (!MenuItem.id) return;
+				if (!MenuItem.id) return
 				switch (MenuItem.id) {
-					case 'open' :
-						const path = this.$electron.remote.dialog.showOpenDialog();
-						if (path && path[0])
-							this.$store.dispatch('INIT_DIRECT', {path: path[0]})
-					break;
-					case 'clear-direct' :
-						this.$store.commit('CLEAR_DIRECT')
-					break;
-					case 'clear-keywords' :
-						this.$store.commit('CLEAR_KEYWORDS')
-					break;
-					case 'clear-all' :
-						this.$store.dispatch('CLEAR_ALL')
-					break;
-					case 'about' :
-						this.$router.push('about')
-					break;
-					case 'next-tab' :
-						switch (this.$route.name) {
-							case 'View'     : this.$router.push({name: 'Keywords'}) ; break;
-							case 'Keywords' : this.$router.push({name: 'FastLinks'}); break;
-							case 'FastLinks': this.$router.push({name: 'UtmMark'})  ; break;
-							case 'UtmMark'  : this.$router.push({name: 'View'})     ; break;
-							default : this.$router.push({name: 'View'});
-						}
-					break;
-					case 'before-tab' :
-						switch (this.$route.name) {
-							case 'View'     : this.$router.push({name: 'UtmMark'})  ; break;
-							case 'UtmMark'  : this.$router.push({name: 'FastLinks'}); break;
-							case 'FastLinks': this.$router.push({name: 'Keywords'}) ; break;
-							case 'Keywords' : this.$router.push({name: 'View'})     ; break;
-							default : this.$router.push({name: 'View'});
-						}
-					break;
+				case 'open' :
+					const path = this.$electron.remote.dialog.showOpenDialog()
+					if (path && path[0]) { this.$store.dispatch('INIT_DIRECT', {path: path[0]}) }
+					break
+				case 'clear-direct' :
+					this.$store.commit(types.CLEAR_DIRECT)
+					break
+				case 'clear-keywords' :
+					this.$store.commit(types.CLEAR_KEYWORDS)
+					break
+				case 'clear-all' :
+					this.$store.dispatch('CLEAR_ALL')
+					break
+				case 'about' :
+					this.$router.push('about')
+					break
+				case 'next-tab' :
+					switch (this.$route.name) {
+					case 'View' : this.$router.push({name: 'Keywords'}); break
+					case 'Keywords' : this.$router.push({name: 'FastLinks'}); break
+					case 'FastLinks': this.$router.push({name: 'UtmMark'}); break
+					case 'UtmMark' : this.$router.push({name: 'View'}); break
+					default : this.$router.push({name: 'View'})
+					}
+					break
+				case 'before-tab' :
+					switch (this.$route.name) {
+					case 'View' : this.$router.push({name: 'UtmMark'}); break
+					case 'UtmMark' : this.$router.push({name: 'FastLinks'}); break
+					case 'FastLinks': this.$router.push({name: 'Keywords'}); break
+					case 'Keywords' : this.$router.push({name: 'View'}); break
+					default : this.$router.push({name: 'View'})
+					}
+					break
 				}
 			})
 		}

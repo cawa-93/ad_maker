@@ -1,6 +1,6 @@
-# command-editor
+# command.editor
 
-> An electron-vue project
+> Быстрое редактирование кампаний для Директа
 
 ## Build Setup
 
@@ -13,6 +13,9 @@ npm run dev
 
 # build electron app for production
 npm run build
+
+# lint all JS/Vue component files in `app/src`
+npm run lint
 
 # run webpack in production
 npm run pack

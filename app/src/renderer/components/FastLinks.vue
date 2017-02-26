@@ -18,8 +18,8 @@
 				<md-whiteframe>
 					<md-card v-for="row in template">
 						<md-card-header>
-							<div class="md-title">{{row.group_name}}</div>
-							<div class="md-subhead">{{row.campain_name}}</div>
+							<div class="md-title">{{row.groupName}}</div>
+							<div class="md-subhead">{{row.campainName}}</div>
 						</md-card-header>
 
 						<md-card-content>
@@ -57,16 +57,16 @@
 </template>
 
 <script>
-	import dropdownZone from './dropdownZone';
-	import { mapState, mapGetters } from 'vuex';
-	import path from 'path';
+	import dropdownZone from './dropdownZone'
+	import { mapState, mapGetters } from 'vuex'
+	import path from 'path'
 
 	export default {
-		name: 'fastLinks',
+		name:       'fastLinks',
 		components: { dropdownZone },
-		data() {
+		data () {
 			return {
-				type: 'custom',
+				type:         'custom',
 				templateType: null
 			}
 		},
@@ -75,32 +75,32 @@
 			...mapGetters(['isDirectLoaded']),
 			...mapState({
 				pathHistory: state => state.direct.fastLinksPathHistory,
-				template: state => {
-					if (!state.direct.fastLinksTemplate || !state.direct.fastLinksTemplate.length) return null;
-					return state.direct.fastLinksTemplate;
-				},
-			}),
+				template:    state => {
+					if (!state.direct.fastLinksTemplate || !state.direct.fastLinksTemplate.length) return null
+					return state.direct.fastLinksTemplate
+				}
+			})
 		},
 
 		methods: {
 			onDrop (fullPath) {
 				this.setTemplate({type: this.type, path: fullPath})
 			},
-			setTemplate(path_obj) {
-				if (!path_obj.type) path_obj.type = this.type;
-				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', path_obj);
-				this.templateType = path_obj.type;
+			setTemplate (pathObj) {
+				if (!pathObj.type) pathObj.type = this.type
+				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', pathObj)
+				this.templateType = pathObj.type
 			},
-			savefastLinks() {
+			savefastLinks () {
 				this.$store.dispatch('SET_FASTLINKS', this.template)
 			},
-			clearTemplate() {
+			clearTemplate () {
 				this.$store.commit('CLEAR_FASTLINKS')
 			}
 		},
 		filters: {
-			basename(fullPath) {
-				return path.basename(fullPath);
+			basename (fullPath) {
+				return path.basename(fullPath)
 			}
 		}
 	}

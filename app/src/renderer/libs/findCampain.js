@@ -1,3 +1,3 @@
-export default function findCampain (directMap, campain_name) {
-	return directMap.find(c => c.name == campain_name);
+export default function findCampain (directMap, campainName) {
+	return directMap.find(c => c.name === campainName)
 }

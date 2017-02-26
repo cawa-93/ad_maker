@@ -9,20 +9,20 @@ const winURL = process.env.NODE_ENV === 'development'
 	: `file://${__dirname}/index.html`
 
 const appMenu = Menu.buildFromTemplate(menuTemplate.map(menuItem => {
-	menuItem = setProxyMenuClickAsCallBack(menuItem);
-	if (menuItem.submenu) menuItem.submenu = menuItem.submenu.map(setProxyMenuClickAsCallBack);
-	return menuItem;
-}));
-Menu.setApplicationMenu(appMenu);
+	menuItem = setProxyMenuClickAsCallBack(menuItem)
+	if (menuItem.submenu) menuItem.submenu = menuItem.submenu.map(setProxyMenuClickAsCallBack)
+	return menuItem
+}))
+Menu.setApplicationMenu(appMenu)
 
 function createWindow () {
 	/**
 	 * Initial window options
 	 */
 	mainWindow = new BrowserWindow({
-		minHeight: 600,
-		minWidth: 800, 
-		useContentSize: true,
+		minHeight:      600,
+		minWidth:       800,
+		useContentSize: true
 		// webContents: true,
 	})
 
@@ -37,17 +37,15 @@ function createWindow () {
 	console.log('mainWindow opened')
 }
 
-function setProxyMenuClickAsCallBack(menuItem) {
-	if (menuItem.click === true)
-		menuItem.click = proxyMenuClick;
-	if (menuItem.submenu) 
-		menuItem.submenu = menuItem.submenu.map(setProxyMenuClickAsCallBack)
-	return menuItem;
+function setProxyMenuClickAsCallBack (menuItem) {
+	if (menuItem.click === true) { menuItem.click = proxyMenuClick }
+	if (menuItem.submenu) { menuItem.submenu = menuItem.submenu.map(setProxyMenuClickAsCallBack) }
+	return menuItem
 }
 
 function proxyMenuClick (...args) {
-	if (!mainWindow || !mainWindow.webContents) return;
-	mainWindow.webContents.send('appMenu-onclick', args);
+	if (!mainWindow || !mainWindow.webContents) return
+	mainWindow.webContents.send('appMenu-onclick', args)
 }
 
 app.on('ready', createWindow)

@@ -16,20 +16,19 @@
 <script>
 	export default {
 		name: 'dropdownZone',
-		data() {
+		data () {
 			return {
-				isDragover: false,
+				isDragover: false
 			}
 		},
 		methods: {
-			loadFiles(e) {
+			loadFiles (e) {
 				this.isDragover = false
 				this.$emit('drop', e.dataTransfer.files[0].path)
 			},
-			openFile() {
-				const path = this.$electron.remote.dialog.showOpenDialog();
-				if (path && path[0])
-					this.$emit('drop', path[0])
+			openFile () {
+				const path = this.$electron.remote.dialog.showOpenDialog()
+				if (path && path[0]) { this.$emit('drop', path[0]) }
 			}
 		}
 	}

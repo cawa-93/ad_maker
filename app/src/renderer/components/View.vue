@@ -86,20 +86,20 @@
 </template>
 
 <script>
-	import dropdownZone from './dropdownZone.vue';
+	import dropdownZone from './dropdownZone.vue'
 	import { mapGetters, mapState } from 'vuex'
 	import path from 'path'
 
 	export default {
-		name: 'View',
+		name:  'View',
 		props: ['defaultQueryType'],
-		data() {
+		data () {
 			return {
 				query: {
 					search: '',
-					type: this.defaultQueryType || 'ads',
+					type:   this.defaultQueryType || 'ads',
 					sortBy: 'campain',
-					sort: 'desc'
+					sort:   'desc'
 				}
 			}
 		},
@@ -111,80 +111,78 @@
 			...mapState({
 				pathHistory: state => state.direct.directPathHistory
 			}),
-			isKeywordsOpen() {
+			isKeywordsOpen () {
 				return (this.$store.getters.directCounters.keywords || 0) > 0
 			},
 			// isFastLinksOpen() {
 			// 	return (this.$store.getters.fastLinksCount || 0) > 0
 			// },
-			sortableData() {
+			sortableData () {
 				return this.filteredData
-					.sort((itemA, itemB) => {
-						if (itemA[this.query.sortBy] > itemB[this.query.sortBy]) {
-							return this.query.sort === 'asc' ? 1 : -1;
-						} else if (itemA[this.query.sortBy] < itemB[this.query.sortBy]) {
-							return this.query.sort === 'asc' ? -1 : 1;
-						} else {
-							return 0;
-						}
-					});
+			.sort((itemA, itemB) => {
+				if (itemA[this.query.sortBy] > itemB[this.query.sortBy]) {
+					return this.query.sort === 'asc' ? 1 : -1
+				} else if (itemA[this.query.sortBy] < itemB[this.query.sortBy]) {
+					return this.query.sort === 'asc' ? -1 : 1
+				}
+				return 0
+			})
 			},
-			filteredData() {
+			filteredData () {
 				return this.$store.getters.directViewTableData
-					.filter((item) => {
-						const search = this.query.search;
-						if (this.query.type === 'ads' && (!item.ad_title || !item.ad_url)) return false;
-						if (this.query.type === 'keywords' && !item.keyword) return false;
-						if (this.query.type === 'bs' && !item.fastLink_url) return false;
+			.filter((item) => {
+				const search = this.query.search
+				if (this.query.type === 'ads' && (!item.ad_title || !item.ad_url)) return false
+				if (this.query.type === 'keywords' && !item.keyword) return false
+				if (this.query.type === 'bs' && !item.fastLink_url) return false
 
-						if (search) {
-							if (item.campain.indexOf(search) !== -1 || item.group.indexOf(search) !== -1) return true;
+				if (search) {
+					if (item.campain.indexOf(search) !== -1 || item.group.indexOf(search) !== -1) return true
 
-							if (this.query.type === 'ads' && (
+					if (this.query.type === 'ads' && (
 								item.ad_title.indexOf(search) !== -1 ||
 								item.ad_url.indexOf(search) !== -1 ||
 								item.ad_desc.indexOf(search) !== -1 ||
 								item.ad_ancor.indexOf(search) !== -1
-								)) return true;
+								)) return true
 
-							if (this.query.type === 'keywords' && (
+					if (this.query.type === 'keywords' && (
 								item.keyword.indexOf(search) !== -1
-								)) return true;
+								)) return true
 
-							if (this.query.type === 'bs' && (
+					if (this.query.type === 'bs' && (
 								item.fastLink_title.indexOf(search) !== -1 ||
 								item.fastLink_url.indexOf(search) !== -1 ||
 								item.fastLink_desc.indexOf(search) !== -1
-								)) return true;
+								)) return true
 
-							return false;
-						} else {
-							return true;
-						}
-					})
-			},
+					return false
+				}
+				return true
+			})
+			}
 		},
 		methods: {
-			set(path) {
+			set (path) {
 				this.$store.dispatch('INIT_DIRECT', {path})
 			},
-			onSort(sort) {
-				this.query.sortBy = sort.name;
-				this.query.sort = sort.type;
+			onSort (sort) {
+				this.query.sortBy = sort.name
+				this.query.sort = sort.type
 			},
-			cutSuffix(campain_name) {
-				campain_name = campain_name.split('_');
+			cutSuffix (campainName) {
+				campainName = campainName.split('_')
 				if (this.campainNamesSuffix && this.campainNamesSuffix.length) {
-					campain_name.splice(0 - this.campainNamesSuffix.length)
+					campainName.splice(0 - this.campainNamesSuffix.length)
 				}
-				return campain_name.join(' ');
+				return campainName.join(' ')
 			}
 		},
 		filters: {
-			basename(fullPath) {
-				return path.basename(fullPath);
+			basename (fullPath) {
+				return path.basename(fullPath)
 			},
-			underlineToSpace(str) {
+			underlineToSpace (str) {
 				return str.replace(/_/g, ' ')
 			}
 		}

@@ -47,29 +47,32 @@
 <script>
 	export default {
 		name: 'about',
-		data() {
+		data () {
 			return {
 				changelog: null
-			};
+			}
 		},
 		computed: {
-			appVersion() {
-				return this.$electron.remote.app.getVersion();
+			appVersion () {
+				return this.$electron.remote.app.getVersion()
 			}
 		},
 		methods: {
-			open(...args) {
+			open (...args) {
 				this.$electron.shell.openExternal(...args)
 			}
 		},
-		mounted() {
+		mounted () {
 			fetch('https://api.github.com/repos/cawa-93/command-editor/releases?per_page=5', {
 				headers: {
-					"Accept": "application/vnd.github.v3.html+json"
+					'Accept': 'application/vnd.github.v3.html+json'
 				}
 			})
-				.then(r => r.json())
-				.then(releases => this.changelog = releases)
+		.then(r => r.json())
+		.then(releases => {
+			this.changelog = releases
+			return releases
+		})
 		}
 	}
 </script>

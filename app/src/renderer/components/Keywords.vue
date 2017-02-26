@@ -21,8 +21,8 @@
 					</blockquote>
 					<md-card v-for="row in template">
 						<md-card-header>
-							<div class="md-title">{{row.group_name}}</div>
-							<div class="md-subhead">{{row.campain_name}}</div>
+							<div class="md-title">{{row.groupName}}</div>
+							<div class="md-subhead">{{row.campainName}}</div>
 						</md-card-header>
 
 						<md-card-content>
@@ -62,16 +62,16 @@
 </template>
 
 <script>
-	import dropdownZone from './dropdownZone';
-	import { mapState, mapGetters } from 'vuex';
-	import path from 'path';
+	import dropdownZone from './dropdownZone'
+	import { mapState, mapGetters } from 'vuex'
+	import path from 'path'
 
 	export default {
-		name: 'keywords',
+		name:       'keywords',
 		components: { dropdownZone },
-		data() {
+		data () {
 			return {
-				type: 'custom',
+				type:         'custom',
 				templateType: null
 			}
 		},
@@ -80,42 +80,42 @@
 			...mapGetters(['isDirectLoaded']),
 			...mapState({
 				pathHistory: state => state.direct.keywordsPathHistory,
-				template: state => {
-					if (!state.direct.keywordsTemplate || !state.direct.keywordsTemplate.length) return null;
+				template:    state => {
+					if (!state.direct.keywordsTemplate || !state.direct.keywordsTemplate.length) return null
 
-					const _map = [];
-					state.direct.keywordsTemplate.forEach(([campain_name, group_name, keyword]) => {
-						let campain = _map.find(m => m.campain_name == campain_name && m.group_name == group_name);
+					const _map = []
+					state.direct.keywordsTemplate.forEach(([campainName, groupName, keyword]) => {
+						let campain = _map.find(m => m.campainName === campainName && m.groupName === groupName)
 						if (!campain) {
-							campain = {campain_name, group_name, keywords: []};
+							campain = {campainName, groupName, keywords: []}
 							_map.push(campain)
 						}
 						campain.keywords.push(keyword)
 					})
-					return _map;
-				},
-			}),
+					return _map
+				}
+			})
 		},
 
 		methods: {
 			onDrop (fullPath) {
 				this.setTemplate({type: this.type, path: fullPath})
 			},
-			setTemplate(path_obj) {
-				if (!path_obj.type) path_obj.type = this.type;
-				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', path_obj);
-				this.templateType = path_obj.type;
+			setTemplate (pathObj) {
+				if (!pathObj.type) pathObj.type = this.type
+				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', pathObj)
+				this.templateType = pathObj.type
 			},
-			saveKeywords() {
+			saveKeywords () {
 				this.$store.dispatch('SET_KEYWORDS', this.template)
 			},
-			clearTemplate() {
+			clearTemplate () {
 				this.$store.commit('CLEAR_KEYWORDS')
 			}
 		},
 		filters: {
-			basename(fullPath) {
-				return path.basename(fullPath);
+			basename (fullPath) {
+				return path.basename(fullPath)
 			}
 		}
 	}
