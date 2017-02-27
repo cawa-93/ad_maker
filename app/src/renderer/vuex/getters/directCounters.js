@@ -1,6 +1,6 @@
 export default (state, getters) => {
 	const counters = {
-		campains:  0,
+		campaigns: 0,
 		groups:    0,
 		ads:       0,
 		keywords:  0,
@@ -8,11 +8,11 @@ export default (state, getters) => {
 	}
 	if (!getters.isDirectLoaded) return counters
 
-	counters.campains += getters.directMap.length
-	getters.directMap.forEach(campain => {
-		counters.groups += campain.groups.length
+	counters.campaigns += getters.directMap.length
+	getters.directMap.forEach(campaign => {
+		counters.groups += campaign.groups.length
 
-		campain.groups.forEach(group => {
+		campaign.groups.forEach(group => {
 			counters.ads += group.ads.length
 			counters.keywords += group.keywords.length
 			counters.fastLinks += group.fastLinks.length

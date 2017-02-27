@@ -12,7 +12,7 @@
 				<md-whiteframe>
 					<md-list>
 						<md-subheader>Последние файлы</md-subheader>
-						<md-list-item v-for="path_obj in pathHistory" @click.native="set(path_obj.path)">{{path_obj.path | basename}}</md-list-item>
+						<md-list-item v-for="path_obj in pathHistory" :key="path_obj.path" @click.native="set(path_obj.path)">{{path_obj.path | basename}}</md-list-item>
 					</md-list>
 				</md-whiteframe>
 			</md-layout>
@@ -44,7 +44,7 @@
 				<md-table md-sort="group" md-sort-type="asc" @sort="onSort">
 					<md-table-header>
 						<md-table-row>
-							<md-table-head md-sort-by="campain">Кампания</md-table-head>
+							<md-table-head md-sort-by="campaign">Кампания</md-table-head>
 							<md-table-head md-sort-by="group">Група</md-table-head>
 
 							<md-table-head v-if="query.type === 'ads'" md-sort-by="ad_title">Заголовок</md-table-head>
@@ -63,7 +63,7 @@
 
 					<md-table-body>
 						<md-table-row v-for="(row, rowIndex) in sortableData" :key="rowIndex" :md-item="row">
-							<md-table-cell><a href="" @click.prevent="query.search = row.campain">{{ cutSuffix(row.campain) }}</a></md-table-cell>
+							<md-table-cell><a href="" @click.prevent="query.search = row.campaign">{{ cutSuffix(row.campaign) }}</a></md-table-cell>
 							<md-table-cell><a href="" @click.prevent="query.search = row.group">{{ row.group | underlineToSpace }}</a></md-table-cell>
 
 							<md-table-cell v-if="query.type === 'ads'">{{ row.ad_title }}</md-table-cell>
@@ -98,7 +98,7 @@
 				query: {
 					search: '',
 					type:   this.defaultQueryType || 'ads',
-					sortBy: 'campain',
+					sortBy: 'campaign',
 					sort:   'desc'
 				}
 			}
@@ -107,7 +107,7 @@
 			dropdownZone
 		},
 		computed: {
-			...mapGetters(['isDirectLoaded', 'campainNamesSuffix']),
+			...mapGetters(['isDirectLoaded', 'campaignNamesSuffix']),
 			...mapState({
 				pathHistory: state => state.direct.directPathHistory
 			}),
@@ -129,37 +129,36 @@
 			})
 			},
 			filteredData () {
-				return this.$store.getters.directViewTableData
-			.filter((item) => {
-				const search = this.query.search
-				if (this.query.type === 'ads' && (!item.ad_title || !item.ad_url)) return false
-				if (this.query.type === 'keywords' && !item.keyword) return false
-				if (this.query.type === 'bs' && !item.fastLink_url) return false
+				return this.$store.getters.directViewTableData.filter((item) => {
+					const search = this.query.search
+					if (this.query.type === 'ads' && (!item.ad_title || !item.ad_url)) return false
+					if (this.query.type === 'keywords' && !item.keyword) return false
+					if (this.query.type === 'bs' && !item.fastLink_url) return false
 
-				if (search) {
-					if (item.campain.indexOf(search) !== -1 || item.group.indexOf(search) !== -1) return true
+					if (search) {
+						if (item.campaign.indexOf(search) !== -1 || item.group.indexOf(search) !== -1) return true
 
-					if (this.query.type === 'ads' && (
+						if (this.query.type === 'ads' && (
 								item.ad_title.indexOf(search) !== -1 ||
 								item.ad_url.indexOf(search) !== -1 ||
 								item.ad_desc.indexOf(search) !== -1 ||
 								item.ad_ancor.indexOf(search) !== -1
 								)) return true
 
-					if (this.query.type === 'keywords' && (
+						if (this.query.type === 'keywords' && (
 								item.keyword.indexOf(search) !== -1
 								)) return true
 
-					if (this.query.type === 'bs' && (
+						if (this.query.type === 'bs' && (
 								item.fastLink_title.indexOf(search) !== -1 ||
 								item.fastLink_url.indexOf(search) !== -1 ||
 								item.fastLink_desc.indexOf(search) !== -1
 								)) return true
 
-					return false
-				}
-				return true
-			})
+						return false
+					}
+					return true
+				})
 			}
 		},
 		methods: {
@@ -170,12 +169,12 @@
 				this.query.sortBy = sort.name
 				this.query.sort = sort.type
 			},
-			cutSuffix (campainName) {
-				campainName = campainName.split('_')
-				if (this.campainNamesSuffix && this.campainNamesSuffix.length) {
-					campainName.splice(0 - this.campainNamesSuffix.length)
+			cutSuffix (campaignName) {
+				campaignName = campaignName.split('_')
+				if (this.campaignNamesSuffix && this.campaignNamesSuffix.length) {
+					campaignName.splice(0 - this.campaignNamesSuffix.length)
 				}
-				return campainName.join(' ')
+				return campaignName.join(' ')
 			}
 		},
 		filters: {

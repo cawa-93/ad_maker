@@ -1,1 +1,3 @@
-export default (state) => state.direct.directLog[ state.direct.directLog.length - 1 ]
+export default (state) => {
+	return state.direct.directLog[ state.direct.currentDirectIndex ]
+}

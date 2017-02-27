@@ -16,15 +16,15 @@
 
 			<md-layout md-flex v-else class="scroll">
 				<md-whiteframe>
-					<md-card v-for="row in template">
+					<md-card v-for="(row, index) in template" :key="index">
 						<md-card-header>
 							<div class="md-title">{{row.groupName}}</div>
-							<div class="md-subhead">{{row.campainName}}</div>
+							<div class="md-subhead">{{row.campaignName}}</div>
 						</md-card-header>
 
 						<md-card-content>
 							<md-layout md-column>
-								<md-layout :md-gutter="16" md-row v-for="link in row.links">
+								<md-layout :md-gutter="16" md-row v-for="(link, linkIndex) in row.links" :key="linkIndex">
 									<md-layout md-flex="20">
 										<md-input-container md-inline>
 											<label>Заголовок</label>
@@ -64,7 +64,7 @@
 					</md-list>
 					<md-list v-if="pathHistory.length">
 						<md-subheader>Последние файлы</md-subheader>
-						<md-list-item v-for="path_obj in pathHistory" @click.native="setTemplate(path_obj)">{{path_obj.path | basename}}</md-list-item>
+						<md-list-item v-for="path_obj in pathHistory" :key="path_obj.path" @click.native="setTemplate(path_obj)">{{path_obj.path | basename}}</md-list-item>
 					</md-list>
 				</md-whiteframe>
 			</md-layout>
@@ -101,18 +101,18 @@
 					if (!state.direct.fastLinksTemplate || !state.direct.fastLinksTemplate.length) return null
 
 					const _map = []
-					state.direct.fastLinksTemplate.forEach(([campainName, groupName, ...linksData], index) => {
+					state.direct.fastLinksTemplate.forEach(([campaignName, groupName, ...linksData], index) => {
 						if (index === 0) return
 
-						let campain = _map.find(m => m.campainName === campainName && m.groupName === groupName)
-						if (!campain) {
-							campain = {campainName, groupName, links: []}
-							_map.push(campain)
+						let campaign = _map.find(m => m.campaignName === campaignName && m.groupName === groupName)
+						if (!campaign) {
+							campaign = {campaignName, groupName, links: []}
+							_map.push(campaign)
 						}
 						for (let i = 1; i <= 4; i++) {
 							const urlIndex = i * 3 - 2
 							if (linksData[urlIndex - 1] && linksData[urlIndex] && linksData[urlIndex + 1]) {
-								campain.links.push({
+								campaign.links.push({
 									title: linksData[urlIndex - 1],
 									url:   linksData[urlIndex],
 									desc:  linksData[urlIndex + 1]
@@ -138,7 +138,7 @@
 				this.$store.dispatch('SET_FASTLINKS', this.template)
 			},
 			clearTemplate () {
-				this.$store.commit('CLEAR_FASTLINKS')
+				this.$store.dispatch('CLEAR_FASTLINKS')
 			}
 		},
 		filters: {

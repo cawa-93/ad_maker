@@ -1,7 +1,8 @@
 'use strict'
 
-import { app, BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow, Menu, ipcMain } from 'electron'
 import menuTemplate from './menu'
+import { autoUpdater } from 'electron-updater'
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -44,11 +45,39 @@ function setProxyMenuClickAsCallBack (menuItem) {
 }
 
 function proxyMenuClick (...args) {
-	if (!mainWindow || !mainWindow.webContents) return
-	mainWindow.webContents.send('appMenu-onclick', args)
+	sendToMainWindow('appMenu-onclick', args)
 }
 
-app.on('ready', createWindow)
+function sendToMainWindow (event, ...args) {
+	if (!mainWindow || !mainWindow.webContents) return
+	if (args.length === 1) args = args[0]
+	mainWindow.webContents.send(event, args)
+}
+
+app.on('ready', () => {
+	createWindow()
+	autoUpdater.checkForUpdates()
+	autoUpdater.addListener('update-available', () => sendToMainWindow('update-available'))
+	autoUpdater.addListener('download-progress', progress => sendToMainWindow('update-progress', progress))
+	autoUpdater.addListener('update-downloaded', () => sendToMainWindow('update-downloaded'))
+	autoUpdater.addListener('error', () => sendToMainWindow('update-error'))
+
+	ipcMain.once('update-install', () => autoUpdater.quitAndInstall())
+
+	if (process.env.NODE_ENV === 'development') {
+		// setInterval(() => {
+		setTimeout(() => sendToMainWindow('update-available'), 1000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 10}), 2000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 20}), 3000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 30}), 4000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 40}), 5000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 50}), 6000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 60}), 7000)
+		setTimeout(() => sendToMainWindow('update-progress', {percent: 70}), 8000)
+		setTimeout(() => sendToMainWindow('update-downloaded'), 10000)
+		// }, 12000)
+	}
+})
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {

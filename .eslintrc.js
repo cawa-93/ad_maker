@@ -15,6 +15,7 @@ module.exports = {
   'rules': {
     'indent': ["error", "tab"],
     'no-tabs': 0,
+    'no-new': 0,
     // allow paren-less arrow functions
     'arrow-parens': 0,
     // allow async-await

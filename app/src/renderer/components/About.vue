@@ -25,7 +25,7 @@
 			<md-subheader>История версий</md-subheader>
 			<md-progress v-if="!changelog" md-indeterminate></md-progress>
 
-			<md-card v-else v-for="release in changelog" md-with-hover @click.native="open(release.html_url)">
+			<md-card v-else v-for="release in changelog" :key="release.id" md-with-hover @click.native="open(release.html_url)">
 				<md-card-header>
 					<div class="md-title">{{release.tag_name}}<span v-if="release.name"> - {{ release.name }}</span><span class="prerelease md-caption" v-if="release.prerelease"> (prerelease)</span></div>
 					<div class="md-subhead">{{new Date(release.published_at).toLocaleDateString()}}</div>

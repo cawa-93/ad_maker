@@ -1,5 +1,5 @@
 export default
-function campainNamesSuffix (state, getters) {
+function campaignNamesSuffix (state, getters) {
 	if (!getters.isDirectLoaded) return []
 
 	return getters.directMap.reduce((suffix, {name}) => {

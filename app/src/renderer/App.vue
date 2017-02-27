@@ -12,26 +12,22 @@
 			</md-button>
 		</md-toolbar>
 		<transition name="fade" mode="out-in">
-			<keep-alive>
+
 				<router-view></router-view>
-			</keep-alive>
+
 		</transition>
 
-		<md-snackbar md-position="bottom center" ref="snackbar" :md-duration="4000">
-			<span>{{snackbar.text}}</span>
-			<md-button class="md-accent" @click.native="$refs.snackbar.close()">
-				<md-icon>close</md-icon>
-			</md-button>
-		</md-snackbar>
+		<update-button></update-button>
 	</div>
 </template>
 
 <script>
 	import store from 'renderer/vuex/store'
-	import * as types from 'renderer/vuex/mutation-types'
+	import updateButton from 'components/updateButton'
 
 	export default {
 		store,
+		components: { updateButton },
 		data () {
 			return {
 				snackbar: {
@@ -48,13 +44,13 @@
 					if (path && path[0]) { this.$store.dispatch('INIT_DIRECT', {path: path[0]}) }
 					break
 				case 'clear-direct' :
-					this.$store.commit(types.CLEAR_DIRECT)
+					this.$store.dispatch('CLEAR_DIRECT')
 					break
 				case 'clear-keywords' :
-					this.$store.commit(types.CLEAR_KEYWORDS)
+					this.$store.dispatch('CLEAR_KEYWORDS')
 					break
 				case 'clear-fastLinks' :
-					this.$store.commit(types.CLEAR_FASTLINKS)
+					this.$store.dispatch('CLEAR_FASTLINKS')
 					break
 				case 'clear-all' :
 					this.$store.dispatch('CLEAR_ALL')
@@ -79,6 +75,15 @@
 					case 'Keywords' : this.$router.push({name: 'View'}); break
 					default : this.$router.push({name: 'View'})
 					}
+					break
+				case 'goto' :
+					this.$router.push({name: MenuItem.to})
+					break
+				case 'undo' :
+					this.$store.dispatch('UNDO')
+					break
+				case 'redo' :
+					this.$store.dispatch('REDO')
 					break
 				}
 			})

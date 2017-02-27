@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import {clone, extend} from 'lodash'
+import { cloneDeep, extend } from 'lodash'
 import libs from 'libs'
 
 const defaultState = {
@@ -39,12 +39,20 @@ const mutations = {
 	},
 
 	[types.SET_DIRECT_INDEX] (state, newIndex) {
-		if (!newIndex) newIndex = state.directLog.length - 1
+		if (newIndex === undefined) newIndex = state.directLog.length - 1
 		state.currentDirectIndex = newIndex
 	},
+
+	[types.CLEAR_REDO_STATES] (state) {
+		state.directLog.splice(state.currentDirectIndex + 1)
+		if (state.directLog.length > 5) {
+			state.directLog.splice(0, 5)
+		}
+		state.currentDirectIndex = state.directLog.length - 1
+	},
+
 	[types.SET_DIRECT] (state, direct) {
 		if (!direct) return
-		state.directLog.splice(state.currentDirectIndex + 1)
 		state.directLog.push(direct)
 	},
 
@@ -57,13 +65,13 @@ const mutations = {
 		})
 	},
 	[types.SET_KEYWORDS] (state, template) {
-		const newDirectState = clone(state.directLog[state.currentDirectIndex])
-		template.forEach(({campainName, groupName, keywords}) => {
+		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex])
+		template.forEach(({campaignName, groupName, keywords}) => {
 			keywords.forEach(keyword => {
-				let adIndex = newDirectState.findIndex(row => row && row[8] && row[3] && row[8].toUpperCase() === campainName.toUpperCase() && row[3].toUpperCase() === groupName.toUpperCase())
+				let adIndex = newDirectState.findIndex(row => row && row[8] && row[3] && row[8].toUpperCase() === campaignName.toUpperCase() && row[3].toUpperCase() === groupName.toUpperCase())
 				if (adIndex < 0) return
 				if (newDirectState[adIndex][10] !== '') {
-					let newAd = clone(newDirectState[adIndex])
+					let newAd = cloneDeep(newDirectState[adIndex])
 					newAd[0] = '-'
 					newDirectState.splice(adIndex, 0, newAd)
 					adIndex += 1
@@ -85,22 +93,22 @@ const mutations = {
 
 	[types.SET_FASTLINKS] (state, template) {
 		const cache = {}
-		const newDirectState = state.directLog[state.currentDirectIndex].map((row, index) => {
+		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex]).map((row, index) => {
 			if (index < 3 || !row) return row
 
 			const cacheKey = row[8] + row[3]
 			if (!cache[cacheKey]) {
-				const campain = template.find(({campainName, groupName}) => {
-					return campainName.toUpperCase() === row[8].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
+				const campaign = template.find(({campaignName, groupName}) => {
+					return campaignName.toUpperCase() === row[8].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
 				})
 
-				if (!campain) return row
+				if (!campaign) return row
 
 				const titles = []
 				const urls = []
 				const descs = []
 
-				campain.links.forEach(link => {
+				campaign.links.forEach(link => {
 					if (!link.title || !link.url || !link.desc) return
 					titles.push(link.title)
 					urls.push(link.url)
@@ -122,6 +130,58 @@ const mutations = {
 
 		state.directLog.push(newDirectState)
 		state.fastLinksTemplate = []
+	},
+
+	[types.UTM_MARK_MAIN] (state, {params, mode}) {
+		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex]).map((row, index) => {
+			if (index < 3 || !row) return row
+
+			const replaceData = {
+				campaign_name: row[8],
+				group_name:    row[3],
+				ad_title:      row[12]
+			}
+			const utm = cloneDeep(params)
+
+			for (let param in utm) {
+				for (let key in replaceData) {
+					const reg = new RegExp(`{${key}}`, 'g')
+					utm[param] = utm[param].replace(reg, replaceData[key])
+				}
+			}
+			row[14] = libs.utmMark(row[14], utm, mode === 'anchor')
+			return row
+		})
+		state.directLog.push(newDirectState)
+	},
+
+	[types.UTM_MARK_FAST] (state, {params, mode}) {
+		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex]).map((row, index) => {
+			if (index < 3 || !row || !row[22] || !row[23]) return row
+
+			const titles = row[22].split('||')
+			row[23] = row[23].split('||').map((url, index) => {
+				const replaceData = {
+					campaign_name: row[8],
+					group_name:    row[3],
+					ad_title:      row[12],
+					fastlink_name: titles[index]
+				}
+				const utm = cloneDeep(params)
+
+				for (let param in utm) {
+					for (let key in replaceData) {
+						const reg = new RegExp(`{${key}}`, 'g')
+						utm[param] = utm[param].replace(reg, replaceData[key])
+					}
+				}
+
+				return libs.utmMark(url, utm, mode === 'anchor')
+			}).join('||')
+
+			return row
+		})
+		state.directLog.push(newDirectState)
 	}
 }
 

@@ -77,7 +77,7 @@
 					</md-list>
 					<md-list>
 						<md-subheader>Теги для замены</md-subheader>
-						<md-list-item v-for="item in templateTags" v-if="!(item.tag === '${fastlink_name}' && type === 'main')" @click.native="copy(item.tag)">
+						<md-list-item v-for="item in templateTags" :key="item.tag" v-if="!(item.tag === '${fastlink_name}' && type === 'main')" @click.native="copy(item.tag)">
 							<div class="md-list-text-container">
 								<span>{{item.tag}}</span>
 								<span>{{item.label}}</span>
@@ -181,14 +181,17 @@
 			}
 		},
 		methods: {
-			mark (pathObj) {
-
+			mark () {
+				this.$store.dispatch('UTM_MARK', {
+					type:    this.type,
+					options: {
+						params: this.utm,
+						mode:   this.markAsAnchor ? 'anchor' : 'query'
+					}
+				})
 			},
 			copy (str) {
 				this.$electron.clipboard.writeText(str)
-			},
-			clearTemplate () {
-				this.$store.commit('CLEAR_KEYWORDS')
 			}
 		}
 	}

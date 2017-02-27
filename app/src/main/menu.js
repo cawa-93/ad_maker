@@ -17,12 +17,14 @@ export default [{
 		label:       'Отменить',
 		accelerator: 'CmdOrCtrl+Z',
 		click:       true,
-		enable:      false
+		id:          'undo'
+		// enabled:      false,
 	}, {
 		label:       'Повторить',
 		accelerator: 'CmdOrCtrl+Y',
 		click:       true,
-		enable:      false
+		id:          'redo'
+		// enabled:      false,
 	},
 	{type: 'separator'},
 	{
@@ -59,7 +61,30 @@ export default [{
 		click:       true,
 		id:          'before-tab',
 		accelerator: 'CmdOrCtrl+Shift+Tab'
-	}]
+	},
+	{type: 'separator'},
+	{
+		label: 'Обзор',
+		click: true,
+		id:    'goto',
+		to:    'View'
+	}, {
+		label: 'Ключевые слова',
+		click: true,
+		id:    'goto',
+		to:    'Keywords'
+	}, {
+		label: 'Быстрые ссылки',
+		click: true,
+		id:    'goto',
+		to:    'FastLinks'
+	}, {
+		label: 'Пометка ссылок',
+		click: true,
+		id:    'goto',
+		to:    'UtmMark'
+	}
+	]
 }, {
 	label:   'Справка',
 	submenu: [{

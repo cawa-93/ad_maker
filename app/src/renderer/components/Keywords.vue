@@ -19,10 +19,10 @@
 					<blockquote v-if="templateType === 'adwords'" class="md-warn">
 						<span>Загрузка ключевых фраз из шаблона AdWords может работать не корректно. Используйте эту функцию на свой страх и риск.</span>
 					</blockquote>
-					<md-card v-for="row in template">
+					<md-card v-for="(row, index) in template" :key="index">
 						<md-card-header>
 							<div class="md-title">{{row.groupName}}</div>
-							<div class="md-subhead">{{row.campainName}}</div>
+							<div class="md-subhead">{{row.campaignName}}</div>
 						</md-card-header>
 
 						<md-card-content>
@@ -48,7 +48,7 @@
 					</md-list>
 					<md-list v-if="pathHistory.length">
 						<md-subheader>Последние файлы</md-subheader>
-						<md-list-item v-for="path_obj in pathHistory" @click.native="setTemplate(path_obj)">{{path_obj.path | basename}}</md-list-item>
+						<md-list-item v-for="path_obj in pathHistory" :key="path_obj.path" @click.native="setTemplate(path_obj)">{{path_obj.path | basename}}</md-list-item>
 					</md-list>
 				</md-whiteframe>
 			</md-layout>
@@ -84,13 +84,13 @@
 					if (!state.direct.keywordsTemplate || !state.direct.keywordsTemplate.length) return null
 
 					const _map = []
-					state.direct.keywordsTemplate.forEach(([campainName, groupName, keyword]) => {
-						let campain = _map.find(m => m.campainName === campainName && m.groupName === groupName)
-						if (!campain) {
-							campain = {campainName, groupName, keywords: []}
-							_map.push(campain)
+					state.direct.keywordsTemplate.forEach(([campaignName, groupName, keyword]) => {
+						let campaign = _map.find(m => m.campaignName === campaignName && m.groupName === groupName)
+						if (!campaign) {
+							campaign = {campaignName, groupName, keywords: []}
+							_map.push(campaign)
 						}
-						campain.keywords.push(keyword)
+						campaign.keywords.push(keyword)
 					})
 					return _map
 				}
@@ -110,7 +110,7 @@
 				this.$store.dispatch('SET_KEYWORDS', this.template)
 			},
 			clearTemplate () {
-				this.$store.commit('CLEAR_KEYWORDS')
+				this.$store.dispatch('CLEAR_KEYWORDS')
 			}
 		},
 		filters: {

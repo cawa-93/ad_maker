@@ -6,7 +6,7 @@ export default (state, getters) => {
 	getters.direct.forEach((row, index) => {
 		if (index < 3 || !row || !row[8] || !row[3]) return
 
-		const campainName = row[8]
+		const campaignName = row[8]
 		const groupName = row[3]
 		const keyword = row[10]
 		const ad = {
@@ -32,16 +32,16 @@ export default (state, getters) => {
 			}
 		})
 
-		let campain = libs.findCampain(_map, campainName)
-		if (campain === undefined) {
-			campain = {
-				name:   campainName,
+		let campaign = libs.findCampaign(_map, campaignName)
+		if (campaign === undefined) {
+			campaign = {
+				name:   campaignName,
 				groups: []
 			}
-			_map.push(campain)
+			_map.push(campaign)
 		}
 
-		let group = libs.findGroup(campain, groupName)
+		let group = libs.findGroup(campaign, groupName)
 		if (group === undefined) {
 			group = {
 				name:      groupName,
@@ -49,7 +49,7 @@ export default (state, getters) => {
 				ads:       [],
 				fastLinks: []
 			}
-			campain.groups.push(group)
+			campaign.groups.push(group)
 		}
 
 		group.ads.push(ad)
