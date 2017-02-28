@@ -32,7 +32,7 @@
 							<label for="type">Показать</label>
 							<md-select name="type" id="type" v-model="query.type">
 								<md-option value="ads">Объявления</md-option>
-								<md-option value="keywords" :disabled="!isKeywordsOpen">Ключевые слова</md-option>
+								<md-option value="keywords">Ключевые слова</md-option>
 								<md-option value="bs">Быстрые ссылки</md-option>
 							</md-select>
 						</md-input-container>
@@ -111,12 +111,6 @@
 			...mapState({
 				pathHistory: state => state.direct.directPathHistory
 			}),
-			isKeywordsOpen () {
-				return (this.$store.getters.directCounters.keywords || 0) > 0
-			},
-			// isFastLinksOpen() {
-			// 	return (this.$store.getters.fastLinksCount || 0) > 0
-			// },
 			sortableData () {
 				return this.filteredData
 			.sort((itemA, itemB) => {

@@ -1,10 +1,10 @@
 <template>
 	<div id="#app">
 		<md-toolbar class="md-primary main-header">
-			<router-link tag="md-button" to="/" class="md-dense" active-class="md-raised" exact>Обзор</router-link>
-			<router-link tag="md-button" to="/keywords" class="md-dense" active-class="md-raised">Ключевые слова</router-link>
-			<router-link tag="md-button" to="/fastLinks" class="md-dense" active-class="md-raised">Быстрые ссылки</router-link>
-			<router-link tag="md-button" to="/utm" class="md-dense" active-class="md-raised">Пометка ссылок</router-link>
+			<router-link to="/" class="md-button md-dense" :class="`md-theme-${$material.currentTheme}`"  active-class="md-raised" exact>Обзор <md-ink-ripple /></router-link>
+			<router-link to="/keywords" class="md-button md-dense" :class="`md-theme-${$material.currentTheme}`"  active-class="md-raised" exact>Ключевые слова <md-ink-ripple /></router-link>
+			<router-link to="/fastLinks" class="md-button md-dense" :class="`md-theme-${$material.currentTheme}`"  active-class="md-raised" exact>Быстрые ссылки <md-ink-ripple /></router-link>
+			<router-link to="/utm" class="md-button md-dense" :class="`md-theme-${$material.currentTheme}`"  active-class="md-raised" exact>Пометка ссылок <md-ink-ripple /></router-link>
 
 			<md-button @click.native="$electron.shell.openExternal('https://www.liqpay.com/ru/checkout/kozack')" class=" donate">
 				<md-icon>favorite</md-icon>
@@ -12,9 +12,7 @@
 			</md-button>
 		</md-toolbar>
 		<transition name="fade" mode="out-in">
-
-				<router-view></router-view>
-
+			<router-view></router-view>
 		</transition>
 
 		<update-button></update-button>
@@ -40,51 +38,55 @@
 				if (!MenuItem.id) return
 				switch (MenuItem.id) {
 				case 'open' :
-					const path = this.$electron.remote.dialog.showOpenDialog()
-					if (path && path[0]) { this.$store.dispatch('INIT_DIRECT', {path: path[0]}) }
-					break
+					let openPath = this.$electron.remote.dialog.showOpenDialog()
+					if (openPath && openPath[0]) { this.$store.dispatch('INIT_DIRECT', {path: openPath[0]}) }
+					return
+				case 'save' :
+					let savePath = this.$electron.remote.dialog.showSaveDialog()
+					if (savePath) { this.$store.dispatch('SAVE_DIRECT', {path: savePath}) }
+					return
 				case 'clear-direct' :
 					this.$store.dispatch('CLEAR_DIRECT')
-					break
+					return
 				case 'clear-keywords' :
 					this.$store.dispatch('CLEAR_KEYWORDS')
-					break
+					return
 				case 'clear-fastLinks' :
 					this.$store.dispatch('CLEAR_FASTLINKS')
-					break
+					return
 				case 'clear-all' :
 					this.$store.dispatch('CLEAR_ALL')
-					break
+					return
 				case 'about' :
 					this.$router.push('about')
-					break
+					return
 				case 'next-tab' :
 					switch (this.$route.name) {
-					case 'View' : this.$router.push({name: 'Keywords'}); break
-					case 'Keywords' : this.$router.push({name: 'FastLinks'}); break
-					case 'FastLinks': this.$router.push({name: 'UtmMark'}); break
-					case 'UtmMark' : this.$router.push({name: 'View'}); break
+					case 'View' : this.$router.push({name: 'Keywords'}); return
+					case 'Keywords' : this.$router.push({name: 'FastLinks'}); return
+					case 'FastLinks': this.$router.push({name: 'UtmMark'}); return
+					case 'UtmMark' : this.$router.push({name: 'View'}); return
 					default : this.$router.push({name: 'View'})
 					}
-					break
+					return
 				case 'before-tab' :
 					switch (this.$route.name) {
-					case 'View' : this.$router.push({name: 'UtmMark'}); break
-					case 'UtmMark' : this.$router.push({name: 'FastLinks'}); break
-					case 'FastLinks': this.$router.push({name: 'Keywords'}); break
-					case 'Keywords' : this.$router.push({name: 'View'}); break
+					case 'View' : this.$router.push({name: 'UtmMark'}); return
+					case 'UtmMark' : this.$router.push({name: 'FastLinks'}); return
+					case 'FastLinks': this.$router.push({name: 'Keywords'}); return
+					case 'Keywords' : this.$router.push({name: 'View'}); return
 					default : this.$router.push({name: 'View'})
 					}
-					break
+					return
 				case 'goto' :
 					this.$router.push({name: MenuItem.to})
-					break
+					return
 				case 'undo' :
 					this.$store.dispatch('UNDO')
-					break
+					return
 				case 'redo' :
 					this.$store.dispatch('REDO')
-					break
+					return
 				}
 			})
 		}

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Electron from 'vue-electron'
 import Router from 'vue-router'
-// import VueAnalytics from 'vue-ua'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import 'material-design-icons/iconfont/material-icons.css'
@@ -33,14 +32,6 @@ const router = new Router({
 	scrollBehavior: () => ({ y: 0 }),
 	routes
 })
-
-// Vue.use(VueAnalytics, {
-// 	appName:    pkg.productName,
-// 	appVersion: pkg.version,
-// 	trackingId: 'UA-71609511-5',
-// 	debug:      process.env.NODE_ENV !== 'production',
-// 	vueRouter:  router
-// })
 
 /* eslint-disable no-new */
 new Vue({

@@ -23,12 +23,11 @@ function createWindow () {
 	mainWindow = new BrowserWindow({
 		minHeight:      600,
 		minWidth:       800,
-		useContentSize: true
-		// webContents: true,
+		useContentSize: true,
+		webContents: true,
 	})
 
 	mainWindow.loadURL(winURL)
-	// mainWindow.webContents.openDevTools()
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
@@ -39,7 +38,7 @@ function createWindow () {
 }
 
 function setProxyMenuClickAsCallBack (menuItem) {
-	if (menuItem.click === true) { menuItem.click = proxyMenuClick }
+	if (menuItem.proxyToMainWindow === true && !menuItem.click) { menuItem.click = proxyMenuClick }
 	if (menuItem.submenu) { menuItem.submenu = menuItem.submenu.map(setProxyMenuClickAsCallBack) }
 	return menuItem
 }
@@ -63,20 +62,6 @@ app.on('ready', () => {
 	autoUpdater.addListener('error', () => sendToMainWindow('update-error'))
 
 	ipcMain.once('update-install', () => autoUpdater.quitAndInstall())
-
-	if (process.env.NODE_ENV === 'development') {
-		// setInterval(() => {
-		setTimeout(() => sendToMainWindow('update-available'), 1000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 10}), 2000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 20}), 3000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 30}), 4000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 40}), 5000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 50}), 6000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 60}), 7000)
-		setTimeout(() => sendToMainWindow('update-progress', {percent: 70}), 8000)
-		setTimeout(() => sendToMainWindow('update-downloaded'), 10000)
-		// }, 12000)
-	}
 })
 
 app.on('window-all-closed', () => {

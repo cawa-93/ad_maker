@@ -73,40 +73,36 @@ export const CLEAR_FASTLINKS = ({commit}) => {
 	commit(types.CLEAR_FASTLINKS)
 }
 
-export const INIT_DIRECT = ({commit}, {path: fullPath}) => {
+export const INIT_DIRECT = async ({commit}, {path: fullPath}) => {
 	try {
 		if (!fullPath) throw new Error('Не указан путь к файлу')
 
-		return libs.openFile(fullPath).then(c => libs.parseCSV(c, {delimiter: '\t'}))
-		.then(fileContent => {
-			if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
-				throw new Error('Данный файл имеет не извесную структуру')
-			}
-			commit(types.CLEAR_DIRECT)
-			commit(types.SET_DIRECT, fileContent)
-			commit(types.SET_DIRECT_INDEX)
-			commit(types.PUSH_PATH_HISTORY, {target: 'direct', item: {path: fullPath}})
-		})
-		.catch(e => new Notification('Ошибка', {body: e}))
+		let fileContent = await libs.openFile(fullPath)
+		    fileContent = await libs.parseCSV(fileContent, {delimiter: '\t'})
+		if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
+			throw new Error('Данный файл имеет не извесную структуру')
+		}
+		commit(types.CLEAR_DIRECT)
+		commit(types.SET_DIRECT, fileContent)
+		commit(types.SET_DIRECT_INDEX)
+		commit(types.PUSH_PATH_HISTORY, {target: 'direct', item: {path: fullPath}})
 	} catch (e) {
 		new Notification('Ошибка', {body: e})
 	}
 }
 
-export const SET_KEYWORDS_TEMPLATE = ({commit}, {type, path: fullPath}) => {
+export const SET_KEYWORDS_TEMPLATE = async ({commit}, {type, path: fullPath}) => {
 	try {
 		if (!fullPath) throw new Error('Не указан путь к файлу')
 		if (!type) throw new Error('Не установлен тип шаблона')
 
-		return libs.openFile(fullPath).then(c => libs.parseCSV(c, {delimiter: '\t'}))
-		.then(fileContent => {
-			commit(types.SET_KEYWORDS_TEMPLATE, {
-				type,
-				template: fileContent
-			})
-			commit(types.PUSH_PATH_HISTORY, {target: 'keywords', item: {type, path: fullPath}})
+		let fileContent = await libs.openFile(fullPath)
+		    fileContent = await libs.parseCSV(fileContent, {delimiter: '\t'})
+		commit(types.SET_KEYWORDS_TEMPLATE, {
+			type,
+			template: fileContent
 		})
-		.catch(e => new Notification('Ошибка', {body: e}))
+		commit(types.PUSH_PATH_HISTORY, {target: 'keywords', item: {type, path: fullPath}})
 	} catch (e) {
 		 new Notification('Ошибка', {body: e})
 	}
@@ -124,20 +120,19 @@ export const SET_KEYWORDS = ({commit}, template) => {
 	}
 }
 
-export const SET_FASTLINKS_TEMPLATE = ({commit}, {type, path: fullPath}) => {
+export const SET_FASTLINKS_TEMPLATE = async ({commit}, {type, path: fullPath}) => {
 	try {
 		if (!fullPath) throw new Error('Не указан путь к файлу')
 		if (!type) throw new Error('Не установлен тип шаблона')
 
-		return libs.openFile(fullPath).then(c => libs.parseCSV(c, {delimiter: '\t'}))
-		.then(fileContent => {
-			commit(types.SET_FASTLINKS_TEMPLATE, {
-				type,
-				template: fileContent
-			})
-			commit(types.PUSH_PATH_HISTORY, {target: 'fastLinks', item: {type, path: fullPath}})
+		let fileContent = await libs.openFile(fullPath)
+		    fileContent = await libs.parseCSV(fileContent, {delimiter: '\t'})
+		commit(types.SET_FASTLINKS_TEMPLATE, {
+			type,
+			template: fileContent
 		})
-		.catch(e => new Notification('Ошибка', {body: e}))
+		commit(types.PUSH_PATH_HISTORY, {target: 'fastLinks', item: {type, path: fullPath}})
+		return fileContent
 	} catch (e) {
 		new Notification('Ошибка', {body: e})
 	}
@@ -166,4 +161,9 @@ export const UTM_MARK = ({commit}, {options, type}) => {
 	} catch (e) {
 		new Notification('Ошибка', {body: e})
 	}
+}
+
+export const SAVE_DIRECT = async ({getters}, {path}) => {
+	// console.log(path, getters.direct)
+	libs.writeCSV(path, getters.direct)
 }

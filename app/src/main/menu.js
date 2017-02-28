@@ -1,28 +1,30 @@
 import {shell} from 'electron'
-/**
- * Important!
- * "Click" property can only accept boolean value that will continue to be replaced by callback function
- */
+
 export default [{
 	label:   'Кампании',
 	submenu: [{
-		label:       'Открыть',
+		label:       'Загрузить',
 		accelerator: 'CmdOrCtrl+O',
-		click:       true,
+		proxyToMainWindow: true,
 		id:          'open'
+	},{
+		label:       'Сохранить как...',
+		accelerator: 'CmdOrCtrl+S',
+		proxyToMainWindow: true,
+		id:          'save'
 	}]
 }, {
 	label:   'Правка',
 	submenu: [{
 		label:       'Отменить',
 		accelerator: 'CmdOrCtrl+Z',
-		click:       true,
+		proxyToMainWindow: true,
 		id:          'undo'
 		// enabled:      false,
 	}, {
 		label:       'Повторить',
 		accelerator: 'CmdOrCtrl+Y',
-		click:       true,
+		proxyToMainWindow: true,
 		id:          'redo'
 		// enabled:      false,
 	},
@@ -31,21 +33,21 @@ export default [{
 		label:   'Очистить...',
 		submenu: [{
 			label: 'Кампании',
-			click: true,
+			proxyToMainWindow: true,
 			id:    'clear-direct'
 		}, {
 			label: 'Ключевые слова',
-			click: true,
+			proxyToMainWindow: true,
 			id:    'clear-keywords'
 		}, {
 			label: 'Быстрые ссылки',
-			click: true,
+			proxyToMainWindow: true,
 			id:    'clear-fastLinks'
 		},
 		{type: 'separator'},
 		{
 			label: 'Очистить всё',
-			click: true,
+			proxyToMainWindow: true,
 			id:    'clear-all'
 		}]
 	}]
@@ -53,34 +55,34 @@ export default [{
 	label:   'Навигация',
 	submenu: [{
 		label:       'Следующая вкладка',
-		click:       true,
+		proxyToMainWindow: true,
 		id:          'next-tab',
 		accelerator: 'CmdOrCtrl+Tab'
 	}, {
 		label:       'Предыдущая вкладка',
-		click:       true,
+		proxyToMainWindow: true,
 		id:          'before-tab',
 		accelerator: 'CmdOrCtrl+Shift+Tab'
 	},
 	{type: 'separator'},
 	{
 		label: 'Обзор',
-		click: true,
+		proxyToMainWindow: true,
 		id:    'goto',
 		to:    'View'
 	}, {
 		label: 'Ключевые слова',
-		click: true,
+		proxyToMainWindow: true,
 		id:    'goto',
 		to:    'Keywords'
 	}, {
 		label: 'Быстрые ссылки',
-		click: true,
+		proxyToMainWindow: true,
 		id:    'goto',
 		to:    'FastLinks'
 	}, {
 		label: 'Пометка ссылок',
-		click: true,
+		proxyToMainWindow: true,
 		id:    'goto',
 		to:    'UtmMark'
 	}
@@ -93,7 +95,7 @@ export default [{
 		click:       () => shell.openExternal('https://github.com/cawa-93/command-editor')
 	}, {
 		label: 'О программе',
-		click: true,
+		proxyToMainWindow: true,
 		id:    'about'
 	}]
 }]
