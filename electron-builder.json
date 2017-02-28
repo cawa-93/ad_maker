@@ -1,0 +1,23 @@
+{
+	"productName": "Command.Editor",
+	"appId": "com.electron.command-editor",
+	"compression": "maximum",
+	"files": [
+		"dist",
+		"node_modules",
+		"package.json"
+	],
+	"linux": {
+		"category": "Utility",
+		"target": ["AppImage"],
+		"icon": "icons"
+	},
+	"nsis": {
+		"oneClick": false,
+		"allowToChangeInstallationDirectory": true,
+		"installerIcon": "icon.ico",
+		"menuCategory": true,
+		"license": "LICENSE",
+		"language": "1049"
+	}
+}
