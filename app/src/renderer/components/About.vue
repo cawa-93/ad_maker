@@ -4,7 +4,7 @@
 			<md-card>
 				<md-card-header>
 					<md-avatar>
-						<img src="./About/assets/512x512.png" alt="People">
+						<img src="./About/assets/logo.png" alt="People">
 					</md-avatar>
 
 					<div class="md-title">Command.Editor</div>

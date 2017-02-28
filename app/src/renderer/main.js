@@ -6,8 +6,6 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.css'
 import 'material-design-icons/iconfont/material-icons.css'
 
-// import pkg from './../../package.json'
-
 import App from './App'
 import routes from './routes'
 
