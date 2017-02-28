@@ -1,23 +1,23 @@
 {
-  "name": "admaker",
-  "version": "0.3.7",
-  "description": "Быстрое заполнение Коммандера",
-  "main": "main.js",
-  "author": "Alex Kozack <kozackunisoft@gmail.com>",
-  "repository": "cawa-93/ad_maker",
+  "name": "command-editor",
+  "productName": "Command.Editor",
+  "version": "0.3.8",
+  "description": "Быстрый редактор кампаний из Яндекс.Директ Коммандера",
+  "main": "./dist/main.js",
+  "repository": "cawa-93/command-editor",
   "dependencies": {
-    "angular": "~1.5.10",
-    "angular-animate": "~1.5.10",
-    "angular-aria": "~1.5.10",
-    "angular-material": "^1.1.3",
-    "angular-material-data-table": "^0.10.10",
-    "angular-messages": "^1.6.2",
-    "angular-ui-router": "^1.0.0-rc.1",
-    "electron-auto-updater": "^1.0.0",
+    "electron-updater": "^1.7.1",
+    "fast-csv": "^2.3.1",
     "iconv-lite": "^0.4.15",
     "jschardet": "^1.4.1",
     "material-design-icons": "^3.0.1",
-    "mime-types": "^2.1.14",
-    "transliteration": "^1.5.2"
-  }
+    "transliteration": "^1.5.3",
+    "vue": "^2.2.1",
+    "vue-electron": "^1.0.6",
+    "vue-material": "^0.7.1",
+    "vue-router": "^2.3.0",
+    "vuex": "^2.2.1"
+  },
+  "devDependencies": {},
+  "author": "Alex Kozack <kozackunisoft@gmail.com>"
 }
