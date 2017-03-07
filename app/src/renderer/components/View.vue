@@ -152,7 +152,7 @@
 						return false
 					}
 					return true
-				})
+				}).splice(0, 5)
 			}
 		},
 		methods: {

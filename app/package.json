@@ -1,13 +1,13 @@
 {
   "name": "command-editor",
   "productName": "Command.Editor",
-  "version": "0.3.8",
+  "version": "0.3.9-beta2",
   "description": "Быстрый редактор кампаний из Яндекс.Директ Коммандера",
   "main": "./dist/main.js",
   "repository": "cawa-93/command-editor",
   "dependencies": {
-    "electron-updater": "^1.7.1",
-    "fast-csv": "^2.3.1",
+    "electron-updater": "^1.8.2",
+    "fast-csv": "^2.4.0",
     "iconv-lite": "^0.4.15",
     "jschardet": "^1.4.1",
     "material-design-icons": "^3.0.1",
