@@ -103,10 +103,10 @@
 			},
 			setTemplate (pathObj) {
 				if (!pathObj.type) pathObj.type = this.type
-				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', pathObj)
+				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', pathObj).then(() => {
+					this.saveKeywords()
+				})
 				this.templateType = pathObj.type
-
-				this.saveKeywords()
 			},
 			saveKeywords () {
 				this.$store.dispatch('SET_KEYWORDS', this.template)

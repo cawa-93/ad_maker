@@ -131,10 +131,10 @@
 			},
 			setTemplate (pathObj) {
 				if (!pathObj.type) pathObj.type = this.type
-				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', pathObj)
+				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', pathObj).then(() => {
+					this.savefastLinks()
+				})
 				this.templateType = pathObj.type
-
-				this.savefastLinks()
 			},
 			savefastLinks () {
 				this.$store.dispatch('SET_FASTLINKS', this.template)

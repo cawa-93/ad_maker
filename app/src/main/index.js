@@ -24,7 +24,7 @@ function createWindow () {
 		minHeight:      600,
 		minWidth:       800,
 		useContentSize: true,
-		webContents: true,
+		webContents:    true
 	})
 
 	mainWindow.loadURL(winURL)

@@ -9,8 +9,11 @@
 	],
 	"linux": {
 		"category": "Utility",
-		"target": ["AppImage"],
+		"target": [{"target":"AppImage", "arch": "x64"}],
 		"icon": "icons"
+	},
+	"win": {
+		"target": [{"target":"nsis", "arch": ["x64", "ia32"]}]
 	},
 	"nsis": {
 		"oneClick": false,

@@ -3,88 +3,88 @@ import {shell} from 'electron'
 export default [{
 	label:   'Кампании',
 	submenu: [{
-		label:       'Загрузить',
-		accelerator: 'CmdOrCtrl+O',
+		label:             'Загрузить',
+		accelerator:       'CmdOrCtrl+O',
 		proxyToMainWindow: true,
-		id:          'open'
-	},{
-		label:       'Сохранить как...',
-		accelerator: 'CmdOrCtrl+S',
+		id:                'open'
+	}, {
+		label:             'Сохранить как...',
+		accelerator:       'CmdOrCtrl+S',
 		proxyToMainWindow: true,
-		id:          'save'
+		id:                'save'
 	}]
 }, {
 	label:   'Правка',
 	submenu: [{
-		label:       'Отменить',
-		accelerator: 'CmdOrCtrl+Z',
+		label:             'Отменить',
+		accelerator:       'CmdOrCtrl+Z',
 		proxyToMainWindow: true,
-		id:          'undo'
+		id:                'undo'
 		// enabled:      false,
 	}, {
-		label:       'Повторить',
-		accelerator: 'CmdOrCtrl+Y',
+		label:             'Повторить',
+		accelerator:       'CmdOrCtrl+Y',
 		proxyToMainWindow: true,
-		id:          'redo'
+		id:                'redo'
 		// enabled:      false,
 	},
 	{type: 'separator'},
 	{
 		label:   'Очистить...',
 		submenu: [{
-			label: 'Кампании',
+			label:             'Кампании',
 			proxyToMainWindow: true,
-			id:    'clear-direct'
+			id:                'clear-direct'
 		}, {
-			label: 'Ключевые слова',
+			label:             'Ключевые слова',
 			proxyToMainWindow: true,
-			id:    'clear-keywords'
+			id:                'clear-keywords'
 		}, {
-			label: 'Быстрые ссылки',
+			label:             'Быстрые ссылки',
 			proxyToMainWindow: true,
-			id:    'clear-fastLinks'
+			id:                'clear-fastLinks'
 		},
 		{type: 'separator'},
 		{
-			label: 'Очистить всё',
+			label:             'Очистить всё',
 			proxyToMainWindow: true,
-			id:    'clear-all'
+			id:                'clear-all'
 		}]
 	}]
 }, {
 	label:   'Навигация',
 	submenu: [{
-		label:       'Следующая вкладка',
+		label:             'Следующая вкладка',
 		proxyToMainWindow: true,
-		id:          'next-tab',
-		accelerator: 'CmdOrCtrl+Tab'
+		id:                'next-tab',
+		accelerator:       'CmdOrCtrl+Tab'
 	}, {
-		label:       'Предыдущая вкладка',
+		label:             'Предыдущая вкладка',
 		proxyToMainWindow: true,
-		id:          'before-tab',
-		accelerator: 'CmdOrCtrl+Shift+Tab'
+		id:                'before-tab',
+		accelerator:       'CmdOrCtrl+Shift+Tab'
 	},
 	{type: 'separator'},
 	{
-		label: 'Обзор',
+		label:             'Обзор',
 		proxyToMainWindow: true,
-		id:    'goto',
-		to:    'View'
+		id:                'goto',
+		to:                'View'
 	}, {
-		label: 'Ключевые слова',
+		label:             'Ключевые слова',
 		proxyToMainWindow: true,
-		id:    'goto',
-		to:    'Keywords'
+		id:                'goto',
+		to:                'Keywords'
 	}, {
-		label: 'Быстрые ссылки',
+		label:             'Быстрые ссылки',
 		proxyToMainWindow: true,
-		id:    'goto',
-		to:    'FastLinks'
+		id:                'goto',
+		to:                'FastLinks'
 	}, {
-		label: 'Пометка ссылок',
+		label:             'Пометка ссылок',
 		proxyToMainWindow: true,
-		id:    'goto',
-		to:    'UtmMark'
+		id:                'goto',
+		to:                'UtmMark'
 	}
 	]
 }, {
@@ -94,8 +94,8 @@ export default [{
 		accelerator: 'F1',
 		click:       () => shell.openExternal('https://github.com/cawa-93/command-editor')
 	}, {
-		label: 'О программе',
+		label:             'О программе',
 		proxyToMainWindow: true,
-		id:    'about'
+		id:                'about'
 	}]
 }]
