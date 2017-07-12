@@ -78,7 +78,7 @@ export const INIT_DIRECT = async ({commit}, {path: fullPath}) => {
 		if (!fullPath) throw new Error('Не указан путь к файлу')
 
 		let fileContent = await libs.openFile(fullPath)
-		    fileContent = await libs.parseCSV(fileContent, {delimiter: '\t'})
+		fileContent = await libs.parseCSV(fileContent, {delimiter: '\t'})
 		if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
 			throw new Error('Данный файл имеет не извесную структуру')
 		}
@@ -164,6 +164,5 @@ export const UTM_MARK = ({commit}, {options, type}) => {
 }
 
 export const SAVE_DIRECT = async ({getters}, {path}) => {
-	// console.log(path, getters.direct)
 	libs.writeCSV(path, getters.direct)
 }

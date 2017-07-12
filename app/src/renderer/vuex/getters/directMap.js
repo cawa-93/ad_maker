@@ -4,23 +4,23 @@ export default (state, getters) => {
 	const _map = []
 	if (!getters.direct) return _map
 	getters.direct.forEach((row, index) => {
-		if (index < 3 || !row || !row[8] || !row[3]) return
+		if (index < 3 || !row || !row[9] || !row[3]) return
 
-		const campaignName = row[8]
+		const campaignName = row[9]
 		const groupName = row[3]
-		const keyword = row[10]
+		const keyword = row[11]
 		const ad = {
-			title: row[12],
-			desc:  row[13],
-			ancor: row[15],
-			url:   row[14]
+			title: row[13],
+			desc:  row[14],
+			ancor: row[16],
+			url:   row[15]
 		}
 
 		const fastLinks = []
 		let fastLinksData = {
-			titles: row[22].split('||'),
-			urls:   row[23].split('||'),
-			descs:  row[24].split('||')
+			titles: row[23].split('||'),
+			urls:   row[24].split('||'),
+			descs:  row[25].split('||')
 		}
 		fastLinksData.urls.forEach((url, index) => {
 			if (url && fastLinksData.titles[index] && fastLinksData.descs[index]) {
