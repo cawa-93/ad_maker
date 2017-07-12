@@ -16,7 +16,7 @@
 
 			<md-layout md-flex v-else class="scroll">
 				<md-whiteframe>
-					<md-card v-for="(row, index) in template" :key="index">
+					<!-- <md-card v-for="(row, index) in template" :key="index">
 						<md-card-header>
 							<div class="md-title">{{row.groupName}}</div>
 							<div class="md-subhead">{{row.campaignName}}</div>
@@ -46,7 +46,7 @@
 								</md-layout>
 							</md-layout>
 						</md-card-content>
-					</md-card>
+					</md-card> -->
 				</md-whiteframe>
 			</md-layout>
 
@@ -131,7 +131,9 @@
 			},
 			setTemplate (pathObj) {
 				if (!pathObj.type) pathObj.type = this.type
-				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', pathObj)
+				this.$store.dispatch('SET_FASTLINKS_TEMPLATE', pathObj).then(() => {
+					this.savefastLinks()
+				})
 				this.templateType = pathObj.type
 			},
 			savefastLinks () {

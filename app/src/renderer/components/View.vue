@@ -17,7 +17,7 @@
 				</md-whiteframe>
 			</md-layout>
 		</md-layout>
-		<div v-else>
+		<div v-else class="full-height">
 			<md-toolbar class="md-primary">
 				<md-layout>
 					<md-layout md-flex="66">
@@ -81,6 +81,9 @@
 					</md-table-body>
 				</md-table>
 			</md-table-card>
+			<div class="load-more" v-if="rowPerPage < filteredData.length">
+				<md-button @click.native="rowPerPage += 15"><md-icon class="md-size-2x md-accent">more_horiz</md-icon></md-button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -95,7 +98,8 @@
 		props: ['defaultQueryType'],
 		data () {
 			return {
-				query: {
+				rowPerPage: 5,
+				query:      {
 					search: '',
 					type:   this.defaultQueryType || 'ads',
 					sortBy: 'campaign',
@@ -113,14 +117,15 @@
 			}),
 			sortableData () {
 				return this.filteredData
-			.sort((itemA, itemB) => {
-				if (itemA[this.query.sortBy] > itemB[this.query.sortBy]) {
-					return this.query.sort === 'asc' ? 1 : -1
-				} else if (itemA[this.query.sortBy] < itemB[this.query.sortBy]) {
-					return this.query.sort === 'asc' ? -1 : 1
-				}
-				return 0
-			})
+				.splice(0, this.rowPerPage)
+				.sort((itemA, itemB) => {
+					if (itemA[this.query.sortBy] > itemB[this.query.sortBy]) {
+						return this.query.sort === 'asc' ? 1 : -1
+					} else if (itemA[this.query.sortBy] < itemB[this.query.sortBy]) {
+						return this.query.sort === 'asc' ? -1 : 1
+					}
+					return 0
+				})
 			},
 			filteredData () {
 				return this.$store.getters.directViewTableData.filter((item) => {
@@ -198,8 +203,14 @@
 	.dropdown-zone p {
 		text-align: center;
 	}
-	.md-table {
-		max-height: calc(100vh - 140px);
+	.full-height {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 64px)
+	}
+	.md-table-card {
+		flex: 1;
+		overflow: auto;
 	}
 	td {
 		word-break: break-word;
@@ -209,5 +220,12 @@
 	}
 	.md-whiteframe {
 		width: 100%;
+	}
+	.load-more {
+		padding: 6px 0;
+		text-align: center;
+	}
+	.load-more > button {
+		margin: 0
 	}
 </style>

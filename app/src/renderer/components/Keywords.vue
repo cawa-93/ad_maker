@@ -19,7 +19,7 @@
 					<blockquote v-if="templateType === 'adwords'" class="md-warn">
 						<span>Загрузка ключевых фраз из шаблона AdWords может работать не корректно. Используйте эту функцию на свой страх и риск.</span>
 					</blockquote>
-					<md-card v-for="(row, index) in template" :key="index">
+					<!--<md-card v-for="(row, index) in template" :key="index">
 						<md-card-header>
 							<div class="md-title">{{row.groupName}}</div>
 							<div class="md-subhead">{{row.campaignName}}</div>
@@ -30,7 +30,7 @@
 								<template scope="chip">{{ chip.value }}</template>
 							</md-chips>
 						</md-card-content>
-					</md-card>
+					</md-card> -->
 				</md-whiteframe>
 			</md-layout>
 
@@ -103,7 +103,9 @@
 			},
 			setTemplate (pathObj) {
 				if (!pathObj.type) pathObj.type = this.type
-				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', pathObj)
+				this.$store.dispatch('SET_KEYWORDS_TEMPLATE', pathObj).then(() => {
+					this.saveKeywords()
+				})
 				this.templateType = pathObj.type
 			},
 			saveKeywords () {
