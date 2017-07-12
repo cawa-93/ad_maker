@@ -8,7 +8,6 @@
 		name:    'dropFile',
 		methods: {
 			loadFiles (e) {
-				console.log('ondrop', e.dataTransfer.files)
 				this.$emit('select', e.dataTransfer.files[0].path)
 			},
 			openFile () {

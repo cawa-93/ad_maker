@@ -57,7 +57,11 @@ const mutations = {
 	},
 
 	[types.SET_KEYWORDS_TEMPLATE] (state, {template, type}) {
-		if (type === 'adwords') { state.keywordsTemplate = template.filter((row, i) => i > 0 && row[0] && row[17] && row[37]).map(row => [row[0], row[17], row[37]]) } else			{ state.keywordsTemplate = template.splice(1) }
+		if (type === 'adwords') {
+			state.keywordsTemplate = template.filter((row, i) => i > 0 && row[0] && row[18] && row[38]).map(row => [row[0], row[18], row[38]])
+		} else {
+			state.keywordsTemplate = template.splice(1)
+		}
 
 		state.keywordsTemplate.map(row => {
 			row[2] = libs.clearKeyword(row[2].trim())
@@ -68,9 +72,9 @@ const mutations = {
 		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex])
 		template.forEach(({campaignName, groupName, keywords}) => {
 			keywords.forEach(keyword => {
-				let adIndex = newDirectState.findIndex(row => row && row[8] && row[3] && row[8].toUpperCase() === campaignName.toUpperCase() && row[3].toUpperCase() === groupName.toUpperCase())
+				let adIndex = newDirectState.findIndex(row => row && row[9] && row[3] && row[9].toUpperCase() === campaignName.toUpperCase() && row[3].toUpperCase() === groupName.toUpperCase())
 				if (adIndex < 0) return
-				if (newDirectState[adIndex][10] !== '') {
+				if (newDirectState[adIndex][11] !== '') {
 					let newAd = cloneDeep(newDirectState[adIndex])
 					newAd[0] = '-'
 					newDirectState.splice(adIndex, 0, newAd)
@@ -78,7 +82,7 @@ const mutations = {
 				} else {
 					newDirectState[adIndex][0] = '-'
 				}
-				newDirectState[adIndex][10] = keyword
+				newDirectState[adIndex][11] = keyword
 			})
 		})
 		state.directLog.push(newDirectState)
@@ -96,10 +100,10 @@ const mutations = {
 		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex]).map((row, index) => {
 			if (index < 3 || !row) return row
 
-			const cacheKey = row[8] + row[3]
+			const cacheKey = row[9] + row[3]
 			if (!cache[cacheKey]) {
 				const campaign = template.find(({campaignName, groupName}) => {
-					return campaignName.toUpperCase() === row[8].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
+					return campaignName.toUpperCase() === row[9].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
 				})
 
 				if (!campaign) return row
@@ -121,9 +125,9 @@ const mutations = {
 					descs:  descs.join('||')
 				}
 			}
-			row[22] = cache[cacheKey].titles
-			row[23] = cache[cacheKey].urls
-			row[24] = cache[cacheKey].descs
+			row[23] = cache[cacheKey].titles
+			row[24] = cache[cacheKey].urls
+			row[25] = cache[cacheKey].descs
 
 			return row
 		})
@@ -137,9 +141,9 @@ const mutations = {
 			if (index < 3 || !row) return row
 
 			const replaceData = {
-				campaign_name: row[8],
+				campaign_name: row[9],
 				group_name:    row[3],
-				ad_title:      row[12]
+				ad_title:      row[13]
 			}
 			const utm = cloneDeep(params)
 
@@ -157,14 +161,14 @@ const mutations = {
 
 	[types.UTM_MARK_FAST] (state, {params, mode}) {
 		const newDirectState = cloneDeep(state.directLog[state.currentDirectIndex]).map((row, index) => {
-			if (index < 3 || !row || !row[22] || !row[23]) return row
+			if (index < 3 || !row || !row[23] || !row[24]) return row
 
-			const titles = row[22].split('||')
-			row[23] = row[23].split('||').map((url, index) => {
+			const titles = row[23].split('||')
+			row[24] = row[24].split('||').map((url, index) => {
 				const replaceData = {
-					campaign_name: row[8],
+					campaign_name: row[9],
 					group_name:    row[3],
-					ad_title:      row[12],
+					ad_title:      row[13],
 					fastlink_name: titles[index]
 				}
 				const utm = cloneDeep(params)
