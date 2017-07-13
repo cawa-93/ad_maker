@@ -7,13 +7,8 @@
 		"node_modules",
 		"package.json"
 	],
-	"linux": {
-		"category": "Utility",
-		"target": [{"target":"AppImage", "arch": "x64"}],
-		"icon": "icons"
-	},
 	"win": {
-		"target": [{"target":"nsis", "arch": ["x64", "ia32"]}]
+		"target": [{"target":"nsis", "arch": ["x64"]}]
 	},
 	"nsis": {
 		"oneClick": false,
