@@ -2,7 +2,7 @@
   "name": "command-editor",
   "productName": "Command.Editor",
   "description": "Быстрый редактор кампаний из Яндекс.Директ Коммандера",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "repository": "cawa-93/command-editor",
   "scripts": {
     "release": "npm run pack && build -w && notify-send 'Компиляция завершена'",
