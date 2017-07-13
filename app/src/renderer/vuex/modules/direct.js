@@ -153,7 +153,7 @@ const mutations = {
 					utm[param] = utm[param].replace(reg, replaceData[key])
 				}
 			}
-			row[14] = libs.utmMark(row[14], utm, mode === 'anchor')
+			row[15] = libs.utmMark(row[15], utm, mode === 'anchor')
 			return row
 		})
 		state.directLog.push(newDirectState)
