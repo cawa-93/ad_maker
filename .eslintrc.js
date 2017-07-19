@@ -16,6 +16,9 @@ module.exports = {
     'html'
   ],
   'rules': {
+    'handle-callback-err': 0,
+    'comma-dangle': ["error", "always-multiline"],
+    'no-mixed-spaces-and-tabs': [2, 'smart-tabs'],
     // enforce consistent indentation
     "indent": ["error", "tab"],
     // disallow all tabs
