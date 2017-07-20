@@ -2,8 +2,8 @@ import cloneDeep from 'lodash.clonedeep'
 import { utmMark } from '@/helpers'
 
 export function CLEAR_STACK (state) {
-	state.stack = []
-	state.stackIndex = -1
+	// state.stack = []
+	// state.stackIndex = -1
 }
 
 export function SET_STACK_INDEX (state, newIndex) {
