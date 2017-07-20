@@ -1,10 +1,10 @@
 export default function clearKeyword (str) {
 	const regExpMap = [{
 		reg: /^\[(.+)\]$/ig,
-		replace: `"$1"`
+		replace: `"$1"`,
 	}, {
 		reg: /\+([^ ]+)/ig,
-		replace: `$1`
+		replace: `$1`,
 	}]
 
 	let result = str

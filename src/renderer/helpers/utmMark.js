@@ -3,7 +3,7 @@ import { slugify } from 'transliteration'
 slugify.config({
 	separator: '_',
 	ignore: ['.'],
-	lowercase: true
+	lowercase: true,
 })
 
 export default function utmMark (baseUrl, utmParams, markAsAnchor = false) {

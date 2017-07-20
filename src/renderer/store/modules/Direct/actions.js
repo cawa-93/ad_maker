@@ -1,5 +1,5 @@
 import { remote } from 'electron'
-import {openFile, parseCSV, writeCSV} from '@helpers'
+import {openFile, parseCSV, writeCSV} from '@/helpers'
 
 export function UNDO ({commit, state}) {
 	if (state.stackIndex > 0) {
@@ -21,7 +21,7 @@ export function CLEAR_ALL ({commit}) {
 		message: 'Вы уверены, что хотите очистить всю информацию?',
 		detail: 'Все не сохранённые изменения будут утеряны',
 		cancelId: 0,
-		buttons: ['Cancel', 'Yes']
+		buttons: ['Cancel', 'Yes'],
 	})
 	if (!confirm) return
 
@@ -38,7 +38,7 @@ export function CLEAR_KEYWORDS ({commit}) {
 		message: 'Вы уверены, что хотите очистить загруженные ключевые слова?',
 		detail: 'Все не сохранённые изменения будут утеряны',
 		cancelId: 0,
-		buttons: ['Cancel', 'Yes']
+		buttons: ['Cancel', 'Yes'],
 	})
 	if (!confirm) return
 	commit('CLEAR_KEYWORDS')
@@ -52,7 +52,7 @@ export function CLEAR_DIRECT ({commit}) {
 		message: 'Вы уверены, что хотите очистить загруженные кампании?',
 		detail: 'Все не сохранённые изменения будут утеряны',
 		cancelId: 0,
-		buttons: ['Cancel', 'Yes']
+		buttons: ['Cancel', 'Yes'],
 	})
 	if (!confirm) return
 	commit('CLEAR_DIRECT')
@@ -66,27 +66,31 @@ export function CLEAR_FASTLINKS ({commit}) {
 		message: 'Вы уверены, что хотите очистить загруженные быстрые ссылки?',
 		detail: 'Все не сохранённые изменения будут утеряны',
 		cancelId: 0,
-		buttons: ['Cancel', 'Yes']
+		buttons: ['Cancel', 'Yes'],
 	})
 	if (!confirm) return
 	commit('CLEAR_FASTLINKS')
 }
 
-export async function INIT_DIRECT ({commit}, {path: fullPath}) {
+export async function initStack ({commit}, {filePath}) {
 	try {
-		if (!fullPath) throw new Error('Не указан путь к файлу')
+		if (!filePath) {
+			throw new Error('Не указан путь к файлу')
+		}
 
-		let fileContent = await openFile(fullPath)
+		let fileContent = await openFile(filePath)
 		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+
 		if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
 			throw new Error('Данный файл имеет не извесную структуру')
 		}
-		commit('CLEAR_DIRECT')
-		commit('SET_DIRECT', fileContent)
-		commit('SET_DIRECT_INDEX')
-		commit('PUSH_PATH_HISTORY', {target: 'direct', item: {path: fullPath}})
+		commit('CLEAR_STACK')
+		commit('STACK_ADD', fileContent)
+		commit('SET_STACK_INDEX')
+		commit('INIT_COLUMNS')
+		commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
 	} catch (e) {
-		// new Notification('Ошибка', {body: e})
+		console.error('Ошибка', {body: e})
 	}
 }
 
@@ -96,9 +100,9 @@ export function SET_KEYWORDS ({commit}, template) {
 		commit('CLEAR_REDO_STATES')
 		commit('SET_KEYWORDS', template)
 		commit('SET_DIRECT_INDEX')
-		// new Notification('Ключевые фразы добавлены')
+		console.error('Ключевые фразы добавлены')
 	} catch (e) {
-		// new Notification('Ошибка', {body: e})
+		console.error('Ошибка', {body: e})
 	}
 }
 
@@ -108,9 +112,9 @@ export function SET_FASTLINKS ({commit}, template) {
 		commit('CLEAR_REDO_STATES')
 		commit('SET_FASTLINKS', template)
 		commit('SET_DIRECT_INDEX')
-		// new Notification('Быстрые ссылки добавлены')
+		console.error('Быстрые ссылки добавлены')
 	} catch (e) {
-		// new Notification('Ошибка', {body: e})
+		console.error('Ошибка', {body: e})
 	}
 }
 
@@ -121,9 +125,9 @@ export function UTM_MARK ({commit}, {options, type}) {
 		else if (type === 'fast') commit('UTM_MARK_FAST', options)
 		else throw new Error('Не извесный тип ссылок для пометки')
 		commit('SET_DIRECT_INDEX')
-		// new Notification('Пометка завершена')
+		console.error('Пометка завершена')
 	} catch (e) {
-		// new Notification('Ошибка', {body: e})
+		console.error('Ошибка', {body: e})
 	}
 }
 

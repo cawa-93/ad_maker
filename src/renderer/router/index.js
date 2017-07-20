@@ -7,12 +7,12 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'landing-page',
-			component: require('@/components/LandingPage')
+			name: 'load-direct',
+			component: require('@/pages/LoadDirect'),
 		},
 		{
 			path: '*',
-			redirect: '/'
-		}
-	]
+			redirect: '/',
+		},
+	],
 })

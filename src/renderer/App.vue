@@ -6,7 +6,7 @@
 
 <script>
   export default {
-  	name: 'command-editor'
+  	name: 'command-editor',
   }
 </script>
 
