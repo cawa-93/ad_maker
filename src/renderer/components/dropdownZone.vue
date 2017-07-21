@@ -1,14 +1,15 @@
 <template>
 	<div 
 		class="dropdown-zone-root"
+		:class="{'primary white--text': isDrag}"
 		@click="openFile"
 		@drop.prevent="loadFiles"
-		@dragover.prevent="isDragover = true"
-		@dragleave.prevent="isDragover = false"
+		@dragover.prevent="isDrag = true"
+		@dragleave.prevent="isDrag = false"
 	>
 		<div class="dashed">
 			<v-icon x-large>file_upload</v-icon>
-			<slot class="dropdown-zone-content"></slot>
+			<p class="dropdown-zone-content">Перетащите файл сюда</p>
 		</div>
 	</div>
 </template>
@@ -18,12 +19,12 @@
 		name: 'dropdownZone',
 		data () {
 			return {
-				isDragover: false,
+				isDrag: false,
 			}
 		},
 		methods: {
 			loadFiles (e) {
-				this.isDragover = false
+				this.isDrag = false
 				this.$emit('input', e.dataTransfer.files[0].path)
 			},
 			openFile () {
@@ -34,40 +35,44 @@
 			},
 		},
 	}
+
+	   //  dropZone.ondragover = function() {
+    //     this.className = 'upload-drop-zone drop';
+    //     return false;
+    // }
+
+    // dropZone.ondragleave = function() {
+    //     this.className = 'upload-drop-zone';
+    //     return false;
+    // }
 </script>
 
 <style scoped>
 	.dropdown-zone-root {
 		padding: 10px;
+		opacity: 0.8;
 	}
 	.dropdown-zone-root, .dashed {
+		min-height: 150px;
 		width: 100%;
-		height:100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		flex-direction: column;
 		cursor: pointer;
-		transition: border-color .2s, background .2s, color .2s;
 	}
 	.dashed {
-		border: 3px dashed transparent;
-	}
-	.dropdown-zone-root:hover {
-		background: #3f51b5;
-		color: #fff;
-	}
-	.dropdown-zone-root:hover .dashed {
-		border-color: #fff;
+		border: 3px dashed;
+		pointer-events: none !important;
 	}
 	
 	.icon {
-    padding: 19px;
     box-sizing: content-box;
     border-radius: 5px;
 		margin: 0;
+		pointer-events: none !important;
 	}
 	.dropdown-zone-content {
 		pointer-events: none !important;
+		margin: 0;
 	}
 </style>
