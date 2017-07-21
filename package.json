@@ -7,7 +7,7 @@
   "main": "./dist/electron/main.js",
   "scripts": {
     "dev": "node node_modules/electron-webpack/dev-runner.js",
-    "compile": "webpack --env.production --progress --bail --config node_modules/electron-webpack/webpack.app.config.js",
+    "compile": "webpack --bail --env.production --config node_modules/electron-webpack/webpack.app.config.js",
     "dist": "npm run compile && electron-builder",
     "dist-dir": "npm run compile && electron-builder --dir -c.compression=store -c.mac.identity=null",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
@@ -54,6 +54,7 @@
     "jschardet": "^1.5.0",
     "lodash.clonedeep": "^4.5.0",
     "material-design-icons": "^3.0.1",
+    "nedb": "^1.8.0",
     "transliteration": "^1.6.2",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
@@ -92,7 +93,7 @@
     "eslint-plugin-node": "^4.2.2",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^3.0.1",
-    "extract-text-webpack-plugin": "^2.0.0-beta.4",
+    "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.16.1",
     "json-loader": "^0.5.4",
@@ -103,7 +104,8 @@
     "vue-loader": "^12.2.1",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.3",
-    "webpack": "^2.2.1",
+    "webpack": "^3.3.0",
+    "webpack-build-notifier": "^0.1.15",
     "webpack-dev-server": "^2.3.0",
     "webpack-hot-middleware": "^2.18.0"
   }

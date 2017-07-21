@@ -7,6 +7,7 @@ export function CLEAR_STACK (state) {
 }
 
 export function SET_STACK_INDEX (state, newIndex) {
+	console.log(newIndex, state.stack, state.stack.length)
 	if (newIndex === undefined) newIndex = state.stack.length - 1
 	state.stackIndex = newIndex
 }

@@ -1,7 +1,7 @@
 import {shell} from 'electron'
 
 export default [{
-	label: 'Кампании !',
+	label: 'Кампании',
 	submenu: [{
 		label: 'Загрузить',
 		accelerator: 'CmdOrCtrl+O',

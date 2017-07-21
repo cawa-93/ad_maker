@@ -41,7 +41,7 @@
 		},
 		computed: {
 			files () {
-				return this.$store.state.RecentFiles[this.type].map(file => path.parse(file))
+				return this.$store.getters[`RecentFiles/${this.type}`].map(doc => path.parse(doc.filePath))
 			},
 		},
 		methods: {

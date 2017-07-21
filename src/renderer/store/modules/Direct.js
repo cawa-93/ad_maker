@@ -4,7 +4,7 @@ import * as actions from './Direct/actions'
 
 export default {
 	namespaced: true,
-	state,
+	state: Object.assign({}, state),
 	mutations,
 	actions,
 }
