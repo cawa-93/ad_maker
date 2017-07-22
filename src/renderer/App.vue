@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+  	<v-app id="example-8" dark standalone>
+  		<v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-app>
   </div>
 </template>
 
@@ -9,7 +13,3 @@
   	name: 'command-editor',
   }
 </script>
-
-<style>
-  /* CSS */
-</style>

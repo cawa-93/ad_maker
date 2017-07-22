@@ -1,17 +1,19 @@
 <template>
-	<div 
-		class="dropdown-zone-root"
-		:class="{'primary white--text': isDrag}"
-		@click="openFile"
-		@drop.prevent="loadFiles"
-		@dragover.prevent="isDrag = true"
-		@dragleave.prevent="isDrag = false"
-	>
-		<div class="dashed">
-			<v-icon x-large>file_upload</v-icon>
-			<p class="dropdown-zone-content">Перетащите файл сюда</p>
+	<v-card>
+		<div 
+			class="dropdown-zone-root"
+			:class="{'primary white--text': isDrag}"
+			@click="openFile"
+			@drop.prevent="loadFiles"
+			@dragover.prevent="isDrag = true"
+			@dragleave.prevent="isDrag = false"
+		>
+			<div class="dashed">
+				<v-icon x-large>file_upload</v-icon>
+				<p class="dropdown-zone-content">Перетащите файл сюда</p>
+			</div>
 		</div>
-	</div>
+	</v-card>
 </template>
 
 <script>

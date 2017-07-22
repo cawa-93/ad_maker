@@ -11,6 +11,11 @@ export default new Router({
 			component: require('@/pages/LoadDirect'),
 		},
 		{
+			path: '/editor',
+			name: 'editor',
+			component: require('@/pages/Editor'),
+		},
+		{
 			path: '*',
 			redirect: '/',
 		},

@@ -1,24 +1,33 @@
 import cloneDeep from 'lodash.clonedeep'
 import { utmMark } from '@/helpers'
 
-export function CLEAR_STACK (state) {
-	// state.stack = []
-	// state.stackIndex = -1
+// export function CLEAR_STACK (state) {
+// 	// state.stack = []
+// 	// state.stackIndex = -1
+// }
+
+// export function SET_STACK_INDEX (state, newIndex) {
+// 	console.log(newIndex, state.stack, state.stack.length)
+// 	if (newIndex === undefined) newIndex = state.stack.length - 1
+// 	state.stackIndex = newIndex
+// }
+
+export function ADD_TO_STACK (state, docId) {
+	const currentIndex = state.stack.indexOf(state.currentStackIndex)
+	state.stack.splice(currentIndex, state.stack.length - currentIndex, docId)
 }
 
-export function SET_STACK_INDEX (state, newIndex) {
-	console.log(newIndex, state.stack, state.stack.length)
-	if (newIndex === undefined) newIndex = state.stack.length - 1
-	state.stackIndex = newIndex
-}
-
-export function STACK_ADD (state, direct) {
+export function INIT_DIRECT (state, direct) {
 	if (!direct) return
-	state.stack.push(direct)
+	state.direct = direct
+}
+export function SET_DIRECT (state, direct) {
+	if (!direct) return
+	state.direct = direct
 }
 
 export function INIT_COLUMNS (state) {
-	const titlesRow = state.stack[state.stackIndex][2]
+	const titlesRow = state.direct[2]
 	state.columns.EXTA_AD = titlesRow.indexOf('Доп. объявление группы')
 	state.columns.CAMPAIN_ID = titlesRow.indexOf('ID кампании (локальный)')
 	state.columns.CAMPAIN_NAME = titlesRow.indexOf('Название кампании')
@@ -29,9 +38,9 @@ export function INIT_COLUMNS (state) {
 	state.columns.AD_TEXT = titlesRow.indexOf('Текст')
 	state.columns.AD_URL = titlesRow.indexOf('Ссылка')
 	state.columns.AD_ANCHOR = titlesRow.indexOf('Отображаемая ссылка')
-	state.columns.BS_TITLES = titlesRow.indexOf('Заголовки быстрых ссылок')
-	state.columns.BS_URLS = titlesRow.indexOf('Адреса быстрых ссылок')
-	state.columns.BS_TEXTS = titlesRow.indexOf('Описания быстрых ссылок')
+	state.columns.FS_TITLES = titlesRow.indexOf('Заголовки быстрых ссылок')
+	state.columns.FS_URLS = titlesRow.indexOf('Адреса быстрых ссылок')
+	state.columns.FS_TEXTS = titlesRow.indexOf('Описания быстрых ссылок')
 }
 
 export function SET_KEYWORDS (state, template) {

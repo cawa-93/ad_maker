@@ -13,8 +13,15 @@ export default {
 	name: 'Page_LoadDirect',
 	components: {fileHistory, dropdownZone},
 	methods: {
-		loadDirect (filePath) {
-			this.$store.dispatch('Direct/initStack', {filePath})
+		async loadDirect (filePath) {
+			try {
+				await this.$store.dispatch('Direct/initStack', {filePath})
+				if (this.$store.getters['Direct/isLoaded']) {
+					this.$router.push('editor')
+				}
+			} catch (e) {
+				console.error(e)
+			}
 		},
 	},
 }
