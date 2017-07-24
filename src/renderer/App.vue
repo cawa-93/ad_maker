@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  	<v-app id="example-8" dark standalone>
+  	<v-app dark standalone>
   		<v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -13,3 +13,9 @@
   	name: 'command-editor',
   }
 </script>
+
+<style>
+  html {
+    overflow-y: auto !important;
+  }
+</style>

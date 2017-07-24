@@ -4,13 +4,13 @@ const state = {
 
 const getters = {
 	direct (state) {
-		return state.items.filter(doc => doc.type === 'direct')
+		return state.items.filter(doc => doc.type === 'direct').map(f => f.filePath)
 	},
 	keywords (state) {
-		return state.items.filter(doc => doc.type === 'keywords')
+		return state.items.filter(doc => doc.type === 'keywords').map(f => f.filePath)
 	},
-	fastlinks (state) {
-		return state.items.filter(doc => doc.type === 'fastlinks')
+	fastLinks (state) {
+		return state.items.filter(doc => doc.type === 'fastLinks').map(f => f.filePath)
 	},
 }
 
@@ -23,6 +23,10 @@ const mutations = {
 		state.items = state.items.filter(doc => doc.filePath !== newDoc.filePath)
 		state.items.push(newDoc)
 	},
+
+	REMOVE (state, {type, filePath}) {
+		state.items = state.items.filter(doc => !(doc.type === type && doc.filePath === filePath))
+	}
 }
 
 export default {

@@ -1,6 +1,7 @@
 export default {
-	stack: [],
-	currentStackIndex: null,
+	nextStateId: null,
+	currentStateId: null,
+	prevStateId: null,
 	columns: {},
 	direct: null,
 }

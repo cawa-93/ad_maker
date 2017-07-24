@@ -49,63 +49,11 @@
 	</v-data-table>
 </v-card>
 
-<v-speed-dial
-	fixed
-	bottom
-	right
-	hover
-	v-model="speedDeal"
->
-	<v-btn
-		v-tooltip:left="{ html: 'Добавить' }"
-		slot="activator"
-		class="blue darken-2"
-		fab
-		hover
-		v-model="speedDeal"
-	>
-		<v-icon>add</v-icon>
-		<v-icon>close</v-icon>
-	</v-btn>
-	<v-btn
-		v-tooltip:left="{ html: 'Кампании' }"
-		fab
-		small
-		class="purple"
-	>
-		<v-icon>attach_file</v-icon>
-	</v-btn>
-	<v-btn
-		v-tooltip:left="{ html: 'Ключевые слова' }"
-		fab
-		small
-		class="green"
-	>
-		<v-icon>attach_file</v-icon>
-	</v-btn>
-	<v-btn
-		v-tooltip:left="{ html: 'Быстрые ссылки' }"
-		fab
-		small
-		class="indigo"
-	>
-		<v-icon>attach_file</v-icon>
-	</v-btn>			
-	<v-btn
-		v-tooltip:left="{ html: 'Пометка ссылок' }"
-		fab
-		small
-		class="red"
-	>
-		<v-icon>local_offer</v-icon>
-	</v-btn>
-</v-speed-dial>
-
 </div></template>
 
 <script>
 	export default {
-		name: 'Page_Editor',
+		name: 'editor',
 		beforeRouteEnter (to, from, next) {
 			next(vm => {
 				if (!vm.$store.getters['Direct/isLoaded']) {

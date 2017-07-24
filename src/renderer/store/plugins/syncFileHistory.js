@@ -12,7 +12,7 @@ export default function suncFileHistory (store) {
 	})
 
 	store.subscribe(({type, payload}, state) => {
-		if (type === 'RecentFiles/ADD') {
+		if (type === 'RecentFiles/ADD' || type === 'RecentFiles/REMOVE') {
 			recentFiles.remove({}, { multi: true }, (err, numRemoved) => {
 				recentFiles.insert(state.RecentFiles.items)
 			})

@@ -11,7 +11,7 @@ export default function syncDirectStates (store) {
 
 	store.subscribe(({type, payload}, state) => {
 		if (
-			   type === 'Direct/INIT_DIRECT' ||
+			type === 'Direct/INIT_DIRECT' ||
 			type === 'Direct/SET_KEYWORDS' ||
 			type === 'Direct/SET_FASTLINKS' ||
 			type === 'Direct/UTM_MARK_MAINLINKS' ||
@@ -22,7 +22,7 @@ export default function syncDirectStates (store) {
 					throw err
 				}
 
-				store.commit('Direct/ADD_TO_STACK', newDoc._id)
+				store.commit('Direct/SAVE_STATE_ID', newDoc._id)
 			})
 		}
 	})

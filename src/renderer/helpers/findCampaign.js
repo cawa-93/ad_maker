@@ -1,3 +1,3 @@
-export default function findCampaign (directMap, campaignName) {
-	return directMap.find(c => c.name === campaignName)
+export default function findCampaign (map, campaignName) {
+	return map.find(c => c.name === campaignName)
 }

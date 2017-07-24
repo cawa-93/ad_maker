@@ -7,13 +7,8 @@ export default new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'load-direct',
-			component: require('@/pages/LoadDirect'),
-		},
-		{
-			path: '/editor',
-			name: 'editor',
-			component: require('@/pages/Editor'),
+			name: 'home',
+			component: () => import('@/pages/Home').then(m => m.default),
 		},
 		{
 			path: '*',

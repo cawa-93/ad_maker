@@ -1,5 +1,5 @@
 <template>
-	<v-card>
+	<!-- <v-card> -->
 		<div 
 			class="dropdown-zone-root"
 			:class="{'primary white--text': isDrag}"
@@ -13,7 +13,7 @@
 				<p class="dropdown-zone-content">Перетащите файл сюда</p>
 			</div>
 		</div>
-	</v-card>
+	<!-- </v-card> -->
 </template>
 
 <script>

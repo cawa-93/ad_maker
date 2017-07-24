@@ -1,5 +1,6 @@
 // import { remote } from 'electron'
 import {openFile, parseCSV, writeCSV} from '@/helpers'
+import {Error, Info} from '@/helpers/dialog'
 
 // export function UNDO ({commit, state}) {
 // 	if (state.stackIndex > 0) {
@@ -73,44 +74,58 @@ import {openFile, parseCSV, writeCSV} from '@/helpers'
 // }
 
 export async function initStack ({commit}, {filePath}) {
-	if (!filePath) {
-		throw new Error('Не указан путь к файлу')
-	}
-
-	let fileContent = await openFile(filePath)
-	fileContent = await parseCSV(fileContent, {delimiter: '\t'})
-
-	if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
-		throw new Error('Данный файл имеет не извесную структуру')
-	}
-	// commit('CLEAR_STACK')
-	commit('INIT_DIRECT', fileContent)
-	// commit('SET_STACK_INDEX')
-	commit('INIT_COLUMNS')
-	commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
-}
-
-export function SET_KEYWORDS ({commit}, template) {
 	try {
-		if (!template) throw new Error('Ключевые слова не переданы')
-		commit('CLEAR_REDO_STATES')
-		commit('SET_KEYWORDS', template)
-		commit('SET_DIRECT_INDEX')
-		console.error('Ключевые фразы добавлены')
+		if (!filePath) {
+			throw new Error('Не указан путь к файлу')
+		}
+
+		let fileContent = await openFile(filePath)
+		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+
+		if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
+			throw new Error('Данный файл имеет не извесную структуру')
+		}
+		// commit('CLEAR_STACK')
+		commit('INIT_DIRECT', fileContent)
+		// commit('SET_STACK_INDEX')
+		commit('INIT_COLUMNS')
+		commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
 	} catch (e) {
-		console.error('Ошибка', {body: e})
+		Error('Ошибка', e.toString())
 	}
 }
 
-export function SET_FASTLINKS ({commit}, template) {
+export async function setKeywords ({commit}, {filePath}) {
 	try {
-		if (!template) throw new Error('Быстрые ссылки не переданы')
-		commit('CLEAR_REDO_STATES')
-		commit('SET_FASTLINKS', template)
-		commit('SET_DIRECT_INDEX')
-		console.error('Быстрые ссылки добавлены')
+		let fileContent = await openFile(filePath)
+		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+
+		if (!fileContent) {
+			throw new Error('Данный файл имеет не извесную структуру')
+		}
+
+		commit('SET_KEYWORDS', fileContent)
+		commit('RecentFiles/ADD', {type: 'keywords', filePath}, {root: true})
+		Info('Успешно', 'Ключевые фразы добавлены')
 	} catch (e) {
-		console.error('Ошибка', {body: e})
+		Error('Ошибка', e.toString())
+	}
+}
+
+export async function setFastLinks ({commit}, {filePath}) {
+	try {
+		let fileContent = await openFile(filePath)
+		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+
+		if (!fileContent) {
+			throw new Error('Данный файл имеет не извесную структуру')
+		}
+
+		commit('SET_FASTLINKS', fileContent)
+		commit('RecentFiles/ADD', {type: 'fastLinks', filePath}, {root: true})
+		Info('Успешно', 'Быстрые ссылки добавлены')
+	} catch (e) {
+		Error('Ошибка', e.toString())
 	}
 }
 
@@ -121,9 +136,9 @@ export function UTM_MARK ({commit}, {options, type}) {
 		else if (type === 'fast') commit('UTM_MARK_FAST', options)
 		else throw new Error('Не извесный тип ссылок для пометки')
 		commit('SET_DIRECT_INDEX')
-		console.error('Пометка завершена')
+		Info('Успешно', 'Пометка завершена')
 	} catch (e) {
-		console.error('Ошибка', {body: e})
+		Error('Ошибка', e.toString())
 	}
 }
 

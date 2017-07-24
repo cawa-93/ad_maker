@@ -12,9 +12,9 @@ import { utmMark } from '@/helpers'
 // 	state.stackIndex = newIndex
 // }
 
-export function ADD_TO_STACK (state, docId) {
-	const currentIndex = state.stack.indexOf(state.currentStackIndex)
-	state.stack.splice(currentIndex, state.stack.length - currentIndex, docId)
+export function SAVE_STATE_ID (state, docId) {
+	state.prevStateId = state.currentStateId
+	state.currentStateId = docId
 }
 
 export function INIT_DIRECT (state, direct) {
@@ -43,66 +43,49 @@ export function INIT_COLUMNS (state) {
 	state.columns.FS_TEXTS = titlesRow.indexOf('Описания быстрых ссылок')
 }
 
-export function SET_KEYWORDS (state, template) {
-	const newDirectState = cloneDeep(state.stack[state.stackIndex])
-	template.forEach(({campaignName, groupName, keywords}) => {
-		keywords.forEach(keyword => {
-			let adIndex = newDirectState.findIndex(row => row && row[9] && row[3] && row[9].toUpperCase() === campaignName.toUpperCase() && row[3].toUpperCase() === groupName.toUpperCase())
-			if (adIndex < 0) return
-			if (newDirectState[adIndex][11] !== '') {
-				let newAd = cloneDeep(newDirectState[adIndex])
-				newAd[0] = '-'
-				newDirectState.splice(adIndex, 0, newAd)
-				adIndex += 1
-			} else {
-				newDirectState[adIndex][0] = '-'
-			}
-			newDirectState[adIndex][11] = keyword
-		})
+export function SET_KEYWORDS (state, fileContent) {
+	const {CAMPAIN_NAME, GROUPE_NAME, KEYWORD} = state.columns
+	fileContent.forEach(([campaignName, groupName, keyword]) => {
+		let adIndex = state.direct.findIndex(row => row && row[CAMPAIN_NAME] && row[GROUPE_NAME] && row[CAMPAIN_NAME].toUpperCase() === campaignName.toUpperCase() && row[GROUPE_NAME].toUpperCase() === groupName.toUpperCase())
+		if (adIndex < 0) return
+
+		if (state.direct[adIndex][KEYWORD] !== '') {
+			let newAd = cloneDeep(state.direct[adIndex])
+			newAd[0] = '-'
+			state.direct.splice(adIndex, 0, newAd)
+			adIndex += 1
+		} else {
+			state.direct[adIndex][0] = '-'
+		}
+		state.direct[adIndex][KEYWORD] = keyword
 	})
-	state.stack.push(newDirectState)
-	state.keywordsTemplate = []
 }
 
-export function SET_FASTLINKS (state, template) {
-	const cache = {}
-	const newDirectState = cloneDeep(state.stack[state.stackIndex]).map((row, index) => {
+export function SET_FASTLINKS (state, fileContent) {
+	const {CAMPAIN_NAME, GROUPE_NAME, FS_TITLES, FS_URLS, FS_TEXTS} = state.columns
+	const _cache = {}
+	state.direct = state.direct.map((row, index) => {
 		if (index < 3 || !row) return row
 
-		const cacheKey = row[9] + row[3]
-		if (!cache[cacheKey]) {
-			const campaign = template.find(({campaignName, groupName}) => {
-				return campaignName.toUpperCase() === row[9].toUpperCase() && groupName.toUpperCase() === row[3].toUpperCase()
-			})
+		const cacheKey = row[CAMPAIN_NAME] + row[GROUPE_NAME]
+		if (!_cache[cacheKey]) {
+			const fsData = fileContent.find(fs => fs[0] === row[CAMPAIN_NAME] && fs[1] === row[GROUPE_NAME])
 
-			if (!campaign) return row
+			if (!fsData) return row
 
-			const titles = []
-			const urls = []
-			const descs = []
-
-			campaign.links.forEach(link => {
-				if (!link.title || !link.url || !link.desc) return
-				titles.push(link.title)
-				urls.push(link.url)
-				descs.push(link.desc)
-			})
-
-			cache[cacheKey] = {
-				titles: titles.join('||'),
-				urls: urls.join('||'),
-				descs: descs.join('||'),
+			_cache[cacheKey] = {
+				titles: `${fsData[2]}||${fsData[5]}||${fsData[8]}||${fsData[11]}`,
+				urls: `${fsData[3]}||${fsData[6]}||${fsData[9]}||${fsData[13]}`,
+				descs: `${fsData[4]}||${fsData[7]}||${fsData[10]}||${fsData[14]}`,
 			}
 		}
-		row[23] = cache[cacheKey].titles
-		row[24] = cache[cacheKey].urls
-		row[25] = cache[cacheKey].descs
 
+		row[FS_TITLES] = _cache[cacheKey].titles
+		row[FS_URLS] = _cache[cacheKey].urls
+		row[FS_TEXTS] = _cache[cacheKey].descs
+		
 		return row
 	})
-
-	state.stack.push(newDirectState)
-	state.fastLinksTemplate = []
 }
 
 export function UTM_MARK_MAINLINKS (state, {params, mode}) {

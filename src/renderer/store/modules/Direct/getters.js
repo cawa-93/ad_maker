@@ -5,11 +5,10 @@ export function isLoaded (state) {
 }
 
 export function directMap (state, getters) {
-	let {EXTA_AD, CAMPAIN_ID, CAMPAIN_NAME, GROUPE_ID, GROUPE_NAME, KEYWORD, AD_TITLE, AD_TEXT, AD_URL, AD_ANCHOR, FS_TITLES, FS_URLS, FS_TEXTS} = state.columns
-	console.log({EXTA_AD, CAMPAIN_ID, CAMPAIN_NAME, GROUPE_ID, GROUPE_NAME, KEYWORD, AD_TITLE, AD_TEXT, AD_URL, AD_ANCHOR, FS_TITLES, FS_URLS, FS_TEXTS})
-
+	console.log('directMap', getters.isLoaded)
 	const _map = []
 	if (!getters.isLoaded) return _map
+	const {CAMPAIN_NAME, GROUPE_NAME, KEYWORD, AD_TITLE, AD_TEXT, AD_URL, AD_ANCHOR, FS_TITLES, FS_URLS, FS_TEXTS} = state.columns
 
 	state.direct.forEach((row, index) => {
 		if (index < 3 || !row || !row[CAMPAIN_NAME] || !row[GROUPE_NAME]) return
