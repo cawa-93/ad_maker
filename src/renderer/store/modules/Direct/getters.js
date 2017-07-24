@@ -1,6 +1,7 @@
 import {findCampaign, findGroup} from '@/helpers'
 
 export function isLoaded (state) {
+	console.log('isLoaded run')
 	return !!(Array.isArray(state.direct) && state.direct.length > 0)
 }
 

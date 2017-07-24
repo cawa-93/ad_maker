@@ -1,5 +1,4 @@
 import electron from 'electron'
-import assignIn from 'lodash.assignin'
 const dialog = (electron.dialog || electron.remote.dialog)
 
 export function Error (title, content) {

@@ -16,7 +16,7 @@
 			<v-btn @click="modals.fastLinks = true" fab small class="indigo" v-tooltip:left="{ html: 'Быстрые ссылки' }">
 				<v-icon>attach_file</v-icon>
 			</v-btn>			
-			<v-btn @click="modals.markup = true" fab small class="red" v-tooltip:left="{ html: 'Пометка ссылок' }">
+			<v-btn @click="modals.tagging = true" fab small class="red" v-tooltip:left="{ html: 'Пометка ссылок' }">
 				<v-icon>local_offer</v-icon>
 			</v-btn>
 		</v-speed-dial>
@@ -32,6 +32,10 @@
 		<modal v-model="modals.fastLinks" title="Выберите файл с быстрыми ссылками">
 			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false"/>
 		</modal>
+
+		<modal v-model="modals.tagging" title="Настройте шаблон пометки" :width="800">
+			<tag-editor/>
+		</modal>
 	</div>
 </template>
 
@@ -40,26 +44,27 @@
 	import modal from '@/components/modal'
 	import fileLoader from '@/components/fileLoader'
 	import editor from '@/components/editor'
+	import tagEditor from '@/components/tagEditor'
 // Direct/setKeywords
 	export default {
 		name: 'Home',
-		components: { modal, fileLoader, editor },
-		data() {
+		components: { modal, fileLoader, editor, tagEditor },
+		data () {
 			return {
 				speedDeal: false,
 				modals: {
 					direct: false,
 					keywords: false,
 					fastLinks: false,
-					markup: false,
-				}
+					tagging: false,
+				},
 			}
 		},
 		computed: {
 			...mapGetters({
-				isDirectLoaded: 'Direct/isLoaded'
-			})
+				isDirectLoaded: 'Direct/isLoaded',
+			}),
 
-		}
+		},
 	}
 </script>

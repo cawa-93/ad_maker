@@ -48,17 +48,17 @@
 					return {
 						path: filePath,
 						base: fileData.base,
-						dir: this.getShortPath(fileData.dir)
+						dir: this.getShortPath(fileData.dir),
 					}
 				})
 			},
-			iconColor() {
+			iconColor () {
 				switch (this.type) {
-					case 'direct' : return 'purple'
-					case 'keywords' : return 'green'
-					case 'fastLinks' : return 'indigo'
+				case 'direct' : return 'purple'
+				case 'keywords' : return 'green'
+				case 'fastLinks' : return 'indigo'
 				}
-			}
+			},
 		},
 		methods: {
 			emit (filePath) {
@@ -71,9 +71,9 @@
 				return dir.split('').splice(startPosition, cutSymbols, '…').join('')
 			},
 
-			remove(filePath) {
+			remove (filePath) {
 				this.$store.commit('RecentFiles/REMOVE', {type: this.type, filePath})
-			}
+			},
 		},
 	}
 </script>

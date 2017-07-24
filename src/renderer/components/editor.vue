@@ -52,85 +52,82 @@
 </div></template>
 
 <script>
-	export default {
-		name: 'editor',
-		beforeRouteEnter (to, from, next) {
-			next(vm => {
-				if (!vm.$store.getters['Direct/isLoaded']) {
-					next('/')
+import { mapGetters } from 'vuex'
+
+export default {
+	name: 'editor',
+	data () {
+		return {
+			search: '',
+			types: [
+				{text: 'Объявления', value: 'ads'},
+				{text: 'Ключевые слова', value: 'ks'},
+				{text: 'Быстрые ссылки', value: 'fs'},
+			],
+			type: 'ads',
+		}
+	},
+	computed: {
+		tableHeaders () {
+			return [{
+				text: 'Кампания',
+				value: 'campaign',
+			},
+			{
+				text: 'Група',
+				value: 'group',
+			}]
+		},
+		filteredData () {
+			return this.tableData.filter(row => {
+				switch (this.type) {
+				case 'ads' : return !!row.ad_url
+				case 'ks' : return !!row.keyword
+				case 'fs' : return !!row.fastLink_url
+				default : return false
 				}
 			})
 		},
-		data () {
-			return {
-				speedDeal: false,
-				search: '',
-				types: [
-					{text: 'Объявления', value: 'ads'},
-					{text: 'Ключевые слова', value: 'ks'},
-					{text: 'Быстрые ссылки', value: 'fs'},
-				],
-				type: 'ads',
-			}
-		},
-		computed: {
-			tableHeaders () {
-				return [{
-					text: 'Кампания',
-					value: 'campaign',
-				},
-				{
-					text: 'Група',
-					value: 'group',
-				}]
-			},
-			filteredData () {
-				return this.tableData.filter(row => {
-					switch (this.type) {
-					case 'ads' : return !!row.ad_url
-					case 'ks' : return !!row.keyword
-					case 'fs' : return !!row.fastLink_url
-					default : return false
-					}
-				})
-			},
 
-			tableData () {
-				const rows = []
-				this.$store.getters['Direct/directMap'].forEach(campaign => {
-					campaign.groups.forEach(group => {
-						group.ads.forEach(ad => {
-							rows.push({
-								campaign: campaign.name,
-								group: group.name,
-								ad_title: ad.title,
-								ad_desc: ad.desc,
-								ad_ancor: ad.ancor,
-								ad_url: ad.url,
-							})
+		tableData () {
+			const rows = []
+			this.directMap.forEach(campaign => {
+				campaign.groups.forEach(group => {
+					group.ads.forEach(ad => {
+						rows.push({
+							campaign: campaign.name,
+							group: group.name,
+							ad_title: ad.title,
+							ad_desc: ad.desc,
+							ad_ancor: ad.ancor,
+							ad_url: ad.url,
 						})
-						group.keywords.forEach(keyword => {
-							rows.push({
-								campaign: campaign.name,
-								group: group.name,
-								keyword,
-							})
+					})
+					group.keywords.forEach(keyword => {
+						rows.push({
+							campaign: campaign.name,
+							group: group.name,
+							keyword,
 						})
-						group.fastLinks.forEach(link => {
-							rows.push({
-								campaign: campaign.name,
-								group: group.name,
-								fastLink_title: link.title,
-								fastLink_url: link.url,
-								fastLink_desc: link.desc,
-							})
+					})
+					group.fastLinks.forEach(link => {
+						rows.push({
+							campaign: campaign.name,
+							group: group.name,
+							fastLink_title: link.title,
+							fastLink_url: link.url,
+							fastLink_desc: link.desc,
 						})
 					})
 				})
-				return rows
-			},
+			})
+			return rows
 		},
-	}
+		...mapGetters({
+			directMap: 'Direct/directMap',
+		}),
+	},
+}
 </script>
 
 <style scoped>

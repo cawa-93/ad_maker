@@ -1,19 +1,17 @@
 <template>
-	<!-- <v-card> -->
-		<div 
-			class="dropdown-zone-root"
-			:class="{'primary white--text': isDrag}"
-			@click="openFile"
-			@drop.prevent="loadFiles"
-			@dragover.prevent="isDrag = true"
-			@dragleave.prevent="isDrag = false"
-		>
-			<div class="dashed">
-				<v-icon x-large>file_upload</v-icon>
-				<p class="dropdown-zone-content">Перетащите файл сюда</p>
-			</div>
+	<div 
+		class="dropdown-zone-root"
+		:class="{'primary white--text': isDrag}"
+		@click="openFile"
+		@drop.prevent="loadFiles"
+		@dragover.prevent="isDrag = true"
+		@dragleave.prevent="isDrag = false"
+	>
+		<div class="dashed">
+			<v-icon x-large>file_upload</v-icon>
+			<p class="dropdown-zone-content">Перетащите файл сюда</p>
 		</div>
-	<!-- </v-card> -->
+	</div>
 </template>
 
 <script>
@@ -38,15 +36,15 @@
 		},
 	}
 
-	   //  dropZone.ondragover = function() {
-    //     this.className = 'upload-drop-zone drop';
-    //     return false;
-    // }
+	//  dropZone.ondragover = function() {
+//     this.className = 'upload-drop-zone drop';
+//     return false;
+// }
 
-    // dropZone.ondragleave = function() {
-    //     this.className = 'upload-drop-zone';
-    //     return false;
-    // }
+// dropZone.ondragleave = function() {
+//     this.className = 'upload-drop-zone';
+//     return false;
+// }
 </script>
 
 <style scoped>

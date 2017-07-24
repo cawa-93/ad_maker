@@ -16,16 +16,16 @@ export default {
 	props: {
 		action: {
 			type: String,
-			required: true
+			required: true,
 		},
 		type: {
 			type: String,
 			required: true,
 		},
 	},
-	data() {
+	data () {
 		return {
-			isProgress: false
+			isProgress: false,
 		}
 	},
 	methods: {

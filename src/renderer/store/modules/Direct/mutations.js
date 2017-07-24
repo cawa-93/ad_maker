@@ -26,8 +26,7 @@ export function SET_DIRECT (state, direct) {
 	state.direct = direct
 }
 
-export function INIT_COLUMNS (state) {
-	const titlesRow = state.direct[2]
+export function INIT_COLUMNS (state, titlesRow) {
 	state.columns.EXTA_AD = titlesRow.indexOf('Доп. объявление группы')
 	state.columns.CAMPAIN_ID = titlesRow.indexOf('ID кампании (локальный)')
 	state.columns.CAMPAIN_NAME = titlesRow.indexOf('Название кампании')
@@ -83,19 +82,20 @@ export function SET_FASTLINKS (state, fileContent) {
 		row[FS_TITLES] = _cache[cacheKey].titles
 		row[FS_URLS] = _cache[cacheKey].urls
 		row[FS_TEXTS] = _cache[cacheKey].descs
-		
+
 		return row
 	})
 }
 
 export function UTM_MARK_MAINLINKS (state, {params, mode}) {
-	const newDirectState = cloneDeep(state.stack[state.stackIndex]).map((row, index) => {
+	const {CAMPAIN_NAME, GROUPE_NAME, AD_TITLE, AD_URL} = state.columns
+	state.direct = state.direct.map((row, index) => {
 		if (index < 3 || !row) return row
 
 		const replaceData = {
-			campaign_name: row[9],
-			group_name: row[3],
-			ad_title: row[13],
+			campaign_name: row[CAMPAIN_NAME],
+			group_name: row[GROUPE_NAME],
+			ad_title: row[AD_TITLE],
 		}
 		const utm = cloneDeep(params)
 
@@ -105,22 +105,21 @@ export function UTM_MARK_MAINLINKS (state, {params, mode}) {
 				utm[param] = utm[param].replace(reg, replaceData[key])
 			}
 		}
-		row[15] = utmMark(row[15], utm, mode === 'anchor')
+		row[AD_URL] = utmMark(row[AD_URL], utm)
 		return row
 	})
-	state.stack.push(newDirectState)
 }
 
 export function UTM_MARK_FASTLINKS (state, {params, mode}) {
-	const newDirectState = cloneDeep(state.stack[state.stackIndex]).map((row, index) => {
-		if (index < 3 || !row || !row[23] || !row[24]) return row
+	const {CAMPAIN_NAME, GROUPE_NAME, FS_TITLES, FS_URLS} = state.columns
+	state.direct = state.direct.map((row, index) => {
+		if (index < 3 || !row || !row[FS_TITLES] || !row[FS_URLS]) return row
 
-		const titles = row[23].split('||')
-		row[24] = row[24].split('||').map((url, index) => {
+		const titles = row[FS_TITLES].split('||')
+		row[FS_URLS] = row[FS_URLS].split('||').map((url, index) => {
 			const replaceData = {
-				campaign_name: row[9],
-				group_name: row[3],
-				ad_title: row[13],
+				campaign_name: row[CAMPAIN_NAME],
+				group_name: row[GROUPE_NAME],
 				fastlink_name: titles[index],
 			}
 			const utm = cloneDeep(params)
@@ -137,5 +136,4 @@ export function UTM_MARK_FASTLINKS (state, {params, mode}) {
 
 		return row
 	})
-	state.stack.push(newDirectState)
 }

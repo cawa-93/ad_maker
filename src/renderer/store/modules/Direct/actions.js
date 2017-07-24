@@ -86,9 +86,9 @@ export async function initStack ({commit}, {filePath}) {
 			throw new Error('Данный файл имеет не извесную структуру')
 		}
 		// commit('CLEAR_STACK')
+		commit('INIT_COLUMNS', fileContent[2])
 		commit('INIT_DIRECT', fileContent)
 		// commit('SET_STACK_INDEX')
-		commit('INIT_COLUMNS')
 		commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
 	} catch (e) {
 		Error('Ошибка', e.toString())
@@ -129,13 +129,11 @@ export async function setFastLinks ({commit}, {filePath}) {
 	}
 }
 
-export function UTM_MARK ({commit}, {options, type}) {
+export function utmTagging ({commit}, {options, type}) {
 	try {
-		commit('CLEAR_REDO_STATES')
-		if (type === 'main') commit('UTM_MARK_MAIN', options)
-		else if (type === 'fast') commit('UTM_MARK_FAST', options)
+		if (type === 'main') commit('UTM_MARK_MAINLINKS', options)
+		else if (type === 'fast') commit('UTM_MARK_FASTLINKS', options)
 		else throw new Error('Не извесный тип ссылок для пометки')
-		commit('SET_DIRECT_INDEX')
 		Info('Успешно', 'Пометка завершена')
 	} catch (e) {
 		Error('Ошибка', e.toString())
