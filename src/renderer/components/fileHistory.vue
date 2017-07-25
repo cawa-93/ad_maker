@@ -7,7 +7,7 @@
 				<v-icon dark :class="iconColor">insert_drive_file</v-icon>
 			</v-list-tile-avatar>
 			<v-list-tile-content>
-				<v-list-tile-title>{{ file.base }}<span class="pl-3 grey--text text--lighten-1 caption">{{file.createdAt}}</span></v-list-tile-title>
+				<v-list-tile-title>{{ file.base }} <span class="grey--text text--lighten-1 caption">{{file.createdAt}}</span></v-list-tile-title>
 				<v-list-tile-sub-title>{{ file.dir }}</v-list-tile-sub-title>
 			</v-list-tile-content>
 			<v-list-tile-action>
@@ -32,10 +32,6 @@
 				type: String,
 				required: true,
 			},
-			maxPathLength: {
-				type: Number,
-				default: 30,
-			},
 		},
 		data () {
 			return {}
@@ -49,7 +45,7 @@
 						createdAt,
 						path: filePath,
 						base: fileData.base,
-						dir: this.getShortPath(fileData.dir),
+						dir: fileData.dir,
 					}
 				})
 			},
@@ -64,12 +60,6 @@
 		methods: {
 			emit (filePath) {
 				this.$emit('input', filePath)
-			},
-			getShortPath (dir) {
-				if (dir.length <= this.maxPathLength) return dir
-				const cutSymbols = dir.length - this.maxPathLength + 1
-				const startPosition = Math.floor((dir.length - cutSymbols) / 2)
-				return dir.split('').splice(startPosition, cutSymbols, '…').join('')
 			},
 
 			remove (filePath) {

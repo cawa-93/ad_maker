@@ -19,11 +19,11 @@
 		></v-select>
 
 		<v-menu offset-y left>
-      <v-btn icon slot="activator">
-      	<v-icon>menu</v-icon>
-    	</v-btn>
-      <slot name="menu"></slot>
-    </v-menu>
+			<v-btn icon slot="activator" :class="{'shake animated infinite':animateMenu}" @click="removeAnimation">
+				<v-icon>menu</v-icon>
+			</v-btn>
+			<slot name="menu"></slot>
+		</v-menu>
 	</v-flex>
 </v-layout>
 <v-card>
@@ -71,6 +71,7 @@ export default {
 	},
 	data () {
 		return {
+			animateMenu: !localStorage.oldUser,
 			search: '',
 			types: [
 				{text: 'Объявления', value: 'ads'},
@@ -172,6 +173,10 @@ export default {
 		emit (event, newType) {
 			this.$emit(event, newType)
 		},
+		removeAnimation() {
+			this.animateMenu = false
+			localStorage.oldUser = 1
+		}
 	},
 }
 </script>
@@ -188,4 +193,35 @@ export default {
 		/*text-decoration: underline;*/
 		cursor: pointer;
 	}
+
+@keyframes shake {
+  from, to, 23.75% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  2.5%, 7.5%, 12.5%, 17.5%, 22.5% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  5%, 10%, 15%, 20% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.shake {
+  animation-name: shake;
+}
+
+.animated {
+  animation-duration: 4s;
+  animation-fill-mode: both;
+}
+
+.animated.infinite {
+  animation-iteration-count: infinite;
+}
+
+.animated.hinge {
+  animation-duration: 2s;
+}
 </style>

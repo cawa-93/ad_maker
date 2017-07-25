@@ -75,6 +75,20 @@
 				</v-list-tile>
 
 				<v-divider/>
+<!-- <i class="material-icons">lightbulb_outline</i> -->
+				<v-list-tile action avatar>
+					<v-list-tile-avatar>
+						<v-icon>lightbulb_outline</v-icon>
+					</v-list-tile-avatar>
+					<v-list-tile-content>
+						<v-list-tile-title>Темная тема</v-list-tile-title>
+					</v-list-tile-content>
+					<v-list-tile-action class="text-xs-right">
+						<span class="btn btn--icon btn--raised"	>
+							<v-switch hide-details v-model="darkMode"></v-switch>
+						</span>
+					</v-list-tile-action>
+				</v-list-tile>
 
 				<v-list-tile @click="modals.help = true">
 					<v-list-tile-avatar>
@@ -154,6 +168,14 @@
 			}
 		},
 		computed: {
+			darkMode: {
+				get() {
+					return this.$store.state.Theme.darkMode
+				},
+				set (value) {
+					return this.$store.commit('Theme/TOGGLE', value)
+				}
+			},
 			...mapGetters({
 				isDirectLoaded: 'Direct/isLoaded',
 			}),

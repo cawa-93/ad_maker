@@ -1,11 +1,11 @@
 <template>
 	<v-dialog lazy :value="value" @input="input" persistent :width="width">
 		<v-card>
-			<v-card-title :class="color">
+			<v-card-title :class="[color, {'white--text': color}]">
 				<span>
 					{{title}}
 				</span>
-				<v-btn icon class="mt-0 mb-0 mr-0 close" @click="input(false)">
+				<v-btn icon class="mt-0 mb-0 mr-0 close" :class="{'white--text': color}" @click="input(false)">
 					<v-icon>close</v-icon>
 				</v-btn>
 				</v-card-title>
