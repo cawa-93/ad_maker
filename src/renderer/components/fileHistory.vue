@@ -7,7 +7,7 @@
 				<v-icon dark :class="iconColor">insert_drive_file</v-icon>
 			</v-list-tile-avatar>
 			<v-list-tile-content>
-				<v-list-tile-title>{{ file.base }}</v-list-tile-title>
+				<v-list-tile-title>{{ file.base }}<span class="pl-3 grey--text text--lighten-1 caption">{{file.createdAt}}</span></v-list-tile-title>
 				<v-list-tile-sub-title>{{ file.dir }}</v-list-tile-sub-title>
 			</v-list-tile-content>
 			<v-list-tile-action>
@@ -42,9 +42,11 @@
 		},
 		computed: {
 			files () {
-				return this.$store.getters[`RecentFiles/${this.type}`].map(filePath => {
+				return this.$store.getters[`RecentFiles/${this.type}`].map(({createdAt, filePath}) => {
 					const fileData = path.parse(filePath)
+					createdAt = new Date(createdAt).toLocaleString()
 					return {
+						createdAt,
 						path: filePath,
 						base: fileData.base,
 						dir: this.getShortPath(fileData.dir),

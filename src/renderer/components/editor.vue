@@ -13,7 +13,8 @@
 	<v-flex xs4 class="display-flex">
 		<v-select
 			:items="types"
-			v-model="type"
+			:value="type"
+			@input="emit('update:type', arguments[0])"
 			label="Показать"
 		></v-select>
 
@@ -62,6 +63,12 @@ import { mapGetters } from 'vuex'
 
 export default {
 	name: 'editor',
+	props: {
+		type: {
+			type: String,
+			default: 'ads',
+		},
+	},
 	data () {
 		return {
 			search: '',
@@ -70,12 +77,11 @@ export default {
 				{text: 'Ключевые слова', value: 'ks'},
 				{text: 'Быстрые ссылки', value: 'fs'},
 			],
-			type: 'ads',
 		}
 	},
 	computed: {
 		tableHeaders () {
-			return [{
+			const headers = [{
 				text: 'Кампания',
 				value: 'campaign',
 			},
@@ -83,6 +89,35 @@ export default {
 				text: 'Група',
 				value: 'group',
 			}]
+			switch (this.type) {
+			case 'ads' : return headers.concat([{
+				text: 'Заголовок',
+				value: 'ad_title',
+			}, {
+				text: 'Ссылка',
+				value: 'ad_url',
+			}, {
+				text: 'Текст ссылки',
+				value: 'ad_ancor',
+			}, {
+				text: 'Текст',
+				value: 'ad_desc',
+			}])
+			case 'ks' : return headers.concat([{
+				text: 'Фраза',
+				value: 'keyword',
+			}])
+			case 'fs' : return headers.concat([{
+				text: 'Заголовок',
+				value: 'fastLink_title',
+			}, {
+				text: 'Ссылка',
+				value: 'fastLink_url',
+			}, {
+				text: 'Текст',
+				value: 'fastLink_desc',
+			}])
+			}
 		},
 		filteredData () {
 			return this.tableData.filter(row => {
@@ -132,6 +167,11 @@ export default {
 		...mapGetters({
 			directMap: 'Direct/directMap',
 		}),
+	},
+	methods: {
+		emit (event, newType) {
+			this.$emit(event, newType)
+		},
 	},
 }
 </script>

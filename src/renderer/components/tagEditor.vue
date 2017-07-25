@@ -141,6 +141,7 @@ export default {
 					params: this.utm,
 				},
 			})
+			this.$emit('mark', this.type)
 		},
 		copy (str) {
 			this.$electron.clipboard.writeText(str)

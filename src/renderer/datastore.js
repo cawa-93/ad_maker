@@ -4,6 +4,7 @@ import { remote } from 'electron'
 
 export const recentFiles = new Datastore({
 	filename: path.join(remote.app.getPath('userData'), '/recentFiles.db'),
+	timestampData: true,
 })
 
 export const directStates = new Datastore({

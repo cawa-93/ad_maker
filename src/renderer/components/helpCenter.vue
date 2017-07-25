@@ -12,21 +12,21 @@
 <script>
 	export default {
 		name: 'helpCenter',
-		data() {
+		data () {
 			return {
-				headers:[''],
+				headers: [''],
 				shortCuts: [{
 					key: 'Ctrl+O',
-					label: 'Загрузить кампании'
-				},{
+					label: 'Загрузить кампании',
+				}, {
 					key: 'Ctrl+S',
-					label: 'Сохранить кампании'
-				},{
+					label: 'Сохранить кампании',
+				}, {
 					key: 'F1',
-					label: 'Открыть справку'
-				},]
+					label: 'Открыть справку',
+				}],
 			}
-		}
+		},
 	}
 </script>
 

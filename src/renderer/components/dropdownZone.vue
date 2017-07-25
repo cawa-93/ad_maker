@@ -16,11 +16,11 @@
 <script>
 	export default {
 		name: 'dropdownZone',
-		props:{
+		props: {
 			color: {
 				type: String,
-				default: 'grey'
-			}
+				default: 'grey',
+			},
 		},
 		data () {
 			return {
@@ -28,9 +28,9 @@
 			}
 		},
 		computed: {
-			classes() {
+			classes () {
 				return `dropdown-zone-root ${this.isDrag ? this.color : ''}`
-			}
+			},
 		},
 		methods: {
 			loadFiles (e) {

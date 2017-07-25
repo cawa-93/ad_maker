@@ -21,7 +21,7 @@ export default {
 			type: String,
 			required: true,
 		},
-		color: String
+		color: String,
 	},
 	methods: {
 		async load (filePath) {

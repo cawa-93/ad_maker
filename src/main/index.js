@@ -1,13 +1,13 @@
 'use strict'
 
-import { app, BrowserWindow, globalShortcut, Menu } from 'electron'
+import { app, BrowserWindow } from 'electron'
 
 let mainWindow
-function sendEventToWindow (channel, ...args) {
-	if (mainWindow && mainWindow.webContents) {
-		mainWindow.webContents.send(channel, ...args)
-	}
-}
+// function sendEventToWindow (channel, ...args) {
+// 	if (mainWindow && mainWindow.webContents) {
+// 		mainWindow.webContents.send(channel, ...args)
+// 	}
+// }
 
 /**
  * Set `__static` path to static files in production
@@ -31,18 +31,13 @@ function createWindow () {
 		width: 1000,
 	})
 
-	mainWindow.setMenu(null);
+	mainWindow.setMenu(null)
 
 	mainWindow.loadURL(winURL)
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
 	})
-
-	// const shortcuts = ['CommandOrControl+O', 'CommandOrControl+S', 'F1']
-	// shortcuts.forEach(accelerator => {
-	// 	globalShortcut.register(accelerator, () => sendEventToWindow('shortcut', accelerator))
-	// })
 }
 
 app.on('ready', createWindow)
@@ -50,7 +45,6 @@ app.on('ready', createWindow)
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit()
-		// globalShortcut.unregisterAll()
 	}
 })
 

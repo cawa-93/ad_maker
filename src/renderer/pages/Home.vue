@@ -1,6 +1,6 @@
 <template>
 	<div @keyup.esc="keyup">
-		<editor v-if="isDirectLoaded">
+		<editor v-if="isDirectLoaded" :type.sync="type">
 			<v-list slot="menu" class="pa-0">
 
 				<v-list-tile @click="loadState('prev')" :disabled="disableUndo">
@@ -111,19 +111,19 @@
 		</modal>
 
 		<modal :value="modals.direct || !isDirectLoaded" @input="value => { modals.direct = value }" title="Выберите файл с кампаниями" :closable="isDirectLoaded" color="purple">
-			<file-loader type="direct" action="Direct/initStack" @load="modals.direct = false" color="purple"/>
+			<file-loader type="direct" action="Direct/initStack" @load="modals.direct = false; type='ads'" color="purple"/>
 		</modal>
 
 		<modal v-model="modals.keywords" title="Выберите файл с ключевыми словами" color="indigo">
-			<file-loader type="keywords" action="Direct/setKeywords" @load="modals.keywords = false" color="indigo"/>
+			<file-loader type="keywords" action="Direct/setKeywords" @load="modals.keywords = false; type='ks'" color="indigo"/>
 		</modal>
 
 		<modal v-model="modals.fastLinks" title="Выберите файл с быстрыми ссылками" color="green">
-			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false" color="green"/>
+			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false; type='fs'" color="green"/>
 		</modal>
 
 		<modal v-model="modals.tagging" title="Настройте шаблон пометки" color="orange">
-			<tag-editor/>
+			<tag-editor @mark="t => {type = t === 'main' ? 'ads' : 'fs'; modals.tagging = false}"/>
 		</modal>
 
 	</div>
@@ -142,13 +142,14 @@
 		components: { modal, fileLoader, editor, tagEditor, helpCenter },
 		data () {
 			return {
+				type: 'ads',
 				speedDeal: false,
 				modals: {
 					direct: false,
 					keywords: false,
 					fastLinks: false,
 					tagging: false,
-					help: true,
+					help: false,
 				},
 			}
 		},
@@ -167,25 +168,25 @@
 			loadState (direction) {
 				this.$store.dispatch('Direct/loadState', direction)
 			},
-			save() {
+			save () {
 				this.$electron.remote.dialog.showSaveDialog(filePath => {
 					if (filePath) {
 						this.$store.dispatch('Direct/write', filePath)
 					}
 				})
-			}
+			},
 		},
-		mounted() {
+		mounted () {
 			window.addEventListener('keyup', (event) => {
 				if (event.key === 'F1') {
 					this.modals.help = !this.modals.help
 				} else if (this.isDirectLoaded && event.ctrlKey) {
 					switch (event.key) {
-						case 'o' : return this.modals.direct = true
-						case 's' : return this.save()
+					case 'o' : this.modals.direct = true; break
+					case 's' : this.save(); break
 					}
 				}
 			}, true)
-		}
+		},
 	}
 </script>

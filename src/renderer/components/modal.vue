@@ -32,11 +32,10 @@
 				type: [String, Number],
 				default: 600,
 			},
-			color: String
+			color: String,
 		},
 		methods: {
 			input (value) {
-				console.log(value)
 				return this.$emit('input', value)
 			},
 		},
