@@ -1,6 +1,7 @@
 // import { remote } from 'electron'
 import {openFile, parseCSV, writeCSV} from '@/helpers'
-import {Error, Info} from '@/helpers/dialog'
+import {Error} from '@/helpers/dialog'
+import {directStates} from '@/datastore'
 
 // export function UNDO ({commit, state}) {
 // 	if (state.stackIndex > 0) {
@@ -74,72 +75,89 @@ import {Error, Info} from '@/helpers/dialog'
 // }
 
 export async function initStack ({commit}, {filePath}) {
-	try {
-		if (!filePath) {
-			throw new Error('Не указан путь к файлу')
-		}
-
-		let fileContent = await openFile(filePath)
-		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
-
-		if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
-			throw new Error('Данный файл имеет не извесную структуру')
-		}
-		// commit('CLEAR_STACK')
-		commit('INIT_COLUMNS', fileContent[2])
-		commit('INIT_DIRECT', fileContent)
-		// commit('SET_STACK_INDEX')
-		commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
-	} catch (e) {
-		Error('Ошибка', e.toString())
+	// try {
+	if (!filePath) {
+		throw Error('Не указан путь к файлу')
 	}
+
+	let fileContent = await openFile(filePath)
+	fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+
+	if (!fileContent || !fileContent[0] || !fileContent[0][0] || fileContent[0][0] !== 'Предложение текстовых блоков для рекламной кампании') {
+		throw Error('Данный файл имеет не извесную структуру')
+	}
+	// commit('CLEAR_STACK')
+	commit('INIT_COLUMNS', fileContent[2])
+	commit('SET_DIRECT', fileContent)
+	// commit('SET_STACK_INDEX')
+	commit('RecentFiles/ADD', {type: 'direct', filePath}, {root: true})
+	// } catch (e) {
+	// Error('Ошибка', e)
+	// }
 }
 
 export async function setKeywords ({commit}, {filePath}) {
-	try {
-		let fileContent = await openFile(filePath)
-		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+	// try {
+	let fileContent = await openFile(filePath)
+	fileContent = await parseCSV(fileContent, {delimiter: '\t'})
 
-		if (!fileContent) {
-			throw new Error('Данный файл имеет не извесную структуру')
-		}
-
-		commit('SET_KEYWORDS', fileContent)
-		commit('RecentFiles/ADD', {type: 'keywords', filePath}, {root: true})
-		Info('Успешно', 'Ключевые фразы добавлены')
-	} catch (e) {
-		Error('Ошибка', e.toString())
+	if (!fileContent) {
+		throw Error('Данный файл имеет не извесную структуру')
 	}
+
+	commit('SET_KEYWORDS', fileContent)
+	commit('RecentFiles/ADD', {type: 'keywords', filePath}, {root: true})
+	// Info('Успешно', 'Ключевые фразы добавлены')
+	// } catch (e) {
+	// Error('Ошибка', e)
+	// }
 }
 
 export async function setFastLinks ({commit}, {filePath}) {
-	try {
-		let fileContent = await openFile(filePath)
-		fileContent = await parseCSV(fileContent, {delimiter: '\t'})
+	// try {
+	let fileContent = await openFile(filePath)
+	fileContent = await parseCSV(fileContent, {delimiter: '\t'})
 
-		if (!fileContent) {
-			throw new Error('Данный файл имеет не извесную структуру')
-		}
-
-		commit('SET_FASTLINKS', fileContent)
-		commit('RecentFiles/ADD', {type: 'fastLinks', filePath}, {root: true})
-		Info('Успешно', 'Быстрые ссылки добавлены')
-	} catch (e) {
-		Error('Ошибка', e.toString())
+	if (!fileContent) {
+		throw Error('Данный файл имеет не извесную структуру')
 	}
+
+	commit('SET_FASTLINKS', fileContent)
+	commit('RecentFiles/ADD', {type: 'fastLinks', filePath}, {root: true})
+	// Info('Успешно', 'Быстрые ссылки добавлены')
+	// } catch (e) {
+	// Error('Ошибка', e)
+	// }
 }
 
 export function utmTagging ({commit}, {options, type}) {
-	try {
-		if (type === 'main') commit('UTM_MARK_MAINLINKS', options)
-		else if (type === 'fast') commit('UTM_MARK_FASTLINKS', options)
-		else throw new Error('Не извесный тип ссылок для пометки')
-		Info('Успешно', 'Пометка завершена')
-	} catch (e) {
-		Error('Ошибка', e.toString())
-	}
+	// try {
+	if (type === 'main') commit('UTM_MARK_MAINLINKS', options)
+	else if (type === 'fast') commit('UTM_MARK_FASTLINKS', options)
+	else throw Error('Не извесный тип ссылок для пометки')
+	// Info('Успешно', 'Пометка завершена')
+	// } catch (e) {
+	// Error('Ошибка', e)
+	// }
 }
 
 export async function SAVE_DIRECT ({getters}, {path}) {
 	writeCSV(path, getters.direct)
+}
+
+export function loadState ({commit, state}, direction) {
+	const _id = state[`${direction}StateId`]
+	if (!_id) {
+		throw Error('Не удалось найти ID состояния')
+	}
+	directStates.findOne({ _id }, function (err, state) {
+	  if (err) {
+			throw Error(err)
+		}
+		if (!state.currentStateId) {
+			state.currentStateId = state._id
+		}
+
+		commit('SET_STATE', state)
+	})
 }

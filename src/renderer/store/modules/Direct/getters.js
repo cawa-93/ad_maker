@@ -1,12 +1,11 @@
 import {findCampaign, findGroup} from '@/helpers'
 
 export function isLoaded (state) {
-	console.log('isLoaded run')
 	return !!(Array.isArray(state.direct) && state.direct.length > 0)
 }
 
 export function directMap (state, getters) {
-	console.log('directMap', getters.isLoaded)
+	// console.log('directMap', getters.isLoaded)
 	const _map = []
 	if (!getters.isLoaded) return _map
 	const {CAMPAIN_NAME, GROUPE_NAME, KEYWORD, AD_TITLE, AD_TEXT, AD_URL, AD_ANCHOR, FS_TITLES, FS_URLS, FS_TEXTS} = state.columns

@@ -1,8 +1,11 @@
 import electron from 'electron'
 const dialog = (electron.dialog || electron.remote.dialog)
 
-export function Error (title, content) {
-	return dialog.showErrorBox(title, content)
+export function Error (content = '', title = '') {
+	if (typeof title === 'object') title = title.toString()
+	if (typeof content === 'object') content = content.toString()
+	dialog.showErrorBox(title, content)
+	return new global.Error(content)
 }
 
 export function Info (title, message) {

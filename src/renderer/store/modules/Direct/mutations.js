@@ -12,15 +12,20 @@ import { utmMark } from '@/helpers'
 // 	state.stackIndex = newIndex
 // }
 
+export function SET_STATE (state, newState) {
+	state.nextStateId = newState.nextStateId
+	state.currentStateId = newState.currentStateId
+	state.prevStateId = newState.prevStateId
+	state.columns = newState.columns
+	state.direct = newState.direct
+}
+
 export function SAVE_STATE_ID (state, docId) {
 	state.prevStateId = state.currentStateId
 	state.currentStateId = docId
+	state.nextStateId = null
 }
 
-export function INIT_DIRECT (state, direct) {
-	if (!direct) return
-	state.direct = direct
-}
 export function SET_DIRECT (state, direct) {
 	if (!direct) return
 	state.direct = direct

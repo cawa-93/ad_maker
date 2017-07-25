@@ -1,7 +1,7 @@
 <template><div>
 
 <v-layout row wrap>
-	<v-flex sm9 xs12>
+	<v-flex xs8>
 		<v-text-field
 			name="search"
 			label="Поиск"
@@ -10,16 +10,22 @@
 			prepend-icon="search"
 		></v-text-field>
 	</v-flex>
-	<v-flex sm3 xs12>
+	<v-flex xs4 class="display-flex">
 		<v-select
 			:items="types"
 			v-model="type"
 			label="Показать"
-			bottom
 		></v-select>
+
+		<v-menu offset-y left>
+      <v-btn icon slot="activator">
+      	<v-icon>menu</v-icon>
+    	</v-btn>
+      <slot name="menu"></slot>
+    </v-menu>
 	</v-flex>
 </v-layout>
-<v-card class="mb-5">
+<v-card>
 	<v-data-table
 		:headers="tableHeaders"
 		:items="filteredData"
@@ -131,6 +137,12 @@ export default {
 </script>
 
 <style scoped>
+.display-flex {
+	display: flex;
+}
+.menu {
+	padding: 18px 0
+}
 	td {
 		text-align: right;
 		/*text-decoration: underline;*/
