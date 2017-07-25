@@ -1,7 +1,7 @@
 <template>
 	<v-dialog lazy :value="value" @input="input" persistent :width="width">
 		<v-card>
-			<v-card-title>
+			<v-card-title :class="color">
 				<span>
 					{{title}}
 				</span>
@@ -9,7 +9,7 @@
 					<v-icon>close</v-icon>
 				</v-btn>
 				</v-card-title>
-				<v-divider></v-divider>
+				<v-divider  :class="color"/>
 			<v-card-text class="pa-0">
 				<slot></slot>
 			</v-card-text>
@@ -32,6 +32,7 @@
 				type: [String, Number],
 				default: 600,
 			},
+			color: String
 		},
 		methods: {
 			input (value) {

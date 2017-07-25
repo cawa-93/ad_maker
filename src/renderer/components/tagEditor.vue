@@ -1,10 +1,10 @@
 <template><v-container>
 <v-layout row>
-  <v-flex xs6>
+  <v-flex xs5>
     <div>
     	<!-- <v-subheader>Ссылки для пометки</v-subheader> -->
-    	<v-radio class="ma-0" hide-details label="Основные ссылки" v-model="type" value="main"></v-radio>
-      <v-radio class="ma-0" hide-details label="Быстрые ссылки" v-model="type" value="fast"></v-radio>
+    	<v-radio class="pa-0" hide-details label="Основные ссылки" v-model="type" value="main"></v-radio>
+      <v-radio class="pa-0" hide-details label="Быстрые ссылки" v-model="type" value="fast"></v-radio>
     </div>
 
     <v-text-field v-model="utm.utm_source" label="Campaign Source"/>
@@ -12,9 +12,9 @@
     <v-text-field v-model="utm.utm_campaign" label="Campaign Name"/>
     <v-text-field v-model="utm.utm_term" label="Campaign Term"/>
     <v-text-field v-model="utm.utm_content" label="Campaign Content"/>
-    <v-btn class="red" @click="mark">Пометить</v-btn>
+    <v-btn class="orange" dark @click="mark">Пометить</v-btn>
   </v-flex>
-  <v-flex xs6>
+  <v-flex xs7>
     <v-layout row wrap>
 		  <v-flex xs12>
 		    <v-list two-line>

@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<v-progress-linear indeterminate :active="isProgress" :height="2"></v-progress-linear>
-		<dropdown-zone @input="load"></dropdown-zone>
+		<dropdown-zone @input="load" :color="color"></dropdown-zone>
 		<file-history @input="load" :type="type" title="Последние файлы"></file-history>
 	</div>
 </template>
@@ -22,22 +21,16 @@ export default {
 			type: String,
 			required: true,
 		},
-	},
-	data () {
-		return {
-			isProgress: false,
-		}
+		color: String
 	},
 	methods: {
 		async load (filePath) {
-			this.isProgress = true
 			try {
 				await this.$store.dispatch(this.action, {filePath})
 				this.$emit('load')
 			} catch (e) {
 				console.error(e)
 			}
-			this.isProgress = false
 		},
 	},
 }

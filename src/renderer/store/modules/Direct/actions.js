@@ -141,8 +141,8 @@ export function utmTagging ({commit}, {options, type}) {
 	// }
 }
 
-export async function SAVE_DIRECT ({getters}, {path}) {
-	writeCSV(path, getters.direct)
+export async function write ({state}, filePath) {
+	await writeCSV(filePath, state.direct)
 }
 
 export function loadState ({commit, state}, direction) {

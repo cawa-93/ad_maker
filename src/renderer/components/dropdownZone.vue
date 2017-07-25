@@ -1,7 +1,6 @@
 <template>
 	<div 
-		class="dropdown-zone-root"
-		:class="{'primary white--text': isDrag}"
+		:class="classes"
 		@click="openFile"
 		@drop.prevent="loadFiles"
 		@dragover.prevent="isDrag = true"
@@ -17,9 +16,20 @@
 <script>
 	export default {
 		name: 'dropdownZone',
+		props:{
+			color: {
+				type: String,
+				default: 'grey'
+			}
+		},
 		data () {
 			return {
 				isDrag: false,
+			}
+		},
+		computed: {
+			classes() {
+				return `dropdown-zone-root ${this.isDrag ? this.color : ''}`
 			}
 		},
 		methods: {

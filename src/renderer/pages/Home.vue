@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div @keyup.esc="keyup">
 		<editor v-if="isDirectLoaded">
 			<v-list slot="menu" class="pa-0">
 
@@ -27,7 +27,7 @@
 
 				<v-list-tile avatar @click="modals.keywords = true">
 					<v-list-tile-avatar>
-						<v-icon class="indigo">attach_file</v-icon>
+						<v-icon dark class="indigo">attach_file</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
 						<v-list-tile-title>Ключевые слова</v-list-tile-title>
@@ -36,7 +36,7 @@
 
 				<v-list-tile avatar @click="modals.fastLinks = true">
 					<v-list-tile-avatar>
-						<v-icon class="green">attach_file</v-icon>
+						<v-icon dark class="green">attach_file</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
 						<v-list-tile-title>Быстрые ссылки</v-list-tile-title>
@@ -45,19 +45,43 @@
 
 				<v-list-tile avatar @click="modals.tagging = true">
 					<v-list-tile-avatar>
-						<v-icon class="orange">local_offer</v-icon>
+						<v-icon dark class="orange">local_offer</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
 						<v-list-tile-title>Пометку ссылок</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 
-				<v-list-tile avatar @click="modals.direct = true">
+				<v-divider/>
+
+				<v-subheader inset>Кампании</v-subheader>
+
+				<v-list-tile @click="modals.direct = true">
 					<v-list-tile-avatar>
-						<v-icon class="purple">attach_file</v-icon>
+						<v-icon>file_upload</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
-						<v-list-tile-title>Кампании</v-list-tile-title>
+						<v-list-tile-title>Загрузить</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+
+				<v-list-tile @click="save()">
+					<v-list-tile-avatar>
+						<v-icon>save</v-icon>
+					</v-list-tile-avatar>
+					<v-list-tile-content>
+						<v-list-tile-title>Сохранить</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+
+				<v-divider/>
+
+				<v-list-tile @click="modals.help = true">
+					<v-list-tile-avatar>
+						<v-icon>help</v-icon>
+					</v-list-tile-avatar>
+					<v-list-tile-content>
+						<v-list-tile-title>Справка</v-list-tile-title>
 					</v-list-tile-content>
 				</v-list-tile>
 			</v-list>
@@ -82,21 +106,26 @@
 			</v-btn>
 		</v-speed-dial> -->
 
-		<modal :value="modals.direct || !isDirectLoaded" @input="value => { modals.direct = value }" title="Выберите файл с кампаниями" :closable="isDirectLoaded">
-			<file-loader type="direct" action="Direct/initStack" @load="modals.direct = false"/>
+		<modal v-model="modals.help" title="Горячие клавиши" :width="400">
+			<help-center/>
 		</modal>
 
-		<modal v-model="modals.keywords" title="Выберите файл с ключевыми словами">
-			<file-loader type="keywords" action="Direct/setKeywords" @load="modals.keywords = false"/>
+		<modal :value="modals.direct || !isDirectLoaded" @input="value => { modals.direct = value }" title="Выберите файл с кампаниями" :closable="isDirectLoaded" color="purple">
+			<file-loader type="direct" action="Direct/initStack" @load="modals.direct = false" color="purple"/>
 		</modal>
 
-		<modal v-model="modals.fastLinks" title="Выберите файл с быстрыми ссылками">
-			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false"/>
+		<modal v-model="modals.keywords" title="Выберите файл с ключевыми словами" color="indigo">
+			<file-loader type="keywords" action="Direct/setKeywords" @load="modals.keywords = false" color="indigo"/>
 		</modal>
 
-		<modal v-model="modals.tagging" title="Настройте шаблон пометки" :width="800">
+		<modal v-model="modals.fastLinks" title="Выберите файл с быстрыми ссылками" color="green">
+			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false" color="green"/>
+		</modal>
+
+		<modal v-model="modals.tagging" title="Настройте шаблон пометки" color="orange">
 			<tag-editor/>
 		</modal>
+
 	</div>
 </template>
 
@@ -106,10 +135,11 @@
 	import fileLoader from '@/components/fileLoader'
 	import editor from '@/components/editor'
 	import tagEditor from '@/components/tagEditor'
+	import helpCenter from '@/components/helpCenter'
 // Direct/setKeywords
 	export default {
 		name: 'Home',
-		components: { modal, fileLoader, editor, tagEditor },
+		components: { modal, fileLoader, editor, tagEditor, helpCenter },
 		data () {
 			return {
 				speedDeal: false,
@@ -118,6 +148,7 @@
 					keywords: false,
 					fastLinks: false,
 					tagging: false,
+					help: true,
 				},
 			}
 		},
@@ -136,6 +167,25 @@
 			loadState (direction) {
 				this.$store.dispatch('Direct/loadState', direction)
 			},
+			save() {
+				this.$electron.remote.dialog.showSaveDialog(filePath => {
+					if (filePath) {
+						this.$store.dispatch('Direct/write', filePath)
+					}
+				})
+			}
 		},
+		mounted() {
+			window.addEventListener('keyup', (event) => {
+				if (event.key === 'F1') {
+					this.modals.help = !this.modals.help
+				} else if (this.isDirectLoaded && event.ctrlKey) {
+					switch (event.key) {
+						case 'o' : return this.modals.direct = true
+						case 's' : return this.save()
+					}
+				}
+			}, true)
+		}
 	}
 </script>

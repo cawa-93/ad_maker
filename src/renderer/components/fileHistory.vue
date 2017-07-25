@@ -2,10 +2,9 @@
 	<v-list two-line subheader v-if="files.length" class="pb-0">
 		<v-divider/>
 		<v-subheader inset>{{title}}</v-subheader>
-		<v-divider/>
 		<v-list-tile @click="emit(file.path)" v-for="file in files" :key="file.path">
 			<v-list-tile-avatar>
-				<v-icon :class="iconColor">insert_drive_file</v-icon>
+				<v-icon dark :class="iconColor">insert_drive_file</v-icon>
 			</v-list-tile-avatar>
 			<v-list-tile-content>
 				<v-list-tile-title>{{ file.base }}</v-list-tile-title>
@@ -55,8 +54,8 @@
 			iconColor () {
 				switch (this.type) {
 				case 'direct' : return 'purple'
-				case 'keywords' : return 'green'
-				case 'fastLinks' : return 'indigo'
+				case 'keywords' : return 'indigo'
+				case 'fastLinks' : return 'green'
 				}
 			},
 		},
