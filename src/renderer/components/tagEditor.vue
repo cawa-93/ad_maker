@@ -90,7 +90,6 @@ export default {
 			}
 
 			const directMap = this.$store.getters['Direct/directMap']
-			console.log(directMap)
 			let isFastLinkFound = false
 			let isAdFound = false
 

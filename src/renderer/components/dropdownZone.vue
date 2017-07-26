@@ -64,7 +64,7 @@
 <style scoped>
 	.dropdown-zone-root {
 		padding: 10px;
-		opacity: 0.8;
+		transition: .3s cubic-bezier(.25,.8,.25,1);
 	}
 	.dropdown-zone-root, .dashed {
 		min-height: 150px;
@@ -76,16 +76,13 @@
 	}
 	.dashed {
 		border: 3px dashed;
-		pointer-events: none !important;
 	}
 	
 	.icon {
-    box-sizing: content-box;
-    border-radius: 5px;
-		margin: 0;
-		pointer-events: none !important;
+		transition: none;
+		color: inherit !important;
 	}
-	.dropdown-zone-content {
+	.dropdown-zone-content, .icon, .dashed {
 		pointer-events: none !important;
 		margin: 0;
 	}

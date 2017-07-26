@@ -29,7 +29,7 @@ const mutations = {
 	},
 
 	REMOVE (state, {type, filePath}) {
-		state.items = state.items.filter(doc => !(doc.type === type && doc.filePath === filePath))
+		state.items = state.items.filter(doc => doc.filePath !== filePath)
 	},
 }
 

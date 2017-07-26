@@ -18,7 +18,7 @@
 			label="Показать"
 		></v-select>
 
-		<v-menu offset-y left>
+		<v-menu offset-y left :max-height="windowHeight * 0.9">
 			<v-btn icon slot="activator" :class="{'shake animated infinite':animateMenu}" @click="removeAnimation">
 				<v-icon>menu</v-icon>
 			</v-btn>
@@ -71,6 +71,7 @@ export default {
 	},
 	data () {
 		return {
+			windowHeight: 0,
 			animateMenu: !localStorage.oldUser,
 			search: '',
 			types: [
@@ -98,7 +99,7 @@ export default {
 				text: 'Ссылка',
 				value: 'ad_url',
 			}, {
-				text: 'Текст ссылки',
+				text: 'Отображаемая ссылка',
 				value: 'ad_ancor',
 			}, {
 				text: 'Текст',
@@ -177,7 +178,16 @@ export default {
 			this.animateMenu = false
 			localStorage.oldUser = 1
 		},
+		getWindowHeight(event) {
+      this.windowHeight = document.documentElement.clientHeight;
+    }
 	},
+	  mounted() {
+    window.addEventListener('resize', this.getWindowHeight);
+
+    //Init
+    this.getWindowHeight()
+  },
 }
 </script>
 

@@ -10,8 +10,19 @@ export function Error (content = '', title = '') {
 
 export function Info (title, message) {
 	const options = {
+		title,
 		message,
 		type: 'info',
+		buttons: ['OK'],
+	}
+	return dialog.showMessageBox(options, () => {})
+}
+
+export function Warn (title, message) {
+	const options = {
+		title,
+		message,
+		type: 'warning',
 		buttons: ['OK'],
 	}
 	return dialog.showMessageBox(options, () => {})
