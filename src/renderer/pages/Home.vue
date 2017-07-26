@@ -169,12 +169,12 @@
 		},
 		computed: {
 			darkMode: {
-				get() {
+				get () {
 					return this.$store.state.Theme.darkMode
 				},
 				set (value) {
 					return this.$store.commit('Theme/TOGGLE', value)
-				}
+				},
 			},
 			...mapGetters({
 				isDirectLoaded: 'Direct/isLoaded',

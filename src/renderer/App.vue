@@ -10,12 +10,12 @@
 
 <script>
 import {mapState} from 'vuex'
-  export default {
-  	name: 'command-editor',
-    computed: mapState({
-      darkMode: state => state.Theme.darkMode,
-    })
-  }
+export default {
+	name: 'command-editor',
+	computed: mapState({
+		darkMode: state => state.Theme.darkMode,
+	}),
+}
 </script>
 
 <style>

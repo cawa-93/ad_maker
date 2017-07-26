@@ -1,5 +1,5 @@
 <template>
-	<div 
+	<v-container 
 		:class="classes"
 		@click="openFile"
 		@drop.prevent="loadFiles"
@@ -7,10 +7,10 @@
 		@dragleave.prevent="isDrag = false"
 	>
 		<div class="dashed">
-			<v-icon x-large>file_upload</v-icon>
+			<v-icon x-large :dark="isDrag">file_upload</v-icon>
 			<p class="dropdown-zone-content">Перетащите файл сюда</p>
 		</div>
-	</div>
+	</v-container>
 </template>
 
 <script>
@@ -29,7 +29,11 @@
 		},
 		computed: {
 			classes () {
-				return `dropdown-zone-root ${this.isDrag ? this.color : ''}`
+				return {
+					'dropdown-zone-root': true,
+					[this.color]: this.isDrag,
+					'white--text': this.isDrag,
+				}
 			},
 		},
 		methods: {

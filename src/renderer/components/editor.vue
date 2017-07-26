@@ -173,10 +173,10 @@ export default {
 		emit (event, newType) {
 			this.$emit(event, newType)
 		},
-		removeAnimation() {
+		removeAnimation () {
 			this.animateMenu = false
 			localStorage.oldUser = 1
-		}
+		},
 	},
 }
 </script>

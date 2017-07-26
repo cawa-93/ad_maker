@@ -19,20 +19,24 @@ if (process.env.NODE_ENV !== 'development') {
 
 const winURL = process.env.NODE_ENV === 'development'
 	? `http://localhost:9080`
-	: `file://${__dirname}/index.html`
-
+	: `file://${__dirname}/../../index.html`
 function createWindow () {
 	/**
 	 * Initial window options
 	 */
 	mainWindow = new BrowserWindow({
+		title: `${app.getName()} v${app.getVersion()}`,
 		height: 563,
 		useContentSize: true,
 		width: 1000,
+		webPreferences: {
+			devTools: true,
+			webSecurity: false,
+		},
 	})
 
-	mainWindow.setMenu(null)
-
+	mainWindow.maximize()
+	// mainWindow.webContents.openDevTools()
 	mainWindow.loadURL(winURL)
 
 	mainWindow.on('closed', () => {
