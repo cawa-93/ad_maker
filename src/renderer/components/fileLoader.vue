@@ -8,7 +8,7 @@
 <script>
 import fileHistory from '@/components/fileHistory'
 import dropdownZone from '@/components/dropdownZone'
-
+import {Error} from '@/helpers/dialog'
 export default {
 	name: 'fileLoader',
 	components: {fileHistory, dropdownZone},
@@ -29,7 +29,7 @@ export default {
 				await this.$store.dispatch(this.action, {filePath})
 				this.$emit('load')
 			} catch (e) {
-				console.error(e)
+				Error('Ошибка', e)
 			}
 		},
 	},

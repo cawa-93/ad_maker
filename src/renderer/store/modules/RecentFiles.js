@@ -28,8 +28,8 @@ const mutations = {
 		state.items.push(newDoc)
 	},
 
-	REMOVE (state, {type, filePath}) {
-		state.items = state.items.filter(doc => !(doc.type === type && doc.filePath === filePath))
+	REMOVE (state, {filePath}) {
+		state.items = state.items.filter(doc => doc.filePath !== filePath)
 	},
 }
 

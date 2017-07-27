@@ -1,7 +1,7 @@
 {
   "name": "command-editor",
   "productName": "Command.Editor",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Быстрый редактор кампаний из Яндекс.Директ Коммандера",
   "repository": "cawa-93/command-editor",
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
@@ -48,10 +48,15 @@
         }
       ]
     },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "installerIcon": "build/icons/icon.ico"
+    "appImage": {
+      "publish": {
+        "provider": "github",
+      }
+    },
+    "portable": {
+      "publish": {
+        "provider": "github",
+      }
     }
   },
   "dependencies": {
@@ -86,7 +91,7 @@
     "del": "^3.0.0",
     "devtron": "^1.1.0",
     "electron": "^1.7.5",
-    "electron-builder": "^19.16.3",
+    "electron-builder": "^19.17.0",
     "electron-debug": "^1.3.0",
     "electron-devtools-installer": "^2.0.1",
     "electron-webpack": "^0.6.0",

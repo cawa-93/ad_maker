@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash.clonedeep'
 import { utmMark } from '@/helpers'
+import { Warn } from '@/helpers/dialog'
 
 // export function CLEAR_STACK (state) {
 // 	// state.stack = []
@@ -49,9 +50,16 @@ export function INIT_COLUMNS (state, titlesRow) {
 
 export function SET_KEYWORDS (state, fileContent) {
 	const {CAMPAIN_NAME, GROUPE_NAME, KEYWORD} = state.columns
-	fileContent.forEach(([campaignName, groupName, keyword]) => {
+	let isAllKeywordsLoaded = true
+	fileContent.forEach(([campaignName, groupName, keyword], index) => {
+		if (index === 0) return
+
 		let adIndex = state.direct.findIndex(row => row && row[CAMPAIN_NAME] && row[GROUPE_NAME] && row[CAMPAIN_NAME].toUpperCase() === campaignName.toUpperCase() && row[GROUPE_NAME].toUpperCase() === groupName.toUpperCase())
-		if (adIndex < 0) return
+		if (adIndex < 0) {
+			console.warn(`Фраза не добавлена - ${campaignName} - ${groupName} - ${keyword}`)
+			isAllKeywordsLoaded = false
+			return
+		}
 
 		if (state.direct[adIndex][KEYWORD] !== '') {
 			let newAd = cloneDeep(state.direct[adIndex])
@@ -63,6 +71,9 @@ export function SET_KEYWORDS (state, fileContent) {
 		}
 		state.direct[adIndex][KEYWORD] = keyword
 	})
+	if (!isAllKeywordsLoaded) {
+		Warn('Не все фразы были добавлены', 'Проверьте соотведствие названий кампаний и групп')
+	}
 }
 
 export function SET_FASTLINKS (state, fileContent) {
@@ -79,8 +90,8 @@ export function SET_FASTLINKS (state, fileContent) {
 
 			_cache[cacheKey] = {
 				titles: `${fsData[2]}||${fsData[5]}||${fsData[8]}||${fsData[11]}`,
-				urls: `${fsData[3]}||${fsData[6]}||${fsData[9]}||${fsData[13]}`,
-				descs: `${fsData[4]}||${fsData[7]}||${fsData[10]}||${fsData[14]}`,
+				urls: `${fsData[3]}||${fsData[6]}||${fsData[9]}||${fsData[12]}`,
+				descs: `${fsData[4]}||${fsData[7]}||${fsData[10]}||${fsData[13]}`,
 			}
 		}
 
