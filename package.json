@@ -50,12 +50,12 @@
     },
     "appImage": {
       "publish": {
-        "provider": "github",
+        "provider": "github"
       }
     },
     "portable": {
       "publish": {
-        "provider": "github",
+        "provider": "github"
       }
     }
   },
