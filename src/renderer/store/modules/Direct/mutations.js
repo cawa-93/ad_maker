@@ -90,8 +90,8 @@ export function SET_FASTLINKS (state, fileContent) {
 
 			_cache[cacheKey] = {
 				titles: `${fsData[2]}||${fsData[5]}||${fsData[8]}||${fsData[11]}`,
-				urls: `${fsData[3]}||${fsData[6]}||${fsData[9]}||${fsData[13]}`,
-				descs: `${fsData[4]}||${fsData[7]}||${fsData[10]}||${fsData[14]}`,
+				urls: `${fsData[3]}||${fsData[6]}||${fsData[9]}||${fsData[12]}`,
+				descs: `${fsData[4]}||${fsData[7]}||${fsData[10]}||${fsData[13]}`,
 			}
 		}
 

@@ -1,4 +1,5 @@
 import {recentFiles} from '@/datastore'
+import fs from 'fs'
 
 export default function suncFileHistory (store) {
 	recentFiles.loadDatabase(err => {
@@ -8,6 +9,13 @@ export default function suncFileHistory (store) {
 
 		recentFiles.find({}, (err, docs) => {
 			store.commit('RecentFiles/INIT', docs)
+			docs.forEach(doc => {
+				fs.access(doc.filePath, (err) => {
+					if (err && err.code === 'ENOENT') {
+						store.commit('RecentFiles/REMOVE', doc)
+					}
+				})
+			})
 		})
 	})
 
