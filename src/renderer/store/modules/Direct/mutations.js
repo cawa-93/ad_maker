@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash.clonedeep'
 import { utmMark } from '@/helpers'
-import { Warn } from '@/helpers/dialog'
+import { Warn } from '@/../common/dialog'
 
 // export function CLEAR_STACK (state) {
 // 	// state.stack = []
@@ -72,7 +72,7 @@ export function SET_KEYWORDS (state, fileContent) {
 		state.direct[adIndex][KEYWORD] = keyword
 	})
 	if (!isAllKeywordsLoaded) {
-		Warn('Не все фразы были добавлены', 'Проверьте соотведствие названий кампаний и групп')
+		Warn('Не все фразы были добавлены', 'Проверьте соответствие названий кампаний и групп')
 	}
 }
 

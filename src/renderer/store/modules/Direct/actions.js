@@ -1,6 +1,6 @@
 // import { remote } from 'electron'
 import {openFile, parseCSV, writeCSV} from '@/helpers'
-import {Error} from '@/helpers/dialog'
+import {Error} from '@/../common/dialog'
 import {directStates} from '@/datastore'
 
 // export function UNDO ({commit, state}) {

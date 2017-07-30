@@ -8,7 +8,7 @@
 <script>
 import fileHistory from '@/components/fileHistory'
 import dropdownZone from '@/components/dropdownZone'
-import {Error} from '@/helpers/dialog'
+import {Error} from '@/../common/dialog'
 export default {
 	name: 'fileLoader',
 	components: {fileHistory, dropdownZone},

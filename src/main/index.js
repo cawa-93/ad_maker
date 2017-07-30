@@ -1,13 +1,7 @@
 'use strict'
-
 import { app, BrowserWindow } from 'electron'
 
 let mainWindow
-// function sendEventToWindow (channel, ...args) {
-// 	if (mainWindow && mainWindow.webContents) {
-// 		mainWindow.webContents.send(channel, ...args)
-// 	}
-// }
 
 /**
  * Set `__static` path to static files in production
@@ -66,14 +60,25 @@ app.on('activate', () => {
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
 
-/*
-import { autoUpdater } from 'electron-updater'
 
-autoUpdater.on('update-downloaded', () => {
-	autoUpdater.quitAndInstall()
+import { autoUpdater } from 'electron-updater'
+import { Info } from '../common/dialog.js'
+
+autoUpdater.on('checking-for-update', () => {
+	Info('Доступно обновление')
+})
+autoUpdater.on('update-available', () => {
+	Info('Доступно обновление')
+})
+autoUpdater.on('update-not-available', () => {
+	Info('Доступно обновление')
+})
+autoUpdater.on('update-downloaded', (UpdateInfo) => {
+	Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
+	Info('Доступно обновление', UpdateInfo)
 })
 
 app.on('ready', () => {
-	if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
+	autoUpdater.checkForUpdates()
 })
- */
+ 
