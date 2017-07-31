@@ -178,16 +178,16 @@ export default {
 			this.animateMenu = false
 			localStorage.oldUser = 1
 		},
-		getWindowHeight(event) {
-      this.windowHeight = document.documentElement.clientHeight;
-    }
+		getWindowHeight (event) {
+			this.windowHeight = document.documentElement.clientHeight
+		},
 	},
-	  mounted() {
-    window.addEventListener('resize', this.getWindowHeight);
+	  mounted () {
+		window.addEventListener('resize', this.getWindowHeight)
 
-    //Init
-    this.getWindowHeight()
-  },
+		// Init
+		this.getWindowHeight()
+	},
 }
 </script>
 

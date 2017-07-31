@@ -1,7 +1,13 @@
 'use strict'
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, clipboard } from 'electron'
+import { autoUpdater } from 'electron-updater'
+import { Info } from '../common/dialog.js'
+
+autoUpdater.logger = require('electron-log')
+autoUpdater.logger.transports.file.level = 'info'
 
 let mainWindow
+let clipboardInterval
 
 /**
  * Set `__static` path to static files in production
@@ -29,13 +35,34 @@ function createWindow () {
 		},
 	})
 
+	mainWindow.on('page-title-updated', (event) => {
+		event.preventDefault()
+	})
+
 	mainWindow.maximize()
-	// mainWindow.webContents.openDevTools()
+	mainWindow.webContents.openDevTools()
 	mainWindow.loadURL(winURL)
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
+		clearInterval(clipboardInterval)
 	})
+
+	/**
+ * Clipboard onChange event
+ *
+ * https://github.com/electron/electron/issues/2280
+ */
+
+	let currentClipboard = null
+	clipboardInterval = setInterval(() => {
+		const newClipboard = clipboard.readText()
+		if (!mainWindow || !mainWindow.webContents || newClipboard === currentClipboard) {
+			return
+		}
+		currentClipboard = newClipboard
+		mainWindow.webContents.send('clipboard-change', {value: currentClipboard})
+	}, 100)
 }
 
 app.on('ready', createWindow)
@@ -60,25 +87,31 @@ app.on('activate', () => {
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
 
-
-import { autoUpdater } from 'electron-updater'
-import { Info } from '../common/dialog.js'
+autoUpdater.on('error', (error) => {
+	console.log('error', error)
+	Info('error', error)
+})
 
 autoUpdater.on('checking-for-update', () => {
-	Info('Доступно обновление')
+	console.log('checking-for-update')
+	Info('checking-for-update')
 })
 autoUpdater.on('update-available', () => {
-	Info('Доступно обновление')
+	console.log('update-available')
+	Info('update-available')
 })
 autoUpdater.on('update-not-available', () => {
-	Info('Доступно обновление')
+	console.log('update-not-available')
+	Info('update-not-available')
 })
 autoUpdater.on('update-downloaded', (UpdateInfo) => {
-	Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
-	Info('Доступно обновление', UpdateInfo)
+	// console.log('Доступно обновление', 'Новая версия будет установлена после перезапуска')
+	// Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
+	console.log('update-downloaded', UpdateInfo)
+	Info('update-downloaded', UpdateInfo)
 })
 
 app.on('ready', () => {
+	Info('ready', 'ready')
 	autoUpdater.checkForUpdates()
 })
- 
