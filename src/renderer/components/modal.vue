@@ -1,15 +1,24 @@
 <template>
-	<v-dialog lazy :value="value" @input="input" persistent :width="width">
+	<v-dialog lazy :value="value" @input="input" :persistent="!closable" :width="width">
 		<v-card>
 			<v-card-title :class="[color, {'white--text': color}]">
 				<span>
 					{{title}}
 				</span>
-				<v-btn icon class="mt-0 mb-0 mr-0 close" :class="{'white--text': color}" @click="input(false)">
+				<v-btn icon class="mt-0 mb-0 mr-0 close" 
+					v-if="closable"
+					:class="{'white--text': color}"
+					@click="input(false)"
+				>
 					<v-icon>close</v-icon>
 				</v-btn>
-				</v-card-title>
-				<v-divider  :class="color"/>
+			</v-card-title>
+			<v-divider  :class="color"/>
+			<v-progress-linear indeterminate 
+				v-if="loader"
+				:color-front="`${color} lighten-1`"
+				:color-back="`${color} lighten-3`"
+			/>
 			<v-card-text class="pa-0">
 				<slot></slot>
 			</v-card-text>
@@ -32,6 +41,14 @@
 				type: [String, Number],
 				default: 600,
 			},
+			loader: {
+				type: Boolean,
+				default: false,
+			},
+			closable: {
+				type: Boolean,
+				default: true,
+			},
 			color: String,
 		},
 		methods: {
@@ -45,5 +62,9 @@
 <style scoped>
 	.close {
 		margin-left: auto;
+	}
+	.progress-linear {
+    margin-top: -7px;
+  	margin-bottom: 0;
 	}
 </style>

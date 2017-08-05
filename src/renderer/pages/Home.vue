@@ -25,7 +25,7 @@
 
 				<v-subheader inset>Добавить</v-subheader>
 
-				<v-list-tile avatar @click="modals.keywords = true">
+				<v-list-tile avatar @click="modals.keywords.visible = true">
 					<v-list-tile-avatar>
 						<v-icon dark class="indigo">attach_file</v-icon>
 					</v-list-tile-avatar>
@@ -34,7 +34,7 @@
 					</v-list-tile-content>
 				</v-list-tile>
 
-				<v-list-tile avatar @click="modals.fastLinks = true">
+				<v-list-tile avatar @click="modals.fastLinks.visible = true">
 					<v-list-tile-avatar>
 						<v-icon dark class="green">attach_file</v-icon>
 					</v-list-tile-avatar>
@@ -43,7 +43,7 @@
 					</v-list-tile-content>
 				</v-list-tile>
 
-				<v-list-tile avatar @click="modals.tagging = true">
+				<v-list-tile avatar @click="modals.tagging.visible = true">
 					<v-list-tile-avatar>
 						<v-icon dark class="orange">local_offer</v-icon>
 					</v-list-tile-avatar>
@@ -56,7 +56,7 @@
 
 				<v-subheader inset>Кампании</v-subheader>
 
-				<v-list-tile @click="modals.direct = true">
+				<v-list-tile @click="modals.direct.visible = true">
 					<v-list-tile-avatar>
 						<v-icon>file_upload</v-icon>
 					</v-list-tile-avatar>
@@ -90,7 +90,7 @@
 					</v-list-tile-action>
 				</v-list-tile>
 
-				<v-list-tile @click="modals.help = true">
+				<v-list-tile @click="modals.help.visible = true">
 					<v-list-tile-avatar>
 						<v-icon>help</v-icon>
 					</v-list-tile-avatar>
@@ -120,23 +120,45 @@
 			</v-btn>
 		</v-speed-dial> -->
 
-		<modal v-model="modals.help" title="Горячие клавиши" :width="400">
+		<modal v-model="modals.help.visible" title="Горячие клавиши" :width="400">
 			<help-center/>
 		</modal>
 
-		<modal :value="modals.direct || !isDirectLoaded" @input="value => { modals.direct = value }" title="Выберите файл с кампаниями" :closable="isDirectLoaded" color="purple">
-			<file-loader type="direct" action="Direct/initStack" @load="modals.direct = false; type='ads'" color="purple"/>
+		<modal :value="modals.direct.visible || !isDirectLoaded" title="Выберите файл с кампаниями" color="purple"
+			:loader="modals.direct.loader"
+			:closable="isDirectLoaded && modals.direct.closable"
+			@input="value => { modals.direct.visible = value }"
+		>
+			<file-loader type="direct" action="Direct/initStack" color="purple"
+				@start-load="onStartLoad('direct')"
+				@load="onLoad('direct'); type='ads'"
+			/>
 		</modal>
 
-		<modal v-model="modals.keywords" title="Выберите файл с ключевыми словами" color="indigo">
-			<file-loader type="keywords" action="Direct/setKeywords" @load="modals.keywords = false; type='ks'" color="indigo"/>
+		<modal v-model="modals.keywords.visible" title="Выберите файл с ключевыми словами" color="indigo"
+			:closable="modals.keywords.closable"
+			:loader="modals.keywords.loader"
+		>
+			<file-loader type="keywords" action="Direct/setKeywords" color="indigo"
+				@start-load="onStartLoad('keywords')"
+				@load="onLoad('keywords'); type='ks'"
+			/>
 		</modal>
 
-		<modal v-model="modals.fastLinks" title="Выберите файл с быстрыми ссылками" color="green">
-			<file-loader type="fastLinks" action="Direct/setFastLinks" @load="modals.fastLinks = false; type='fs'" color="green"/>
+		<modal v-model="modals.fastLinks.visible" title="Выберите файл с быстрыми ссылками" color="green"
+			:closable="modals.fastLinks.closable"
+			:loader="modals.fastLinks.loader"
+		>
+			<file-loader type="fastLinks" action="Direct/setFastLinks" color="green"
+				@start-load="onStartLoad('fastLinks')"
+				@load="onLoad('fastLinks'); type='fs'"
+			/>
 		</modal>
 
-		<modal v-model="modals.tagging" title="Настройте шаблон пометки" color="orange">
+		<modal v-model="modals.tagging.visible" title="Настройте шаблон пометки" color="orange"
+			:closable="modals.tagging.closable"
+			:loader="modals.tagging.loader"
+		>
 			<tag-editor @mark="t => {type = t === 'main' ? 'ads' : 'fs'; modals.tagging = false}"/>
 		</modal>
 
@@ -157,13 +179,32 @@
 		data () {
 			return {
 				type: 'ads',
-				speedDeal: false,
 				modals: {
-					direct: false,
-					keywords: false,
-					fastLinks: false,
-					tagging: false,
-					help: false,
+					direct: {
+						visible: false,
+						loader: false,
+						closable: true,
+					},
+					keywords: {
+						visible: false,
+						loader: false,
+						closable: true,
+					},
+					fastLinks: {
+						visible: false,
+						loader: false,
+						closable: true,
+					},
+					tagging: {
+						visible: false,
+						loader: false,
+						closable: true,
+					},
+					help: {
+						visible: false,
+						loader: false,
+						closable: true,
+					},
 				},
 			}
 		},
@@ -196,6 +237,15 @@
 						this.$store.dispatch('Direct/write', filePath)
 					}
 				})
+			},
+			onStartLoad(type) {
+				this.modals[type].closable = false
+				this.modals[type].loader = true
+			},
+			onLoad(type) {
+				this.modals[type].visible = false
+				this.modals[type].loader = false
+				this.modals[type].closable = true
 			},
 		},
 		mounted () {

@@ -1,5 +1,5 @@
 const state = {
-	darkMode: ((localStorage.getItem('darkMode') || 1) === 1),
+	darkMode: ((localStorage.getItem('darkMode') || 1) == 1),
 }
 
 const mutations = {
