@@ -11,7 +11,7 @@
     "dev": "electron-webpack dev",
     "docker": "docker run --rm -ti -v ${PWD}:/project -v ${PWD##*/}-node-modules:/project/node_modules -v ~/.electron:/root/.electron  --env-file ./.env electronuserland/electron-builder:wine",
     "compile": "electron-webpack",
-    "release": "yarn compile && electron-builder -lw",
+    "release": "yarn compile && electron-builder -w",
     "dist": "yarn compile && electron-builder --dir -c.compression=store",
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src"
@@ -32,7 +32,7 @@
       ],
       "target": [
         {
-          "target": "portable",
+          "target": "nsis",
           "arch": [
             "x64",
             "ia32"
@@ -89,10 +89,10 @@
     "del": "^3.0.0",
     "devtron": "^1.1.0",
     "electron": "^1.7.5",
-    "electron-builder": "19.18.0",
+    "electron-builder": "^19.19.1",
     "electron-debug": "^1.3.0",
     "electron-devtools-installer": "^2.0.1",
-    "electron-webpack": "0.8.1",
+    "electron-webpack": "^0.10.1",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",

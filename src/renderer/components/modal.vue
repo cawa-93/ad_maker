@@ -2,7 +2,7 @@
 	<v-dialog lazy :value="value" @input="input" :persistent="!closable" :width="width">
 		<v-card>
 			<v-card-title :class="[color, {'white--text': color}]">
-				<span>
+				<span class="modal-title">
 					{{title}}
 				</span>
 				<v-btn icon class="mt-0 mb-0 mr-0 close" 
@@ -13,7 +13,7 @@
 					<v-icon>close</v-icon>
 				</v-btn>
 			</v-card-title>
-			<v-divider  :class="color"/>
+			<v-divider :class="color"/>
 			<v-progress-linear indeterminate 
 				v-if="loader"
 				:color-front="`${color} lighten-1`"
@@ -64,7 +64,10 @@
 		margin-left: auto;
 	}
 	.progress-linear {
-    margin-top: -7px;
-  	margin-bottom: 0;
+		margin-top: -7px;
+		margin-bottom: 0;
+	}
+	.modal-title {
+		line-height: 36px
 	}
 </style>

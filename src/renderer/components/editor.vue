@@ -19,7 +19,7 @@
 		></v-select>
 
 		<v-menu offset-y left :max-height="windowHeight * 0.9">
-			<v-btn icon slot="activator" :class="{'shake animated infinite':animateMenu}" @click="removeAnimation">
+			<v-btn icon slot="activator" :class="{'shake':animateMenu}" @click="removeAnimation">
 				<v-icon>menu</v-icon>
 			</v-btn>
 			<slot name="menu"></slot>
@@ -198,40 +198,39 @@ export default {
 .menu {
 	padding: 18px 0
 }
-	td {
-		text-align: right;
-		/*text-decoration: underline;*/
-		cursor: pointer;
-	}
+
+td {
+	text-align: right;
+	/*text-decoration: underline;*/
+	cursor: pointer;
+}
 
 @keyframes shake {
-  from, to, 23.75% {
-    transform: translate3d(0, 0, 0);
+  0%, 30% {
+    transform: rotate(0)
   }
-
-  2.5%, 7.5%, 12.5%, 17.5%, 22.5% {
-    transform: translate3d(-4px, 0, 0);
+  5% {
+    transform: rotate(20deg)
   }
-
-  5%, 10%, 15%, 20% {
-    transform: translate3d(4px, 0, 0);
+  10% {
+    transform: rotate(-16deg)
+  }
+  15% {
+    transform: rotate(12deg)
+  }
+  20% {
+    transform: rotate(-8deg)
+  }
+  25% {
+    transform: rotate(4deg)
   }
 }
 
 .shake {
   animation-name: shake;
-}
-
-.animated {
-  animation-duration: 4s;
+  animation-duration: 2s;
   animation-fill-mode: both;
-}
-
-.animated.infinite {
   animation-iteration-count: infinite;
 }
 
-.animated.hinge {
-  animation-duration: 2s;
-}
 </style>

@@ -27,7 +27,7 @@
 
 				<v-list-tile avatar @click="modals.keywords.visible = true">
 					<v-list-tile-avatar>
-						<v-icon dark class="indigo">attach_file</v-icon>
+						<v-icon dark class="indigo">vpn_key</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
 						<v-list-tile-title>Ключевые слова</v-list-tile-title>
@@ -36,7 +36,7 @@
 
 				<v-list-tile avatar @click="modals.fastLinks.visible = true">
 					<v-list-tile-avatar>
-						<v-icon dark class="green">attach_file</v-icon>
+						<v-icon dark class="green">link</v-icon>
 					</v-list-tile-avatar>
 					<v-list-tile-content>
 						<v-list-tile-title>Быстрые ссылки</v-list-tile-title>
@@ -75,8 +75,8 @@
 				</v-list-tile>
 
 				<v-divider/>
-<!-- <i class="material-icons">lightbulb_outline</i> -->
-				<v-list-tile action avatar>
+
+				<v-list-tile action avatar @click.stop>
 					<v-list-tile-avatar>
 						<v-icon>lightbulb_outline</v-icon>
 					</v-list-tile-avatar>
@@ -100,25 +100,6 @@
 				</v-list-tile>
 			</v-list>
 		</editor>
-
-		<!-- <v-speed-dial v-if="isDirectLoaded" v-model="speedDeal" fixed bottom right hover >
-			<v-btn slot="activator" v-model="speedDeal" class="blue darken-2" fab hover v-tooltip:left="{ html: 'Добавить' }">
-				<v-icon>add</v-icon>
-				<v-icon>close</v-icon>
-			</v-btn>
-			<v-btn @click="modals.direct = true" fab small class="purple" v-tooltip:left="{ html: 'Кампании' }">
-				<v-icon>attach_file</v-icon>
-			</v-btn>
-			<v-btn @click="modals.keywords = true" fab small class="green" v-tooltip:left="{ html: 'Ключевые слова' }">
-				<v-icon>attach_file</v-icon>
-			</v-btn>
-			<v-btn @click="modals.fastLinks = true" fab small class="indigo" v-tooltip:left="{ html: 'Быстрые ссылки' }">
-				<v-icon>attach_file</v-icon>
-			</v-btn>			
-			<v-btn @click="modals.tagging = true" fab small class="red" v-tooltip:left="{ html: 'Пометка ссылок' }">
-				<v-icon>local_offer</v-icon>
-			</v-btn>
-		</v-speed-dial> -->
 
 		<modal v-model="modals.help.visible" title="Горячие клавиши" :width="400">
 			<help-center/>
@@ -238,11 +219,11 @@
 					}
 				})
 			},
-			onStartLoad(type) {
+			onStartLoad (type) {
 				this.modals[type].closable = false
 				this.modals[type].loader = true
 			},
-			onLoad(type) {
+			onLoad (type) {
 				this.modals[type].visible = false
 				this.modals[type].loader = false
 				this.modals[type].closable = true
@@ -251,10 +232,10 @@
 		mounted () {
 			window.addEventListener('keyup', (event) => {
 				if (event.key === 'F1') {
-					this.modals.help = !this.modals.help
+					this.modals.help.visible = !this.modals.help.visible
 				} else if (this.isDirectLoaded && event.ctrlKey) {
 					switch (event.key) {
-					case 'o' : this.modals.direct = true; break
+					case 'o' : this.modals.direct.visible = true; break
 					case 's' : this.save(); break
 					}
 				}
