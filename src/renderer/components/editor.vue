@@ -33,14 +33,14 @@
 		:search="search"
 	>
 		<template slot="items" scope="props">
-			<td @click="search = props.item.campaign">{{ props.item.campaign }}</td>
+			<td @click="search = props.item.campaign" v-html="caption(props.item.campaign)"></td>
 			<td @click="search = props.item.group">{{ props.item.group }}</td>
 			
 			<template v-if="type === 'ads'">
 				<td @click="search = props.item.ad_title">{{ props.item.ad_title }}</td>
 				<td @click="search = props.item.ad_url">{{ props.item.ad_url }}</td>
 				<td @click="search = props.item.ad_ancor">{{ props.item.ad_ancor }}</td>
-				<td @click="search = props.item.ad_desc">{{ props.item.ad_desc }}</td>
+				<td><short-text>{{ props.item.ad_desc }}</short-text></td>
 			</template>
 
 			<template v-else-if="type === 'ks'">
@@ -50,7 +50,7 @@
 			<template v-else-if="type === 'fs'">
 				<td @click="search = props.item.fastLink_title">{{ props.item.fastLink_title }}</td>
 				<td @click="search = props.item.fastLink_url">{{ props.item.fastLink_url }}</td>
-				<td @click="search = props.item.fastLink_desc">{{ props.item.fastLink_desc }}</td>
+				<td>{{ props.item.fastLink_desc }}</td>
 			</template>
 		</template>
 	</v-data-table>
@@ -181,8 +181,11 @@ export default {
 		getWindowHeight (event) {
 			this.windowHeight = document.documentElement.clientHeight
 		},
+		caption (str, delimiter = '_') {
+			return str.replace(new RegExp(`(${delimiter}[^${delimiter}]+)$`), `<span class="caption grey--text">$1</span>`)
+		},
 	},
-	  mounted () {
+	mounted () {
 		window.addEventListener('resize', this.getWindowHeight)
 
 		// Init
@@ -201,8 +204,10 @@ export default {
 
 td {
 	text-align: right;
-	/*text-decoration: underline;*/
 	cursor: pointer;
+}
+td > .caption {
+	font-size: 9px !important;
 }
 
 @keyframes shake {
