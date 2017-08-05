@@ -140,7 +140,7 @@
 			:closable="modals.tagging.closable"
 			:loader="modals.tagging.loader"
 		>
-			<tag-editor @mark="t => {type = t === 'main' ? 'ads' : 'fs'; modals.tagging = false}"/>
+			<tag-editor @mark="t => {type = t === 'main' ? 'ads' : 'fs'; modals.tagging.visible = false}"/>
 		</modal>
 
 	</div>
