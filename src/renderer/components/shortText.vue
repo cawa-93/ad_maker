@@ -11,20 +11,20 @@
 		props: {
 			length: {
 				type: Number,
-				default: 3
-			}
+				default: 3,
+			},
 		},
-		data() {
+		data () {
 			return {
 				enable: true,
-				words: this.$slots.default[0].text.split(' ').length
+				words: this.$slots.default[0].text.split(' ').length,
 			}
 		},
 		computed: {
-			text() {
+			text () {
 				return this.$slots.default[0].text.split(' ').slice(0, this.length).join(' ') + '...'
-			}
-		}
+			},
+		},
 	}
 </script>
 

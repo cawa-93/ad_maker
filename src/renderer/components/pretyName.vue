@@ -10,9 +10,9 @@
 	export default {
 		name: 'pretyName',
 		computed: {
-			nameComponents() {
+			nameComponents () {
 				return this.$slots.default[0].text.split('_')
-			}
-		}
+			},
+		},
 	}
 </script>

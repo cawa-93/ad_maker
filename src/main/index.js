@@ -1,10 +1,7 @@
 'use strict'
 import { app, BrowserWindow, clipboard } from 'electron'
 import { autoUpdater } from 'electron-updater'
-import { Info } from '../common/dialog.js'
-
-autoUpdater.logger = require('electron-log')
-autoUpdater.logger.transports.file.level = 'info'
+import { Info, Error } from 'common/dialog.js'
 
 let mainWindow
 let clipboardInterval
@@ -26,9 +23,10 @@ function createWindow () {
 	 */
 	mainWindow = new BrowserWindow({
 		title: `${app.getName()} v${app.getVersion()}`,
-		height: 563,
-		useContentSize: true,
 		width: 1000,
+		height: 563,
+		backgroundColor: '#303030',
+		useContentSize: true,
 		webPreferences: {
 			devTools: true,
 			webSecurity: false,
@@ -40,7 +38,7 @@ function createWindow () {
 	})
 
 	mainWindow.maximize()
-	mainWindow.webContents.openDevTools()
+	// mainWindow.webContents.openDevTools()
 	mainWindow.loadURL(winURL)
 
 	mainWindow.on('closed', () => {
@@ -49,10 +47,10 @@ function createWindow () {
 	})
 
 	/**
- * Clipboard onChange event
- *
- * https://github.com/electron/electron/issues/2280
- */
+	 * Clipboard onChange event
+	 *
+	 * https://github.com/electron/electron/issues/2280
+	 */
 
 	let currentClipboard = null
 	clipboardInterval = setInterval(() => {
@@ -86,32 +84,16 @@ app.on('activate', () => {
  * support auto updating. Code Signing with a valid certificate is required.
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
-
 autoUpdater.on('error', (error) => {
-	console.log('error', error)
-	Info('error', error)
+	console.error(error)
+	Error(error, 'Во время поиска обновлений произошла ошибка')
 })
 
-autoUpdater.on('checking-for-update', () => {
-	console.log('checking-for-update')
-	Info('checking-for-update')
-})
-autoUpdater.on('update-available', () => {
-	console.log('update-available')
-	Info('update-available')
-})
-autoUpdater.on('update-not-available', () => {
-	console.log('update-not-available')
-	Info('update-not-available')
-})
 autoUpdater.on('update-downloaded', (UpdateInfo) => {
-	// console.log('Доступно обновление', 'Новая версия будет установлена после перезапуска')
-	// Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
-	console.log('update-downloaded', UpdateInfo)
-	Info('update-downloaded', UpdateInfo)
+	console.log('Доступно обновление', UpdateInfo)
+	Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
 })
 
 app.on('ready', () => {
-	Info('ready', 'ready')
 	autoUpdater.checkForUpdates()
 })
