@@ -1,13 +1,11 @@
 'use strict'
-
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow/*, clipboard*/ } from 'electron'
+// import { autoUpdater } from 'electron-updater'
+// import { Info, Error } from 'common/dialog.js'
+// import isDev from 'electron-is-dev'
 
 let mainWindow
-// function sendEventToWindow (channel, ...args) {
-// 	if (mainWindow && mainWindow.webContents) {
-// 		mainWindow.webContents.send(channel, ...args)
-// 	}
-// }
+// let clipboardInterval
 
 /**
  * Set `__static` path to static files in production
@@ -26,22 +24,45 @@ function createWindow () {
 	 */
 	mainWindow = new BrowserWindow({
 		title: `${app.getName()} v${app.getVersion()}`,
-		height: 563,
-		useContentSize: true,
 		width: 1000,
+		height: 563,
+		backgroundColor: '#303030',
+		useContentSize: true,
+		show: false,
 		webPreferences: {
 			devTools: true,
 			webSecurity: false,
 		},
 	})
 
-	mainWindow.maximize()
-	// mainWindow.webContents.openDevTools()
+	mainWindow.on('page-title-updated', (event) => {
+		event.preventDefault()
+	})
+
 	mainWindow.loadURL(winURL)
+	mainWindow.maximize()
+	mainWindow.show()
+	// mainWindow.webContents.openDevTools()
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
+		// clearInterval(clipboardInterval)
 	})
+
+	/**
+	 * Clipboard onChange event
+	 *
+	 * https://github.com/electron/electron/issues/2280
+	 */
+
+	// clipboardInterval = setInterval(() => {
+	// 	const newClipboard = clipboard.readText()
+	// 	if (!mainWindow || !mainWindow.webContents || newClipboard === currentClipboard) {
+	// 		return
+	// 	}
+	// 	currentClipboard = newClipboard
+	// 	mainWindow.webContents.send('clipboard-change', {value: currentClipboard})
+	// }, 100)
 }
 
 app.on('ready', createWindow)
@@ -65,15 +86,18 @@ app.on('activate', () => {
  * support auto updating. Code Signing with a valid certificate is required.
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
+// if (!isDev) {
+// 	autoUpdater.on('error', (error) => {
+// 		console.error(error)
+// 		Error(error, 'Во время поиска обновлений произошла ошибка')
+// 	})
 
-/*
-import { autoUpdater } from 'electron-updater'
+// 	autoUpdater.on('update-downloaded', (UpdateInfo) => {
+// 		console.log('Доступно обновление', UpdateInfo)
+// 		Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
+// 	})
 
-autoUpdater.on('update-downloaded', () => {
-	autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-	if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */
+// 	app.on('ready', () => {
+// 		autoUpdater.checkForUpdates()
+// 	})
+// }

@@ -5,6 +5,7 @@ import openFile from './openFile'
 import parseCSV from './parseCSV'
 import utmMark from './utmMark'
 import writeCSV from './writeCSV'
+import thankNotify from './thankNotify'
 
 export {
 	clearKeyword,
@@ -14,4 +15,5 @@ export {
 	parseCSV,
 	utmMark,
 	writeCSV,
+	thankNotify,
 }

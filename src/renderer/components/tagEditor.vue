@@ -18,7 +18,8 @@
     <v-layout row wrap>
 		  <v-flex xs12>
 		    <v-list two-line>
-		    	<v-list-tile v-for="tag in templateTags" :key="tag.tag" @click="copy(tag.tag)" v-tooltip:top="{ html: 'Скопировать' }">
+		    	<v-list-tile v-for="tag in templateTags" :key="tag.tag" @click="copy(tag.tag)" :disabled="tag.disabled"
+		    	 v-tooltip:top="{ html: tag.disabled ? 'Скопировано' : 'Скопировать' }" >
 			    	<v-list-tile-content>
 							<v-list-tile-title>{{ tag.tag }}</v-list-tile-title>
 							<v-list-tile-sub-title>{{ tag.label }}</v-list-tile-sub-title>
@@ -48,6 +49,7 @@ export default {
 	name: 'tagEditor',
 	data () {
 		return {
+			clipboard: null,
 			type: 'main',
 			utm: {
 				utm_source: 'yandex.com',
@@ -78,7 +80,10 @@ export default {
 					label: 'Заголовок быстрой ссылки',
 				})
 			}
-			return templateTags
+			return templateTags.map(tag => {
+				tag.disabled = tag.tag === this.clipboard
+				return tag
+			})
 		},
 		exampleData () {
 			const exampleData = {
@@ -132,6 +137,12 @@ export default {
 			return exampleUrlComponents
 		},
 	},
+	mounted () {
+		this.clipboard = this.$electron.clipboard.readText()
+		this.$electron.ipcRenderer.on('clipboard-change', (event, {value}) => {
+			this.clipboard = value
+		})
+	},
 	methods: {
 		mark () {
 			this.$store.dispatch('Direct/utmTagging', {
@@ -143,6 +154,7 @@ export default {
 			this.$emit('mark', this.type)
 		},
 		copy (str) {
+			this.clipboard = str
 			this.$electron.clipboard.writeText(str)
 		},
 	},

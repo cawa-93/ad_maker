@@ -2,7 +2,7 @@
   <div id="app">
   	<v-app :dark="darkMode" standalone>
   		<v-container fluid>
-        <router-view></router-view>
+        <home/>
       </v-container>
     </v-app>
   </div>
@@ -10,8 +10,10 @@
 
 <script>
 import {mapState} from 'vuex'
+import Home from '@/pages/Home'
 export default {
 	name: 'command-editor',
+	components: { Home },
 	computed: mapState({
 		darkMode: state => state.Theme.darkMode,
 	}),

@@ -19,7 +19,7 @@
 		></v-select>
 
 		<v-menu offset-y left :max-height="windowHeight * 0.9">
-			<v-btn icon slot="activator" :class="{'shake animated infinite':animateMenu}" @click="removeAnimation">
+			<v-btn icon slot="activator" :class="{'shake':animateMenu}" @click="removeAnimation">
 				<v-icon>menu</v-icon>
 			</v-btn>
 			<slot name="menu"></slot>
@@ -33,14 +33,14 @@
 		:search="search"
 	>
 		<template slot="items" scope="props">
-			<td @click="search = props.item.campaign">{{ props.item.campaign }}</td>
-			<td @click="search = props.item.group">{{ props.item.group }}</td>
+			<td @click="search = props.item.campaign"><prety-name>{{props.item.campaign}}</prety-name></td>
+			<td @click="search = props.item.group"><prety-name>{{props.item.group}}</prety-name></td>
 			
 			<template v-if="type === 'ads'">
 				<td @click="search = props.item.ad_title">{{ props.item.ad_title }}</td>
-				<td @click="search = props.item.ad_url">{{ props.item.ad_url }}</td>
+				<td class="text-xs-left" @click="search = props.item.ad_url" v-html="captionDomain(props.item.ad_url)"></td>
 				<td @click="search = props.item.ad_ancor">{{ props.item.ad_ancor }}</td>
-				<td @click="search = props.item.ad_desc">{{ props.item.ad_desc }}</td>
+				<td><short-text>{{ props.item.ad_desc }}</short-text></td>
 			</template>
 
 			<template v-else-if="type === 'ks'">
@@ -49,8 +49,8 @@
 
 			<template v-else-if="type === 'fs'">
 				<td @click="search = props.item.fastLink_title">{{ props.item.fastLink_title }}</td>
-				<td @click="search = props.item.fastLink_url">{{ props.item.fastLink_url }}</td>
-				<td @click="search = props.item.fastLink_desc">{{ props.item.fastLink_desc }}</td>
+				<td class="text-xs-left" @click="search = props.item.fastLink_url" v-html="captionDomain(props.item.fastLink_url)"></td>
+				<td><short-text>{{ props.item.fastLink_desc }}</short-text></td>
 			</template>
 		</template>
 	</v-data-table>
@@ -60,9 +60,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import shortText from '@/components/shortText'
+import pretyName from '@/components/pretyName'
 
 export default {
 	name: 'editor',
+	components: { shortText, pretyName },
 	props: {
 		type: {
 			type: String,
@@ -178,16 +181,22 @@ export default {
 			this.animateMenu = false
 			localStorage.oldUser = 1
 		},
-		getWindowHeight(event) {
-      this.windowHeight = document.documentElement.clientHeight;
-    }
+		getWindowHeight (event) {
+			this.windowHeight = document.documentElement.clientHeight
+		},
+		caption (str, delimiter = '_') {
+			return str.replace(new RegExp(`(${delimiter}[^${delimiter}]+)$`), `<span class="caption grey--text">$1</span>`)
+		},
+		captionDomain (str) {
+			return str.replace(new RegExp(`^([a-z]+://[^/]+)`), `<span class="caption grey--text">$1</span>`)
+		},
 	},
-	  mounted() {
-    window.addEventListener('resize', this.getWindowHeight);
+	mounted () {
+		window.addEventListener('resize', this.getWindowHeight)
 
-    //Init
-    this.getWindowHeight()
-  },
+		// Init
+		this.getWindowHeight()
+	},
 }
 </script>
 
@@ -195,43 +204,48 @@ export default {
 .display-flex {
 	display: flex;
 }
-.menu {
-	padding: 18px 0
+
+
+
+td {
+	cursor: pointer;
 }
-	td {
-		text-align: right;
-		/*text-decoration: underline;*/
-		cursor: pointer;
-	}
 
 @keyframes shake {
-  from, to, 23.75% {
-    transform: translate3d(0, 0, 0);
+  0%, 30% {
+    transform: rotate(0)
   }
-
-  2.5%, 7.5%, 12.5%, 17.5%, 22.5% {
-    transform: translate3d(-4px, 0, 0);
+  5% {
+    transform: rotate(20deg)
   }
-
-  5%, 10%, 15%, 20% {
-    transform: translate3d(4px, 0, 0);
+  10% {
+    transform: rotate(-16deg)
+  }
+  15% {
+    transform: rotate(12deg)
+  }
+  20% {
+    transform: rotate(-8deg)
+  }
+  25% {
+    transform: rotate(4deg)
   }
 }
 
 .shake {
   animation-name: shake;
-}
-
-.animated {
-  animation-duration: 4s;
+  animation-duration: 2s;
   animation-fill-mode: both;
-}
-
-.animated.infinite {
   animation-iteration-count: infinite;
 }
 
-.animated.hinge {
-  animation-duration: 2s;
+</style>
+
+<style>
+	td .caption {
+		font-size: 9px !important;
+	}
+	th.text-xs-right {
+	text-align: left !important;
 }
 </style>
