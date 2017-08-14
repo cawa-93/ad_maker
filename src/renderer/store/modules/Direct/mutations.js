@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash.clonedeep'
-import { utmMark } from '@/helpers'
-import { Warn } from '@/../common/dialog'
+import { utmMark, thankNotify } from '@/helpers'
+import { Warn } from 'common/dialog'
 
 // export function CLEAR_STACK (state) {
 // 	// state.stack = []
@@ -74,10 +74,13 @@ export function SET_KEYWORDS (state, fileContent) {
 	if (!isAllKeywordsLoaded) {
 		Warn('Не все фразы были добавлены', 'Проверьте соответствие названий кампаний и групп')
 	}
+
+	thankNotify(fileContent.length * 5)
 }
 
 export function SET_FASTLINKS (state, fileContent) {
 	const {CAMPAIN_NAME, GROUPE_NAME, FS_TITLES, FS_URLS, FS_TEXTS} = state.columns
+	const groups = new Set()
 	const _cache = {}
 	state.direct = state.direct.map((row, index) => {
 		if (index < 3 || !row) return row
@@ -99,12 +102,17 @@ export function SET_FASTLINKS (state, fileContent) {
 		row[FS_URLS] = _cache[cacheKey].urls
 		row[FS_TEXTS] = _cache[cacheKey].descs
 
+		groups.add(row[CAMPAIN_NAME]+row[GROUPE_NAME])
 		return row
 	})
+
+	thankNotify(groups.size * 120)
 }
 
 export function UTM_MARK_MAINLINKS (state, {params, mode}) {
 	const {CAMPAIN_NAME, GROUPE_NAME, AD_TITLE, AD_URL} = state.columns
+	const campains = new Set()
+	const groups = new Set()
 	state.direct = state.direct.map((row, index) => {
 		if (index < 3 || !row) return row
 
@@ -122,12 +130,18 @@ export function UTM_MARK_MAINLINKS (state, {params, mode}) {
 			}
 		}
 		row[AD_URL] = utmMark(row[AD_URL], utm)
+
+		campains.add(row[CAMPAIN_NAME])
+		groups.add(row[CAMPAIN_NAME]+row[GROUPE_NAME])
 		return row
 	})
+
+	thankNotify(campains.size * 60 + groups.size * 20)
 }
 
 export function UTM_MARK_FASTLINKS (state, {params, mode}) {
 	const {CAMPAIN_NAME, GROUPE_NAME, FS_TITLES, FS_URLS} = state.columns
+	const campains = new Set()
 	state.direct = state.direct.map((row, index) => {
 		if (index < 3 || !row || !row[FS_TITLES] || !row[FS_URLS]) return row
 
@@ -149,7 +163,9 @@ export function UTM_MARK_FASTLINKS (state, {params, mode}) {
 
 			return utmMark(url, utm, mode === 'anchor')
 		}).join('||')
-
+		
+		campains.add(row[CAMPAIN_NAME])
 		return row
 	})
+	thankNotify(campains.size * 30 + 150)
 }

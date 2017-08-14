@@ -9,3 +9,4 @@ thumbs.db
 .fuse*
 .env
 !.gitkeep
+*.sublime-*
