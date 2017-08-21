@@ -1,7 +1,7 @@
 {
   "name": "command-editor",
   "productName": "Command.Editor",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "Быстрый редактор кампаний из Яндекс.Директ Коммандера",
   "repository": "cawa-93/command-editor",
   "author": "Alex Kozack <kozackunisoft@gmail.com>",
