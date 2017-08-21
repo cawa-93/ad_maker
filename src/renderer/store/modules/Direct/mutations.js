@@ -102,7 +102,7 @@ export function SET_FASTLINKS (state, fileContent) {
 		row[FS_URLS] = _cache[cacheKey].urls
 		row[FS_TEXTS] = _cache[cacheKey].descs
 
-		groups.add(row[CAMPAIN_NAME]+row[GROUPE_NAME])
+		groups.add(row[CAMPAIN_NAME] + row[GROUPE_NAME])
 		return row
 	})
 
@@ -132,7 +132,7 @@ export function UTM_MARK_MAINLINKS (state, {params, mode}) {
 		row[AD_URL] = utmMark(row[AD_URL], utm)
 
 		campains.add(row[CAMPAIN_NAME])
-		groups.add(row[CAMPAIN_NAME]+row[GROUPE_NAME])
+		groups.add(row[CAMPAIN_NAME] + row[GROUPE_NAME])
 		return row
 	})
 
@@ -163,7 +163,7 @@ export function UTM_MARK_FASTLINKS (state, {params, mode}) {
 
 			return utmMark(url, utm, mode === 'anchor')
 		}).join('||')
-		
+
 		campains.add(row[CAMPAIN_NAME])
 		return row
 	})
