@@ -3,7 +3,7 @@ import declOfNum from 'common/declOfNum'
 
 export default function thankNotify (seconds) {
 	let count = 0
-	let cases 
+	let cases
 	if (seconds >= 3600) {
 		count = Math.round(seconds / 3600)
 		cases = ['час', 'часа', 'часов']
@@ -16,7 +16,7 @@ export default function thankNotify (seconds) {
 	}
 
 	const notification = new Notification(`Вы сэкономили ${count} ${declOfNum(cases)(count)}`, {
-		body: 'Потратьте это время с пользой'
+		body: 'Потратьте это время с пользой',
 	})
 	notification.onclick = () => shell.openExternal('https://www.liqpay.ua/ru/checkout/kozack')
 }

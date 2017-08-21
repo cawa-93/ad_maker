@@ -1,11 +1,11 @@
 'use strict'
-import { app, BrowserWindow/*, clipboard*/ } from 'electron'
-// import { autoUpdater } from 'electron-updater'
-// import { Info, Error } from 'common/dialog.js'
-// import isDev from 'electron-is-dev'
+import { app, BrowserWindow, clipboard } from 'electron'
+import { autoUpdater } from 'electron-updater'
+import { Info, Error } from 'common/dialog.js'
+import isDev from 'electron-is-dev'
 
 let mainWindow
-// let clipboardInterval
+let clipboardInterval
 
 /**
  * Set `__static` path to static files in production
@@ -46,7 +46,7 @@ function createWindow () {
 
 	mainWindow.on('closed', () => {
 		mainWindow = null
-		// clearInterval(clipboardInterval)
+		clearInterval(clipboardInterval)
 	})
 
 	/**
@@ -54,15 +54,15 @@ function createWindow () {
 	 *
 	 * https://github.com/electron/electron/issues/2280
 	 */
-
-	// clipboardInterval = setInterval(() => {
-	// 	const newClipboard = clipboard.readText()
-	// 	if (!mainWindow || !mainWindow.webContents || newClipboard === currentClipboard) {
-	// 		return
-	// 	}
-	// 	currentClipboard = newClipboard
-	// 	mainWindow.webContents.send('clipboard-change', {value: currentClipboard})
-	// }, 100)
+	let currentClipboard = clipboard.readText()
+	clipboardInterval = setInterval(() => {
+		const newClipboard = clipboard.readText()
+		if (!mainWindow || !mainWindow.webContents || newClipboard === currentClipboard) {
+			return
+		}
+		currentClipboard = newClipboard
+		mainWindow.webContents.send('clipboard-change', {value: currentClipboard})
+	}, 100)
 }
 
 app.on('ready', createWindow)
@@ -86,18 +86,18 @@ app.on('activate', () => {
  * support auto updating. Code Signing with a valid certificate is required.
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
  */
-// if (!isDev) {
-// 	autoUpdater.on('error', (error) => {
-// 		console.error(error)
-// 		Error(error, 'Во время поиска обновлений произошла ошибка')
-// 	})
+if (!isDev) {
+	autoUpdater.on('error', (error) => {
+		console.error(error)
+		Error(error, 'Во время поиска обновлений произошла ошибка')
+	})
 
-// 	autoUpdater.on('update-downloaded', (UpdateInfo) => {
-// 		console.log('Доступно обновление', UpdateInfo)
-// 		Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
-// 	})
+	autoUpdater.on('update-downloaded', (UpdateInfo) => {
+		console.log('Доступно обновление', UpdateInfo)
+		Info('Доступно обновление', 'Новая версия будет установлена после перезапуска')
+	})
 
-// 	app.on('ready', () => {
-// 		autoUpdater.checkForUpdates()
-// 	})
-// }
+	app.on('ready', () => {
+		autoUpdater.checkForUpdates()
+	})
+}

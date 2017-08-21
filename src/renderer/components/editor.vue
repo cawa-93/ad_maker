@@ -26,35 +26,39 @@
 		</v-menu>
 	</v-flex>
 </v-layout>
-<v-card>
-	<v-data-table
-		:headers="tableHeaders"
-		:items="filteredData"
-		:search="search"
-	>
-		<template slot="items" scope="props">
-			<td @click="search = props.item.campaign"><prety-name>{{props.item.campaign}}</prety-name></td>
-			<td @click="search = props.item.group"><prety-name>{{props.item.group}}</prety-name></td>
-			
-			<template v-if="type === 'ads'">
-				<td @click="search = props.item.ad_title">{{ props.item.ad_title }}</td>
-				<td class="text-xs-left" @click="search = props.item.ad_url" v-html="captionDomain(props.item.ad_url)"></td>
-				<td @click="search = props.item.ad_ancor">{{ props.item.ad_ancor }}</td>
-				<td><short-text>{{ props.item.ad_desc }}</short-text></td>
-			</template>
 
-			<template v-else-if="type === 'ks'">
-				<td @click="search = props.item.keyword">{{ props.item.keyword }}</td>
-			</template>
-
-			<template v-else-if="type === 'fs'">
-				<td @click="search = props.item.fastLink_title">{{ props.item.fastLink_title }}</td>
-				<td class="text-xs-left" @click="search = props.item.fastLink_url" v-html="captionDomain(props.item.fastLink_url)"></td>
-				<td><short-text>{{ props.item.fastLink_desc }}</short-text></td>
-			</template>
+<v-data-table
+	:headers="tableHeaders"
+	:items="filteredData"
+	:search="search"
+	no-data-text="Нет данных"
+	no-results-text="Не найдено соответствующих записей"
+	rows-per-page-text="Строк на страницу"
+>
+	<template slot="items" scope="props">
+		<td @click="search = props.item.campaign"><prety-name :text="props.item.campaign" /></td>
+		<td @click="search = props.item.group"><prety-name :text="props.item.group" /></td>
+		
+		<template v-if="type === 'ads'">
+			<td @click="search = props.item.ad_title">{{ props.item.ad_title }}</td>
+			<td class="text-xs-left" @click="search = props.item.ad_url" v-html="captionDomain(props.item.ad_url)"></td>
+			<td @click="search = props.item.ad_ancor">{{ props.item.ad_ancor }}</td>
+			<td><short-text>{{ props.item.ad_desc }}</short-text></td>
 		</template>
-	</v-data-table>
-</v-card>
+
+		<template v-else-if="type === 'ks'">
+			<td>
+				<span v-for="(keyword, index) in props.item.keywords" :key="index" @click="search = keyword">{{ keyword }}; </span>
+			</td>
+		</template>
+
+		<template v-else-if="type === 'fs'">
+			<td @click="search = props.item.fastLink_title">{{ props.item.fastLink_title }}</td>
+			<td class="text-xs-left" @click="search = props.item.fastLink_url" v-html="captionDomain(props.item.fastLink_url)"></td>
+			<td><short-text>{{ props.item.fastLink_desc }}</short-text></td>
+		</template>
+	</template>
+</v-data-table>
 
 </div></template>
 
@@ -128,7 +132,7 @@ export default {
 			return this.tableData.filter(row => {
 				switch (this.type) {
 				case 'ads' : return !!row.ad_url
-				case 'ks' : return !!row.keyword
+				case 'ks' : return !!row.keywords
 				case 'fs' : return !!row.fastLink_url
 				default : return false
 				}
@@ -149,13 +153,13 @@ export default {
 							ad_url: ad.url,
 						})
 					})
-					group.keywords.forEach(keyword => {
-						rows.push({
-							campaign: campaign.name,
-							group: group.name,
-							keyword,
-						})
+
+					rows.push({
+						campaign: campaign.name,
+						group: group.name,
+						keywords: group.keywords,
 					})
+
 					group.fastLinks.forEach(link => {
 						rows.push({
 							campaign: campaign.name,
@@ -183,9 +187,6 @@ export default {
 		},
 		getWindowHeight (event) {
 			this.windowHeight = document.documentElement.clientHeight
-		},
-		caption (str, delimiter = '_') {
-			return str.replace(new RegExp(`(${delimiter}[^${delimiter}]+)$`), `<span class="caption grey--text">$1</span>`)
 		},
 		captionDomain (str) {
 			return str.replace(new RegExp(`^([a-z]+://[^/]+)`), `<span class="caption grey--text">$1</span>`)
